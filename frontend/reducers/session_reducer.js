@@ -5,6 +5,7 @@ import {RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER} from "../actions/session_acti
 const sessionReducer = (state = {id: null}, action) => {
     Object.freeze(state);
     let newState = Object.assign({}, state);
+    // debugger
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
             newState.id = action.user.id;

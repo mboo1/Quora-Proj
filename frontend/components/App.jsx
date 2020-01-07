@@ -1,10 +1,19 @@
 import React from 'react'
+import GreetingContainer from "./greeting_container"
 
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+    }
 
-const App = () => (
-    <div>
-        <h1>QuoraApp</h1>
-    </div>
-)
+    render() {
+        return (
+            <div>
+                <GreetingContainer />
+            </div>
+        )
+    }
+}
+
 
 export default App

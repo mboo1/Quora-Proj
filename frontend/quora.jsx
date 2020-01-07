@@ -1,25 +1,17 @@
-const path = require('path');
+import React from "react";
+import ReactDOM from "react-dom";
+import * as SessionApiUtil from "./util/session_api_util"
+import configureStore from "./store/store"
+import Root from "./components/root"
 
-module.exports = {
-  entry: './frontend/quora.jsx',
-  output: {
-    path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
-    filename: 'bundle.js'
-  },
-  module: {
-    rules: [
-      {
-        test: [/\.jsx?$/],
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: [ '@babel/env', '@babel/react']
-        }
-      }
-    ]
-  },
-  devtool: 'source-map',
-  resolve: {
-    extensions: ['.js', '.jsx', '*'],
-  }
-};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const store = configureStore();
+    window.getState = store.getState;
+    window.signup = SessionApiUtil.signup;
+    window.login = SessionApiUtil.login;
+    window.logout = SessionApiUtil.logout;
+
+    const rootEl = document.getElementById("root");
+    ReactDOM.render(<Root store = {store}/>, rootEl);
+})

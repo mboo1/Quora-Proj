@@ -1,4 +1,6 @@
-import React from "react"
+import React from "react";
+import {Route, Switch, Link} from "react-router-dom";
+import IndexContainer from "../Index/index_container"
 
 class Main extends React.Component {
     constructor(props) {
@@ -7,7 +9,12 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div>Main Page</div>
+            <div>
+                <Switch>
+                    <Route path = "/" component={IndexContainer} />
+                </Switch>
+            </div>
+
         )
     }
 }

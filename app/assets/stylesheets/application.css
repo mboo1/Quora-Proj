@@ -13,3 +13,56 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+    font-family: 'Abel', sans-serif;
+  }
+
+ .login-form-container {
+     height: 750px;
+     background-image: url('./30dogs.jpg');
+     /* background-color: chocolate; */
+     display: flex;
+     outline: 1px solid black;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+ }
+
+ .session-form {
+    background-color: white;
+     /* display: flex; */
+     height: 200px;
+     width: 150px;
+     border-left: 1px solid gray;
+     /* justify-content: center;
+     align-items: center; */
+     padding: 30px;
+     padding-left: 60px;
+     padding-right: 60px;
+ }
+
+ .session-row {
+     width: auto;
+     height: auto;
+     display: flex;
+     border-radius: 5px;
+ }
+
+ .submit-button {
+     background-color: darkcyan;
+     color: white
+ }
+
+ .submit-button:hover {
+     cursor: pointer;
+ }
+
+ .title-row {
+     display: flex;
+     color: maroon;
+     background-color: white;
+     width: 540px;
+     justify-content: center;
+     margin: 0px;
+ }

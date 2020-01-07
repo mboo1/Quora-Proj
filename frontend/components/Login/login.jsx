@@ -13,6 +13,7 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
         this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleGuest = this.handleGuest.bind(this);
     }
 
     handleChange(kind) {
@@ -31,32 +32,50 @@ class Login extends React.Component {
         this.props.login(user)
     }
 
+    handleGuest() {
+        let user
+        this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
+            user = {username: this.state.oldUsername, password: this.state.oldPassword}
+            this.props.login(user)
+        })
+    }
+
     render() {
         // console.log(this.props)
         return (
             <div>
                 <h3>{this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}</h3>
-                <form onSubmit={this.handleSignUp}>Sign Up!
-                    <label>Username:
-                        <input type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
-                    </label>
-                    <label>Email:
-                        <input type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
-                    </label>
-                    <label>Password:
-                        <input type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
-                    </label>
-                    <button onClick={this.handleSignUp}>Sign Up</button>
-                </form>
-                <form onSubmit= {this.handleSignIn}>Log In!
-                    <label>Username:
-                        <input type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
-                    </label>
-                    <label>Password:
-                        <input type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
-                    </label>
-                    <button onClick={this.handleSignIn}>Login</button>
-                </form>
+                <div className="login-form-container">
+                    <h1 className="title-row">Quora but for dogs.  Only dogs!</h1>
+                    <div className = "session-row">
+                        <form onSubmit={this.handleSignUp} className="session-form">Sign Up
+                        <br/>
+                        <br/>
+                            <label>Username:
+                                <input type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
+                            </label>
+                            <label>Email:
+                                <input type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
+                            </label>
+                            <label>Password:
+                                <input type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
+                            </label>
+                            <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
+                        </form>
+                        <form onSubmit= {this.handleSignIn} className="session-form">Login
+                        <br/>
+                        <br/>
+                            <label>Username:
+                                <input type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
+                            </label>
+                            <label>Password:
+                                <input type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
+                            </label>
+                            <button onClick={this.handleSignIn} className="submit-button">Login</button>
+                            <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }

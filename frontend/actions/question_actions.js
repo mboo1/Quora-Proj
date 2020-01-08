@@ -14,6 +14,23 @@ const receiveQuestions = (questions) => ({
     questions: questions
 })
 
-const removeQuestion = () => ({
-    type: REMOVE_QUESTION
+const removeQuestion = (questionId) => ({
+    type: REMOVE_QUESTION,
+    questionId: questionId
 })
+
+export const fetchQuestions = () => dispatch => (
+    ApiQuestionUtil.fetchQuestions().then(questions => dispatch(receiveQuestions(questions)))
+)
+
+export const fetchQuestion = (questionId) => dispatch => (
+    ApiQuestionUtil.fetchQuestion(questionId).then(question => dispatch(receiveQuestion(question)))
+)
+
+export const createQuestion = (question) => dispatch => (
+    ApiQuestionUtil.createQuestion(question).then(question => dispatch(receiveQuestion(question)))
+)
+
+export const destroyQuestion = (questionId) => dispatch => (
+    ApiQuestionUtil.destroyQuestion(questionId).then(() => dispatch(removeQuestion(questionId)) )
+)

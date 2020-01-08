@@ -41,6 +41,6 @@ q2 = Question.create!(
 
 q3 = Question.create!(
     title: 'Bark!',
-    body: 'Is it not that case that, when considered in light of recent development in both material philosophy and technological development that one can conclude, with the obvious cavets, that in fact...',
+    body: 'Is it not that case that, when considered in light of recent developments in both material philosophy and technological advancement that one can conclude, with the obvious cavets, that in fact...',
     author_id: u2.id
 )

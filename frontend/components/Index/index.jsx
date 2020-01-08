@@ -9,7 +9,7 @@ class Index extends React.Component {
         
         return (
             <div>
-                Index
+                IndexofQuestions
             </div>
         )
     }

@@ -20,8 +20,8 @@
 
  .login-form-container {
      height: 750px;
-     background-image: url('./30dogs.jpg');
-     /* background-color: chocolate; */
+     background-image: url("30dogs.jpg");
+     background-color: chocolate;
      display: flex;
      outline: 1px solid black;
      align-items: center;

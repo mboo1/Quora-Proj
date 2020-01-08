@@ -20,6 +20,6 @@ export const logout = () => {
         method: "DELETE",
         url: "/api/session"
     })
-    console.log(res);
+   
     return res
 }

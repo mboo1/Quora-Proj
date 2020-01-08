@@ -259,7 +259,6 @@ function (_React$Component) {
   _createClass(Index, [{
     key: "render",
     value: function render() {
-      console.log(this.props.currentUser.username);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Index");
     }
   }]);
@@ -995,7 +994,6 @@ var logout = function logout() {
     method: "DELETE",
     url: "/api/session"
   });
-  console.log(res);
   return res;
 };
 

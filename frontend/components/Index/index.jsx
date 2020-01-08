@@ -6,7 +6,7 @@ class Index extends React.Component {
     }
 
     render () {
-        console.log(this.props.currentUser.username)
+        
         return (
             <div>
                 Index

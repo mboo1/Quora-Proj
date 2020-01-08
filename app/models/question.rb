@@ -1,6 +1,6 @@
 class Question < ApplicationRecord
 
-    validates :title, :body, :author_id presence: true
+    validates :title, :body, :author_id, presence: true
     validates :title, uniqueness: true
 
     belongs_to :author,

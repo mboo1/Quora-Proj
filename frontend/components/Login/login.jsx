@@ -60,7 +60,8 @@ class Login extends React.Component {
                     <h1 className="title-row">Quora but for dogs.  Only dogs!</h1>
                     {this.checkErrors()}
                     <div className = "session-row">
-                        <form onSubmit={this.handleSignUp} className="session-form">Sign Up
+                        {/* <form onSubmit={this.handleSignUp} className="session-form">Sign Up */}
+                        <form className="session-form">Sign Up
                         <br/>
                         <br/>
                             <label>Username:

@@ -570,20 +570,14 @@ function (_React$Component) {
   }, {
     key: "handleGuest",
     value: function handleGuest() {
-      var _this3 = this;
-
-      var user;
-      this.setState({
-        oldUsername: 'guest',
-        oldPassword: 'password'
-      }, function () {
-        user = {
-          username: _this3.state.oldUsername,
-          password: _this3.state.oldPassword
-        };
-
-        _this3.props.login(user);
-      });
+      // let user
+      this.props.login({
+        username: 'guest',
+        password: 'password'
+      }); // this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
+      //     user = {username: this.state.oldUsername, password: this.state.oldPassword}
+      //     this.props.login(user)
+      // })
     }
   }, {
     key: "checkErrors",

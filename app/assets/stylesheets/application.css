@@ -20,7 +20,7 @@
 
  .login-form-container {
      height: 750px;
-     /* background-image: url("30dogs.jpg"); */
+     background-image: url("30dogs.jpg");
      background-color: chocolate;
      display: flex;
      outline: 1px solid black;
@@ -116,4 +116,12 @@
     color: rgba(40, 110, 241, 1);
     background-color: rgba(233, 241, 254, 1);
     padding: '20px';
+  }
+
+  .login-error-bar {
+      width: 540px;
+      height: 40px;
+      margin: 0;
+      padding: 0;
+      background-color: white;
   }

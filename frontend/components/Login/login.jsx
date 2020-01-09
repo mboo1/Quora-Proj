@@ -14,6 +14,7 @@ class Login extends React.Component {
         this.handleSignUp = this.handleSignUp.bind(this);
         this.handleSignIn = this.handleSignIn.bind(this);
         this.handleGuest = this.handleGuest.bind(this);
+        this.checkErrors = this.checkErrors.bind(this);
     }
 
     handleChange(kind) {
@@ -40,13 +41,23 @@ class Login extends React.Component {
         })
     }
 
+    checkErrors() {
+        if (this.props.errors.length === 0) {
+            return <h6 className="login-error-bar"></h6>
+        } else {
+            return (
+                <h6 className="login-error-bar">{this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}</h6>
+            )
+        }
+    }
+
     render() {
         // console.log(this.props)
         return (
             <div>
-                <h3>{this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}</h3>
                 <div className="login-form-container">
                     <h1 className="title-row">Quora but for dogs.  Only dogs!</h1>
+                    {this.checkErrors()}
                     <div className = "session-row">
                         <form onSubmit={this.handleSignUp} className="session-form">Sign Up
                         <br/>

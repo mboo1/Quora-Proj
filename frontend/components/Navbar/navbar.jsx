@@ -10,7 +10,8 @@ class Navbar extends React.Component {
         return (
             <nav className="navbar-row">
                 <p>Quora</p>
-                <p onClick={this.props.openModal}>Dogs</p>
+                <p onClick={this.props.openModal}>Add Question</p>
+                <p onClick ={this.props.logout}>Logout</p>
             </nav>
         )
     }

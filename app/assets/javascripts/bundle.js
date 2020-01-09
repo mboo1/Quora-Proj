@@ -535,6 +535,7 @@ function (_React$Component) {
     _this.handleSignUp = _this.handleSignUp.bind(_assertThisInitialized(_this));
     _this.handleSignIn = _this.handleSignIn.bind(_assertThisInitialized(_this));
     _this.handleGuest = _this.handleGuest.bind(_assertThisInitialized(_this));
+    _this.checkErrors = _this.checkErrors.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -585,18 +586,31 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "checkErrors",
+    value: function checkErrors() {
+      if (this.props.errors.length === 0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+          className: "login-error-bar"
+        });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+          className: "login-error-bar"
+        }, this.props.errors.map(function (error, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: idx
+          }, error);
+        }));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       // console.log(this.props)
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.props.errors.map(function (error, idx) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: idx
-        }, error);
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "title-row"
-      }, "Quora but for dogs.  Only dogs!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Quora but for dogs.  Only dogs!"), this.checkErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSignUp,
@@ -915,7 +929,9 @@ function (_React$Component) {
         className: "navbar-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quora"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         onClick: this.props.openModal
-      }, "Dogs"));
+      }, "Add Question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        onClick: this.props.logout
+      }, "Logout"));
     }
   }]);
 
@@ -939,6 +955,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navbar */ "./frontend/components/Navbar/navbar.jsx");
 /* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/question_actions */ "./frontend/actions/question_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 
@@ -957,6 +975,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     openModal: function openModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])('open'));
+    },
+    logout: function logout() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["logout"])());
     }
   };
 };
@@ -1469,6 +1490,7 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state); // let newState = Object.assign({}, state);
+  // debugger
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:

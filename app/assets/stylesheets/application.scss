@@ -20,10 +20,10 @@
 
  .login-form-container {
      height: 750px;
-     background-image: url("30dogs.jpg");
+     background-image: image-url("30dogs.jpg");
      background-color: chocolate;
      display: flex;
-     outline: 1px solid black;
+     /* outline: 1px solid black; */
      align-items: center;
      justify-content: center;
      flex-direction: column;
@@ -33,20 +33,21 @@
     background-color: white;
      /* display: flex; */
      height: 200px;
-     width: 150px;
+     width: 149px;
      border-left: 1px solid gray;
      /* justify-content: center;
      align-items: center; */
      padding: 30px;
      padding-left: 60px;
-     padding-right: 60px;
+     padding-right: 61px;
+     /* border-radius: 10px */
  }
 
  .session-row {
      width: auto;
      height: auto;
      display: flex;
-     border-radius: 5px;
+     /* border-radius: 5px; */
  }
 
  .submit-button {

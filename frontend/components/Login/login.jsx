@@ -34,12 +34,12 @@ class Login extends React.Component {
     }
 
     handleGuest() {
-        // let user
-        this.props.login({username: 'guest', password: 'password'})
-        // this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
-        //     user = {username: this.state.oldUsername, password: this.state.oldPassword}
-        //     this.props.login(user)
-        // })
+        let user
+        // this.props.login({username: 'guest', password: 'password'})
+        this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
+            user = {username: this.state.oldUsername, password: this.state.oldPassword}
+            this.props.login(user)
+        })
     }
 
     checkErrors() {
@@ -53,7 +53,7 @@ class Login extends React.Component {
     }
 
     render() {
-        // console.log(this.props)
+        
         return (
             <div>
                 <div className="login-form-container">
@@ -74,7 +74,8 @@ class Login extends React.Component {
                             </label>
                             <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
                         </form>
-                        <form onSubmit= {this.handleSignIn} className="session-form">Login
+                        {/* <form onSubmit= {this.handleSignIn} className="session-form">Login */}
+                        <form className="session-form">Login
                         <br/>
                         <br/>
                             <label>Username:

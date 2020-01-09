@@ -3,6 +3,7 @@ import {Route, Switch, Link} from "react-router-dom";
 import IndexContainer from "../Index/index_container"
 import NavbarContainer from "../Navbar/navbar_container"
 import ModalContainer from "../Modal/modal_container"
+import QuestionShowContainer from "../Question/question_show_container"
 
 class Main extends React.Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class Main extends React.Component {
                 <NavbarContainer />
                     <div className="main-row">
                         <Switch>
-                            <Route path = "/" component={IndexContainer} />
+                            <Route exact path = "/questions/:questionId" component={QuestionShowContainer} />
+                            <Route exact path = "/" component={IndexContainer} />
                         </Switch>
                     </div>
             </div>

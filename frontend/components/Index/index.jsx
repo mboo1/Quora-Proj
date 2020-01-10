@@ -1,5 +1,6 @@
 import React from "react"
 import IndexItem from "./index_item"
+// import IndexItemContainer from "./index_item"
 
 class Index extends React.Component {
     constructor(props) {
@@ -10,7 +11,12 @@ class Index extends React.Component {
         this.props.fetchQuestions()
     }
 
+    // getAuthor(authorId) {
+    //     this.props.fetchUser(authorId)
+    // }
+
     render () {
+        console.log(this.props)
         return (
             <div className="index-box">
                 <ul>

@@ -5,6 +5,7 @@ import Root from "./components/root"
 
 import * as SessionApiUtil from "./util/session_api_util"
 import * as QuestionsApiUtil from "./util/questions_api_util"
+import * as UsersApiUtil from "./util/users_api_util"
 import {login, logout, signup, logoutCurrentUser} from "./actions/session_actions"
 import { fetchQuestions, fetchQuestion, createQuestion, destroyQuestion } from "./actions/question_actions"
 
@@ -29,11 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // window.signup = SessionApiUtil.signup;
     // window.login = SessionApiUtil.login;
     // window.logout = SessionApiUtil.logout;
-    // window.fetchQuestions = QuestionsApiUtil.fetchQuestions;
+    window.fetchQuestions = QuestionsApiUtil.fetchQuestions;
     // window.fetchQuestion = QuestionsApiUtil.fetchQuestion;
     // window.createQuestion = QuestionsApiUtil.createQuestion;
     // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
-    window.fetchQuestions = fetchQuestions;
+    window.fetchUsers = UsersApiUtil.fetchUsers;
+    // window.fetchQuestions = fetchQuestions;
     window.fetchQuestion = fetchQuestion;
     window.createQuestion = createQuestion;
     window.destroyQuestion = destroyQuestion;

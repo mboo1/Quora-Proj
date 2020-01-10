@@ -4,7 +4,8 @@ import {fetchQuestions} from "../../actions/question_actions"
 
 const mapStateToProps = state => ({
     currentUser: state.entities.users[state.session.id],
-    questions: Object.values(state.entities.questions)
+    questions: Object.values(state.entities.questions),
+    users: state.entities.users
 })
 
 const mapDispatchToProps = dispatch => ({

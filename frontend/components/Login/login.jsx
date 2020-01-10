@@ -35,7 +35,7 @@ class Login extends React.Component {
 
     handleGuest() {
         let user
-        // this.props.login({username: 'guest', password: 'password'})
+        // this.props.login({username: 'guestt', password: 'password'})
         this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
             user = {username: this.state.oldUsername, password: this.state.oldPassword}
             this.props.login(user)
@@ -57,37 +57,36 @@ class Login extends React.Component {
         return (
             <div>
                 <div className="login-form-container">
-                    <h1 className="title-row">Quora but for dogs.  Only dogs!</h1>
-                    {this.checkErrors()}
-                    <div className = "session-row">
-                        {/* <form onSubmit={this.handleSignUp} className="session-form">Sign Up */}
-                        <form className="session-form">Sign Up
-                        <br/>
-                        <br/>
-                            <label>Username:
-                                <input type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
-                            </label>
-                            <label>Email:
-                                <input type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
-                            </label>
-                            <label>Password:
-                                <input type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
-                            </label>
-                            <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
-                        </form>
-                        {/* <form onSubmit= {this.handleSignIn} className="session-form">Login */}
-                        <form className="session-form">Login
-                        <br/>
-                        <br/>
-                            <label>Username:
-                                <input type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
-                            </label>
-                            <label>Password:
-                                <input type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
-                            </label>
-                            <button onClick={this.handleSignIn} className="submit-button">Login</button>
-                            <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
-                        </form>
+                    <div className="greeting-box">
+                        <div className="greeting-logo">
+                            <img className="greeting" src = {logo} alt = "logo"></img>
+                        </div>
+                        <div className="intro-row">A place to share knowledge and better understand the world</div>
+                        {this.checkErrors()}
+                        <div className = "session-row">
+                            {/* <form onSubmit={this.handleSignUp} className="session-form">Sign Up */}
+                            <form className="signup-form">
+                                <div className="login-div">Sign Up</div>
+                                <label>
+                                    <input placeholder={" Name"} className="session-input" type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
+                                </label>
+                                <label>
+                                    <input placeholder={" Email"} className="session-input" type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
+                                </label>
+                                <label>
+                                    <input placeholder={" Password"} className="session-input" type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
+                                </label>
+                                <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
+                            </form>
+                            {/* <form onSubmit= {this.handleSignIn} className="session-form">Login */}
+                            <form className="login-form">
+                                <div className="login-div">Login</div>
+                                <input placeholder={" Name"}className="session-input" type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
+                                <input placeholder={" Password"}className= "session-input" type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
+                                <button onClick={this.handleSignIn} className="submit-button">Login</button>
+                                <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

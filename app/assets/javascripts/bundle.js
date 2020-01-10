@@ -582,7 +582,7 @@ function (_React$Component) {
     value: function handleGuest() {
       var _this3 = this;
 
-      var user; // this.props.login({username: 'guest', password: 'password'})
+      var user; // this.props.login({username: 'guestt', password: 'password'})
 
       this.setState({
         oldUsername: 'guest',
@@ -618,21 +618,37 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        className: "title-row"
-      }, "Quora but for dogs.  Only dogs!"), this.checkErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "greeting-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "greeting-logo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "greeting",
+        src: logo,
+        alt: "logo"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "intro-row"
+      }, "A place to share knowledge and better understand the world"), this.checkErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "session-form"
-      }, "Sign Up", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Username:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "signup-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-div"
+      }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Name",
+        className: "session-input",
         type: "text",
         value: this.state.newUsername,
         onChange: this.handleChange('newUsername')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Email",
+        className: "session-input",
         type: "text",
         value: this.state.newEmail,
         onChange: this.handleChange('newEmail')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Password",
+        className: "session-input",
         type: "password",
         value: this.state.newPassword,
         onChange: this.handleChange('newPassword')
@@ -640,22 +656,28 @@ function (_React$Component) {
         onClick: this.handleSignUp,
         className: "submit-button"
       }, "Sign Up")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "session-form"
-      }, "Login", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Username:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "login-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-div"
+      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Name",
+        className: "session-input",
         type: "text",
         value: this.state.oldUsername,
         onChange: this.handleChange('oldUsername')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Password",
+        className: "session-input",
         type: "password",
         value: this.state.oldPassword,
         onChange: this.handleChange('oldPassword')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSignIn,
         className: "submit-button"
       }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleGuest,
         className: "submit-button"
-      }, "Guest Login")))));
+      }, "Guest Login"))))));
     }
   }]);
 

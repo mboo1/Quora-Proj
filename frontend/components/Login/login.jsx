@@ -47,7 +47,11 @@ class Login extends React.Component {
             return <h6 className="login-error-bar"></h6>
         } else {
             return (
-                <h6 className="login-error-bar">{this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}</h6>
+                <h6 className="login-error-bar">
+                    <div className="login-error-display">
+                        {this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
+                </h6>
             )
         }
     }
@@ -67,24 +71,22 @@ class Login extends React.Component {
                             {/* <form onSubmit={this.handleSignUp} className="session-form">Sign Up */}
                             <form className="signup-form">
                                 <div className="login-div">Sign Up</div>
-                                <label>
-                                    <input placeholder={" Name"} className="session-input" type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
-                                </label>
-                                <label>
-                                    <input placeholder={" Email"} className="session-input" type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
-                                </label>
-                                <label>
-                                    <input placeholder={" Password"} className="session-input" type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
-                                </label>
-                                <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
+                                <input placeholder={" Name"} className="session-input" type="text" value={this.state.newUsername} onChange={this.handleChange('newUsername')}/>
+                                <input placeholder={" Email"} className="session-input" type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
+                                <input placeholder={" Password"} className="session-input" type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
+                                <div className="button-row">
+                                    <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
+                                </div>
                             </form>
                             {/* <form onSubmit= {this.handleSignIn} className="session-form">Login */}
                             <form className="login-form">
                                 <div className="login-div">Login</div>
                                 <input placeholder={" Name"}className="session-input" type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
                                 <input placeholder={" Password"}className= "session-input" type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
-                                <button onClick={this.handleSignIn} className="submit-button">Login</button>
-                                <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
+                                <div className="button-row">
+                                    <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
+                                    <button onClick={this.handleSignIn} className="submit-button">Login</button>
+                                </div>
                             </form>
                         </div>
                     </div>

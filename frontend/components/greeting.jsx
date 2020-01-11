@@ -1,6 +1,8 @@
 import React from 'react'
 import Main from "./Main/main"
 import LoginContainer from "./Login/login_container"
+import {Route, Switch, Redirect, Link} from "react-router-dom";
+
 
 class Greeting extends React.Component {
     constructor(props) {
@@ -12,7 +14,12 @@ class Greeting extends React.Component {
         if (this.props.currentUser !== undefined) {
             return <Main />
         } else {
-            return <LoginContainer />
+            return (
+                <Switch>
+                    <Route exact path="/" component={LoginContainer}/>
+                    <Redirect from="*" to="/"/>
+                </Switch>
+            )
         }
     }
 

@@ -225,16 +225,28 @@ table {
      height: auto;
      width: auto;
      flex-direction: column;
+     background-color: rgba($color: rgb(231, 229, 229), $alpha: 1.0)
  }
 
  .navbar-row{
      display: flex;
-     width: auto;
+     position: fixed;
+     top: 0;
+     left: 0; 
+     right: 0;
      height: 51px;
-     background-color: tan;
      border-bottom: 1px solid gray;
      justify-content: space-around;
      align-items: center;
+     background-color: rgba($color: #FAFAFA, $alpha: 1.0)
+ }
+
+ .navbar-item {
+     width: 80px;
+ }
+
+ .main-row {
+     margin-top: 51px;
  }
 
  .modal-background {
@@ -296,7 +308,7 @@ table {
 
   .index-box {
       display: flex;
-      background-color: rgba(235, 235, 235, 0.404);
+      background-color: rgba(255, 255, 255, 0.404);
       flex-direction: column;
   }
 
@@ -307,7 +319,7 @@ table {
       height: 250px;
       padding: 20px;
       margin: 20px;
-      background-color: rgba(255, 255, 255, 0.705);
+      background-color: rgba($color: #FAFAFA, $alpha: 1.0);
       border: 1px solid lightgray;
       border-bottom: 1px solid rgb(184, 183, 183);
       border-radius: 5px;

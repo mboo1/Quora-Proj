@@ -17,7 +17,7 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar-row">
-                <p>Quora</p>
+                <img className="navbar-item" src = {logo} alt = "logo"></img>
                 <p onClick={this.props.openModal}>Add Question</p>
                 <p onClick ={this.handleLogout}>Logout</p>
             </nav>

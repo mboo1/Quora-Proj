@@ -988,7 +988,11 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "navbar-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quora"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "navbar-item",
+        src: logo,
+        alt: "logo"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         onClick: this.props.openModal
       }, "Add Question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         onClick: this.handleLogout
@@ -1314,6 +1318,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Main_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Main/main */ "./frontend/components/Main/main.jsx");
 /* harmony import */ var _Login_login_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Login/login_container */ "./frontend/components/Login/login_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1331,6 +1336,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1357,7 +1363,14 @@ function (_React$Component) {
       if (this.props.currentUser !== undefined) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Main_main__WEBPACK_IMPORTED_MODULE_1__["default"], null);
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Login_login_container__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
+          exact: true,
+          path: "/",
+          component: _Login_login_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Redirect"], {
+          from: "*",
+          to: "/"
+        }));
       }
     }
   }, {

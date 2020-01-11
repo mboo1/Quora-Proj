@@ -75,7 +75,7 @@ class Login extends React.Component {
                                 <input placeholder={" Email"} className="session-input" type="text" value={this.state.newEmail} onChange={this.handleChange('newEmail')}/>
                                 <input placeholder={" Password"} className="session-input" type="password" value={this.state.newPassword} onChange={this.handleChange('newPassword')}/>
                                 <div className="button-row">
-                                    <button onClick={this.handleSignUp} className="submit-button">Sign Up</button>
+                                    <button onClick={this.handleSignUp} className="submit-button">Signup</button>
                                 </div>
                             </form>
                             {/* <form onSubmit= {this.handleSignIn} className="session-form">Login */}
@@ -84,10 +84,17 @@ class Login extends React.Component {
                                 <input placeholder={" Name"}className="session-input" type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
                                 <input placeholder={" Password"}className= "session-input" type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
                                 <div className="button-row">
-                                    <button onClick={this.handleGuest} className="submit-button">Guest Login</button>
+                                    <button onClick={this.handleGuest} className="submit-button">Demo</button>
                                     <button onClick={this.handleSignIn} className="submit-button">Login</button>
                                 </div>
                             </form>
+                        </div>
+                        <div className="language-row">
+                            Not available in: Dutch, Danish, Finnish, Norwegian, Swedish, Marathi, Bengali, or Tamil
+                        </div>
+                        <div className="links-row">
+                            <a>About</a><a>Languages</a><a>Careers</a><a>Businesses</a>
+                            <a>Privacy</a><a>Terms</a><a>Contact</a><a>@AppAcademy</a>
                         </div>
                     </div>
                 </div>

@@ -659,7 +659,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSignUp,
         className: "submit-button"
-      }, "Sign Up"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, "Signup"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "login-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-div"
@@ -680,10 +680,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleGuest,
         className: "submit-button"
-      }, "Guest Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Demo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSignIn,
         className: "submit-button"
-      }, "Login")))))));
+      }, "Login")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "language-row"
+      }, "Not available in: Dutch, Danish, Finnish, Norwegian, Swedish, Marathi, Bengali, or Tamil"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "links-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Languages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Careers"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Businesses"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Privacy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Terms"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Contact"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "@AppAcademy")))));
     }
   }]);
 

@@ -988,15 +988,64 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "navbar-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "navbar-item",
         src: logo,
         alt: "logo"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        onClick: this.props.openModal
-      }, "Add Question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        style: {
+          textDecoration: 'none'
+        },
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "navbar-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-book fa-2x"
+      }), "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        style: {
+          textDecoration: 'none'
+        },
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "navbar-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-edit fa-2x"
+      }), "Answer")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        style: {
+          textDecoration: 'none'
+        },
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "navbar-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-users fa-2x"
+      }), "Spaces")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        style: {
+          textDecoration: 'none'
+        },
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "navbar-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-bell fa-2x"
+      }), "Notifications")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        "class": "fa fa-search"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "nav-search",
+        placeholder: "Search Quora",
+        type: "text"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "profile-icon",
+        src: userImg,
         onClick: this.handleLogout
-      }, "Logout"));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "question-button",
+        onClick: this.props.openModal
+      }, "Add Question"));
     }
   }]);
 

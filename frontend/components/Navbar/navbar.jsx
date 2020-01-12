@@ -1,5 +1,5 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
+import { withRouter, Link } from "react-router-dom"
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -17,9 +17,17 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar-row">
-                <img className="navbar-item" src = {logo} alt = "logo"></img>
-                <p onClick={this.props.openModal}>Add Question</p>
-                <p onClick ={this.handleLogout}>Logout</p>
+                <Link to="/"><img className="navbar-item" src = {logo} alt = "logo"></img></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-book fa-2x"></i>Home</div></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-edit fa-2x"></i>Answer</div></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link>
+                <div className="search-container">
+                    <i class="fa fa-search"></i>
+                    <input className="nav-search" placeholder="Search Quora" type="text"/>
+                </div>
+                <img className="profile-icon" src={userImg} onClick={this.handleLogout} />
+                <p className="question-button" onClick={this.props.openModal}>Add Question</p>
             </nav>
         )
     }

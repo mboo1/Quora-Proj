@@ -8,6 +8,7 @@ import * as QuestionsApiUtil from "./util/questions_api_util"
 import * as UsersApiUtil from "./util/users_api_util"
 import {login, logout, signup, logoutCurrentUser} from "./actions/session_actions"
 import { fetchQuestions, fetchQuestion, createQuestion, destroyQuestion } from "./actions/question_actions"
+import { fetchUsers, fetchUser } from "./actions/users_actions"
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -34,8 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // window.fetchQuestion = QuestionsApiUtil.fetchQuestion;
     // window.createQuestion = QuestionsApiUtil.createQuestion;
     // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
-    window.fetchUsers = UsersApiUtil.fetchUsers;
+    // window.fetchUsers = UsersApiUtil.fetchUsers;
     // window.fetchQuestions = fetchQuestions;
+    window.fetchUsers = fetchUsers;
+    window.fetchUser = fetchUser;
     window.fetchQuestion = fetchQuestion;
     window.createQuestion = createQuestion;
     window.destroyQuestion = destroyQuestion;

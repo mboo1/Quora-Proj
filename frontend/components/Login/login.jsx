@@ -28,13 +28,15 @@ class Login extends React.Component {
         this.props.signup(user)
     }
 
-    handleSignIn() {
+    handleSignIn(e) {
+        e.preventDefault();
         let user = {username: this.state.oldUsername, password: this.state.oldPassword}
         this.props.login(user)
     }
 
-    handleGuest() {
-        let user
+    handleGuest(e) {
+        e.preventDefault();
+        let user;
         // this.props.login({username: 'guestt', password: 'password'})
         this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
             user = {username: this.state.oldUsername, password: this.state.oldPassword}

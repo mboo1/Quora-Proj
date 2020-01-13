@@ -8,20 +8,15 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchQuestions()
+        this.props.fetchUsers().then(this.props.fetchQuestions())
     }
 
-    // getAuthor(authorId) {
-    //     this.props.fetchUser(authorId)
-    // }
-
     render () {
-        console.log(this.props)
         return (
             <div className="index-box">
                 <ul>
                     {this.props.questions.map(question => (
-                        <IndexItem question={question} key={question.id} />
+                        <IndexItem question={question} key={question.id} author={this.props.users[question.author_id]} />
                     ))}
                 </ul>
             </div>

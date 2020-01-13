@@ -11,7 +11,7 @@ class Greeting extends React.Component {
     }
 
     findPage() {
-        if (this.props.currentUser !== undefined) {
+        if (typeof this.props.currentUser !== 'undefined') {
             return <Main />
         } else {
             return (

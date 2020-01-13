@@ -137,17 +137,23 @@ var RECEIVE_QUESTION = "RECEIVE_QUESTION";
 var RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 var REMOVE_QUESTION = "REMOVE_QUESTION";
 
-var receiveQuestion = function receiveQuestion(question) {
+var receiveQuestion = function receiveQuestion(_ref) {
+  var question = _ref.question,
+      answers = _ref.answers;
   return {
     type: RECEIVE_QUESTION,
-    question: question
+    question: question,
+    answers: answers
   };
 };
 
-var receiveQuestions = function receiveQuestions(questions) {
+var receiveQuestions = function receiveQuestions(_ref2) {
+  var questions = _ref2.questions,
+      answers = _ref2.answers;
   return {
     type: RECEIVE_QUESTIONS,
-    questions: questions
+    questions: questions,
+    answers: answers
   };
 };
 
@@ -1649,16 +1655,16 @@ document.addEventListener("DOMContentLoaded", function () {
   window.getState = store.getState; // window.signup = SessionApiUtil.signup;
   // window.login = SessionApiUtil.login;
   // window.logout = SessionApiUtil.logout;
+  // window.fetchQuestions = QuestionsApiUtil.fetchQuestions;
 
-  window.fetchQuestions = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["fetchQuestions"]; // window.fetchQuestion = QuestionsApiUtil.fetchQuestion;
-  // window.createQuestion = QuestionsApiUtil.createQuestion;
+  window.fetchQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["fetchQuestion"]; // window.createQuestion = QuestionsApiUtil.createQuestion;
   // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
   // window.fetchUsers = UsersApiUtil.fetchUsers;
   // window.fetchQuestions = fetchQuestions;
 
   window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__["fetchUsers"];
-  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__["fetchUser"];
-  window.fetchQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__["fetchQuestion"];
+  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__["fetchUser"]; // window.fetchQuestion = fetchQuestion;
+
   window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__["createQuestion"];
   window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__["destroyQuestion"];
   window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__["login"];
@@ -1670,6 +1676,44 @@ document.addEventListener("DOMContentLoaded", function () {
     store: store
   }), rootEl);
 });
+
+/***/ }),
+
+/***/ "./frontend/reducers/answers_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/answers_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/question_actions */ "./frontend/actions/question_actions.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var answersReducer = function answersReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
+      newState = _objectSpread({}, newState, {}, action.answers);
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (answersReducer);
 
 /***/ }),
 
@@ -1685,12 +1729,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _questions_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./questions_reducer */ "./frontend/reducers/questions_reducer.js");
+/* harmony import */ var _answers_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./answers_reducer */ "./frontend/reducers/answers_reducer.js");
+
 
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  questions: _questions_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  questions: _questions_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  answers: _answers_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 

@@ -10,7 +10,6 @@ class Api::QuestionsController < ApplicationController
     end
 
     def show
-        #any way to add error check?  maybe if(Question.find(params[:id].destroy then, else))
         @question = Question.find(params[:id])
         render "api/questions/show"
     end

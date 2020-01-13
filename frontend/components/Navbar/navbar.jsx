@@ -23,7 +23,7 @@ class Navbar extends React.Component {
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link>
                 <div className="search-container">
-                    <i class="fa fa-search"></i>
+                    <i className="fa fa-search"></i>
                     <input className="nav-search" placeholder="Search Quora" type="text"/>
                 </div>
                 <img className="profile-icon" src={userImg} onClick={this.handleLogout} />

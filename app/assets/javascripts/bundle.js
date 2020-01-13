@@ -802,6 +802,9 @@ function (_React$Component) {
         exact: true,
         path: "/",
         component: _Index_index_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+        from: "*",
+        to: "/"
       }))));
     }
   }]);
@@ -1033,7 +1036,7 @@ function (_React$Component) {
       }), "Notifications")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        "class": "fa fa-search"
+        className: "fa fa-search"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "nav-search",
         placeholder: "Search Quora",
@@ -1291,18 +1294,43 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, "Add Question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "question-form-header"
+      }, "Add Question", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "question-form-x",
+        onClick: this.props.closeModal
+      }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "hint-box"
-      }, "Tips on getting good answers quickly", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Make sure your doggone question hasn't been asked already"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Woof!  Watch your spelling and grammar!  Dogs are very particular."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Question must be by or about dogs, wolves, foxes, or other canids!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.currentUser.username, " is asking..."), "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Tips on getting good answers quickly"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-check-circle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Make sure your question hasn't been asked already")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-check-circle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Keep your question short and to the point")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-check-circle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Double-check grammar and spelling"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "question-form-profile-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "profile-icon",
+        src: userImg
+      }), this.props.currentUser.username, " asked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: 'Start your question with "What", "How", "Why", etc.',
+        className: "question-form-input",
         type: "text",
         onChange: this.handleInput('title'),
         value: this.state.title
-      }), "Body", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        placeholder: 'rooo',
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: 'Include a link that gives context',
+        className: "question-form-body",
         type: "text",
         onChange: this.handleInput('body'),
         value: this.state.body
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-form-submit-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-form-cancel",
+        onClick: this.props.closeModal
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-form-submit",
         onClick: this.handleSubmit
       }, "Add Question")));
     }

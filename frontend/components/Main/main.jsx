@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch, Link} from "react-router-dom";
+import {Route, Switch, Link, Redirect } from "react-router-dom";
 import IndexContainer from "../Index/index_container"
 import NavbarContainer from "../Navbar/navbar_container"
 import ModalContainer from "../Modal/modal_container"
@@ -19,6 +19,7 @@ class Main extends React.Component {
                         <Switch>
                             <Route exact path = "/questions/:questionId" component={QuestionShowContainer} />
                             <Route exact path = "/" component={IndexContainer} />
+                            <Redirect from="*" to="/"/>
                         </Switch>
                     </div>
             </div>

@@ -1255,7 +1255,20 @@ function (_React$Component) {
     value: function render() {
       var tempName;
       typeof this.props.author === 'undefined' ? tempName = '' : tempName = this.props.author.username;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, tempName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, this.props.answer.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, this.props.answer.body));
+      var createdAt = new Date(this.props.answer.created_at).toString();
+      createdAt = createdAt.split(' ').slice(1, 4).join(' ');
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-detail"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-profile-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "profile-icon",
+        src: userImg
+      }), tempName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-date"
+      }, "Answered ", createdAt), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-body"
+      }, this.props.answer.body));
     }
   }]);
 
@@ -1372,14 +1385,17 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "profile-icon",
           src: userImg
-        }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "answer-textarea",
           placeholder: 'Write your answer',
           value: this.state.body,
           onChange: this.handleInput
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "answer-submit-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "answer-submit-button",
           onClick: this.handleAnswer
-        }, "Answer"));
+        }, "Submit")));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }
@@ -1406,17 +1422,15 @@ function (_React$Component) {
         onClick: this.openAnswerForm
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-edit fa-sm"
-      }), "Answer"), this.renderAnswerForm(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, questionAnswers.length), questionAnswers.map(function (answer) {
+      }), "Answer"), this.renderAnswerForm(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-count"
+      }, "Answers: ", questionAnswers.length), questionAnswers.map(function (answer) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"], {
           answer: answer,
           author: _this2.props.authors[answer.author_id],
           key: answer.id
         });
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleDelete
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/"
-      }, "To Index")));
+      })));
     }
   }]);
 

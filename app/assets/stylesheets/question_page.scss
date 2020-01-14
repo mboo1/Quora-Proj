@@ -41,3 +41,77 @@
     border-bottom: 1px solid lightgray;
     background-color: rgba($color: #FAFAFA, $alpha: 1.0);
 }
+
+.answer-textarea {
+    width: 98%;
+    height: 148px;
+    padding: 16px 0px 12px 10px;
+    border: none;
+    resize: none;
+    font-size: 15px;
+    border-bottom: 1px solid lightgray;
+}
+
+.answer-textarea:focus {
+    outline-style: none;
+}
+
+.answer-submit-row {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 10px;
+    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
+}
+
+.answer-submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba($color: #FFFFFF, $alpha: 1.0);
+    background-color: rgba($color: #3E78AD, $alpha: 1.0);
+    border-radius: 3px;
+}
+
+.answer-submit-button:focus {
+    outline-style: none;
+}
+
+.answer-count {
+    color: rgba($color: #333333, $alpha: 1.0);
+    font-size: 18px;
+    padding: 12px 0px 32px 0px
+}
+
+.answer-detail {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid lightgray;
+    padding: 12px 0 12px 0;
+}
+
+.answer-profile-row {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    color: rgba($color: #333333, $alpha: 1.0);
+    padding-bottom: 5px;
+}
+
+.answer-profile-row img {
+    padding-left: 0px;
+}
+
+.answer-date {
+    font-size: 13px;
+    color: rgba($color: #949494, $alpha: 1.0);
+    padding-bottom: 8px;
+}
+
+.answer-body {
+    font-size: 16px;
+    line-height: 1.4;
+}

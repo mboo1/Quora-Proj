@@ -47,10 +47,10 @@ class QuestionShow extends React.Component {
                     <img className="profile-icon" src={userImg}/>
                     {this.props.currentUser.username}
                 </div>
-                <div>
-                    <textarea className="answer-textarea" placeholder={'Write your answer'} value={this.state.body} onChange={this.handleInput}/>
+                <textarea className="answer-textarea" placeholder={'Write your answer'} value={this.state.body} onChange={this.handleInput}/>
+                <div className="answer-submit-row">
+                    <button className="answer-submit-button" onClick={this.handleAnswer}>Submit</button>
                 </div>
-                <button onClick={this.handleAnswer}>Answer</button>
             </form>
             )
         } else {
@@ -72,12 +72,10 @@ class QuestionShow extends React.Component {
                         Answer
                     </div>
                     {this.renderAnswerForm()}
-                    <h5>{questionAnswers.length}</h5>
+                    <div className="answer-count">Answers: {questionAnswers.length}</div>
                     {questionAnswers.map(answer => (
                         <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={answer.id}/>
                     ))}
-                    <button onClick={this.handleDelete}></button>
-                    <Link to="/">To Index</Link>
                 </div>
             </div>
         )

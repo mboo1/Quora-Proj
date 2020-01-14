@@ -86,6 +86,38 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/answer_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/answer_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_ANSWER, createAnswer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ANSWER", function() { return RECEIVE_ANSWER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createAnswer", function() { return createAnswer; });
+/* harmony import */ var _util_answers_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/answers_api_util */ "./frontend/util/answers_api_util.js");
+
+var RECEIVE_ANSWER = "RECEIVE_ANSWER";
+
+var receiveAnswer = function receiveAnswer(answer) {
+  return {
+    type: RECEIVE_ANSWER,
+    answer: answer
+  };
+};
+
+var createAnswer = function createAnswer(answer) {
+  return function (dispatch) {
+    return _util_answers_api_util__WEBPACK_IMPORTED_MODULE_0__["createAnswer"](answer).then(function (answer) {
+      return dispatch(receiveAnswer(answer));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/modal_actions.js":
 /*!*******************************************!*\
   !*** ./frontend/actions/modal_actions.js ***!
@@ -139,11 +171,13 @@ var REMOVE_QUESTION = "REMOVE_QUESTION";
 
 var receiveQuestion = function receiveQuestion(_ref) {
   var question = _ref.question,
-      answers = _ref.answers;
+      answers = _ref.answers,
+      users = _ref.users;
   return {
     type: RECEIVE_QUESTION,
     question: question,
-    answers: answers
+    answers: answers,
+    users: users
   };
 };
 
@@ -1174,9 +1208,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/Question/question_show.jsx":
+/***/ "./frontend/components/Question/answer_detail.jsx":
 /*!********************************************************!*\
-  !*** ./frontend/components/Question/question_show.jsx ***!
+  !*** ./frontend/components/Question/answer_detail.jsx ***!
   \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1185,7 +1219,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1206,6 +1239,69 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var AnswerDetail =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AnswerDetail, _React$Component);
+
+  function AnswerDetail(props) {
+    _classCallCheck(this, AnswerDetail);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(AnswerDetail).call(this, props));
+  }
+
+  _createClass(AnswerDetail, [{
+    key: "render",
+    value: function render() {
+      var tempName;
+      typeof this.props.author === 'undefined' ? tempName = '' : tempName = this.props.author.username;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, tempName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, this.props.answer.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, this.props.answer.body));
+    }
+  }]);
+
+  return AnswerDetail;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (AnswerDetail);
+
+/***/ }),
+
+/***/ "./frontend/components/Question/question_show.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/Question/question_show.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _answer_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./answer_detail */ "./frontend/components/Question/answer_detail.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
 
 var QuestionShow =
 /*#__PURE__*/
@@ -1218,11 +1314,8 @@ function (_React$Component) {
     _classCallCheck(this, QuestionShow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(QuestionShow).call(this, props));
-    _this.state = {
-      question: {
-        title: ''
-      }
-    };
+    _this.state = {};
+    _this.handleAnswer = _this.handleAnswer.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1232,10 +1325,40 @@ function (_React$Component) {
       this.props.fetchQuestion(this.props.match.params.questionId);
     }
   }, {
+    key: "handleAnswer",
+    value: function handleAnswer(e) {
+      e.preventDefault();
+      this.props.createAnswer({
+        body: 'krak',
+        author_id: 51,
+        question_id: 31
+      }).then(window.setTimeout(function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      }.bind(this), 125));
+    }
+  }, {
     key: "render",
     value: function render() {
-      if (typeof this.props.question !== 'undefined') this.state.question = this.props.question;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.state.question.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      var _this2 = this;
+
+      var questionAnswers = Object.values(this.props.fullAnswers);
+      questionAnswers = questionAnswers.filter(function (obj) {
+        return obj.question_id === _this2.props.question.id;
+      });
+      var tempTitle = '';
+      if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleAnswer
+      }, "Answer")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, questionAnswers.length), questionAnswers.map(function (answer) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          answer: answer,
+          author: _this2.props.authors[answer.author_id],
+          key: answer.id
+        });
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleDelete
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
@@ -1246,13 +1369,7 @@ function (_React$Component) {
   return QuestionShow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (QuestionShow); // checkState() {
-//     if (typeof this.props.question !== 'undefined') {
-//         return this.props.question.title
-//     } else {
-//         return 'ok'
-//     }
-// }
+/* harmony default export */ __webpack_exports__["default"] = (QuestionShow);
 
 /***/ }),
 
@@ -1268,13 +1385,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _question_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./question_show */ "./frontend/components/Question/question_show.jsx");
 /* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/answer_actions */ "./frontend/actions/answer_actions.js");
+
+
 
 
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var question = state.entities.questions[ownProps.match.params.questionId];
+  var authorIds;
+  typeof question === "undefined" || typeof question.authorIds === "undefined" ? authorIds = [] : authorIds = question.authorIds;
+  var authors = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectAuthors"])(state.entities.users, authorIds);
   return {
-    question: state.entities.questions[ownProps.match.params.questionId]
+    question: question,
+    authors: authors,
+    fullAnswers: state.entities.answers
   };
 };
 
@@ -1285,6 +1412,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchQuestion: function fetchQuestion(questionId) {
       return dispatch(Object(_actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["fetchQuestion"])(questionId));
+    },
+    createAnswer: function createAnswer(answer) {
+      return dispatch(Object(_actions_answer_actions__WEBPACK_IMPORTED_MODULE_4__["createAnswer"])(answer));
     }
   };
 };
@@ -1619,10 +1749,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util/session_api_util */ "./frontend/util/session_api_util.js");
 /* harmony import */ var _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util/questions_api_util */ "./frontend/util/questions_api_util.js");
 /* harmony import */ var _util_users_api_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/users_api_util */ "./frontend/util/users_api_util.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
-/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _util_answers_api_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/answers_api_util */ "./frontend/util/answers_api_util.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./actions/answer_actions */ "./frontend/actions/answer_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -1662,14 +1796,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.fetchUsers = UsersApiUtil.fetchUsers;
   // window.fetchQuestions = fetchQuestions;
 
-  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__["fetchUsers"];
-  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_9__["fetchUser"]; // window.fetchQuestion = fetchQuestion;
+  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["fetchUsers"];
+  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["fetchUser"];
+  window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_11__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
+  // window.fetchQuestion = fetchQuestion;
 
-  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__["createQuestion"];
-  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_8__["destroyQuestion"];
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__["login"];
-  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__["logout"];
-  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_7__["signup"];
+  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__["createQuestion"];
+  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__["destroyQuestion"];
+  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["login"];
+  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["logout"];
+  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["signup"];
   window.dispatch = store.dispatch;
   var rootEl = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -1689,11 +1825,13 @@ document.addEventListener("DOMContentLoaded", function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/answer_actions */ "./frontend/actions/answer_actions.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1706,6 +1844,10 @@ var answersReducer = function answersReducer() {
   switch (action.type) {
     case _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
       newState = _objectSpread({}, newState, {}, action.answers);
+      return newState;
+
+    case _actions_answer_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ANSWER"]:
+      newState[action.answer.id] = action.answer;
       return newState;
 
     default:
@@ -1863,6 +2005,32 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 
 /***/ }),
 
+/***/ "./frontend/reducers/selectors.js":
+/*!****************************************!*\
+  !*** ./frontend/reducers/selectors.js ***!
+  \****************************************/
+/*! exports provided: selectAnswers, selectAuthors */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectAnswers", function() { return selectAnswers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectAuthors", function() { return selectAuthors; });
+var selectAnswers = function selectAnswers(answers, answerIds) {
+  return answerIds.map(function (Id) {
+    return answers[Id];
+  });
+};
+var selectAuthors = function selectAuthors(authors, authorIds) {
+  var res = {};
+  authorIds.forEach(function (authorId) {
+    return res[authorId] = authors[authorId];
+  });
+  return res;
+};
+
+/***/ }),
+
 /***/ "./frontend/reducers/session_errors_reducer.js":
 /*!*****************************************************!*\
   !*** ./frontend/reducers/session_errors_reducer.js ***!
@@ -1969,11 +2137,13 @@ var uiReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/question_actions */ "./frontend/actions/question_actions.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1995,6 +2165,10 @@ var usersReducer = function usersReducer() {
 
     case _actions_users_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_USER"]:
       newState[action.user.id] = action.user;
+      return newState;
+
+    case _actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_QUESTION"]:
+      newState = _objectSpread({}, newState, {}, action.users);
       return newState;
 
     default:
@@ -2045,6 +2219,28 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/answers_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/answers_api_util.js ***!
+  \*******************************************/
+/*! exports provided: createAnswer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createAnswer", function() { return createAnswer; });
+var createAnswer = function createAnswer(answer) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/answers",
+    data: {
+      answer: answer
+    }
+  });
+};
 
 /***/ }),
 

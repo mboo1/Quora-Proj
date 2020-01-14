@@ -8,23 +8,54 @@ class QuestionShow extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            body: '',
+            answerClicked: false
         }
         this.handleAnswer = this.handleAnswer.bind(this);
+        this.handleInput = this.handleInput.bind(this);
+        this.openAnswerForm = this.openAnswerForm.bind(this);
+        this.renderAnswerForm = this.renderAnswerForm.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchQuestion(this.props.match.params.questionId);
+        this.props.fetchQuestion(this.props.match.params.questionId)
     }
 
     handleAnswer(e) {
         e.preventDefault();
-        this.props.createAnswer({body: 'krak', author_id: 51, question_id: 31}).then(
+        this.props.createAnswer({body: this.state.body, author_id: this.props.currentUser.id, question_id: this.props.question.id}).then(
         window.setTimeout(function() {window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
         })}.bind(this), 125)
-        )
+        ).then(this.setState({body: ''}))
+    }
+
+    handleInput(e) {
+        this.setState({body: e.currentTarget.value})
+    }
+
+    openAnswerForm(e) {
+        this.setState({answerClicked: true})
+    }
+
+    renderAnswerForm(e) {
+        if (this.state.answerClicked) {
+        return (
+            <form className="answer-form">
+                <div className="answer-username">
+                    <img className="profile-icon" src={userImg}/>
+                    {this.props.currentUser.username}
+                </div>
+                <div>
+                    <textarea className="answer-textarea" placeholder={'Write your answer'} value={this.state.body} onChange={this.handleInput}/>
+                </div>
+                <button onClick={this.handleAnswer}>Answer</button>
+            </form>
+            )
+        } else {
+            return <div></div>
+        }
     }
 
     render() {
@@ -33,19 +64,21 @@ class QuestionShow extends React.Component {
         let tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title
         return(
-            <div>
-                <form>
-                    <textarea>
-                    </textarea>
-                    <button onClick={this.handleAnswer}>Answer</button>
-                </form>
-                <h4>{tempTitle}</h4>
-                <h5>{questionAnswers.length}</h5>
-                {questionAnswers.map(answer => (
-                    <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={answer.id}/>
-                ))}
-                <button onClick={this.handleDelete}></button>
-                <Link to="/">To Index</Link>
+            <div className="question-show-page">
+                <div className="question-column">
+                    <div className="question-title">{tempTitle}</div>
+                    <div className="question-answer-button" onClick={this.openAnswerForm}>
+                        <i className="far fa-edit fa-sm"></i>
+                        Answer
+                    </div>
+                    {this.renderAnswerForm()}
+                    <h5>{questionAnswers.length}</h5>
+                    {questionAnswers.map(answer => (
+                        <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={answer.id}/>
+                    ))}
+                    <button onClick={this.handleDelete}></button>
+                    <Link to="/">To Index</Link>
+                </div>
             </div>
         )
     }

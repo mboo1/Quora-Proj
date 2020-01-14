@@ -1314,8 +1314,14 @@ function (_React$Component) {
     _classCallCheck(this, QuestionShow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(QuestionShow).call(this, props));
-    _this.state = {};
+    _this.state = {
+      body: '',
+      answerClicked: false
+    };
     _this.handleAnswer = _this.handleAnswer.bind(_assertThisInitialized(_this));
+    _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
+    _this.openAnswerForm = _this.openAnswerForm.bind(_assertThisInitialized(_this));
+    _this.renderAnswerForm = _this.renderAnswerForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1329,15 +1335,54 @@ function (_React$Component) {
     value: function handleAnswer(e) {
       e.preventDefault();
       this.props.createAnswer({
-        body: 'krak',
-        author_id: 51,
-        question_id: 31
+        body: this.state.body,
+        author_id: this.props.currentUser.id,
+        question_id: this.props.question.id
       }).then(window.setTimeout(function () {
         window.scrollTo({
           top: document.body.scrollHeight,
           behavior: 'smooth'
         });
-      }.bind(this), 125));
+      }.bind(this), 125)).then(this.setState({
+        body: ''
+      }));
+    }
+  }, {
+    key: "handleInput",
+    value: function handleInput(e) {
+      this.setState({
+        body: e.currentTarget.value
+      });
+    }
+  }, {
+    key: "openAnswerForm",
+    value: function openAnswerForm(e) {
+      this.setState({
+        answerClicked: true
+      });
+    }
+  }, {
+    key: "renderAnswerForm",
+    value: function renderAnswerForm(e) {
+      if (this.state.answerClicked) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "answer-form"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "answer-username"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "profile-icon",
+          src: userImg
+        }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "answer-textarea",
+          placeholder: 'Write your answer',
+          value: this.state.body,
+          onChange: this.handleInput
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.handleAnswer
+        }, "Answer"));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }, {
     key: "render",
@@ -1350,9 +1395,18 @@ function (_React$Component) {
       });
       var tempTitle = '';
       if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleAnswer
-      }, "Answer")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, questionAnswers.length), questionAnswers.map(function (answer) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-show-page"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-title"
+      }, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question-answer-button",
+        onClick: this.openAnswerForm
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-edit fa-sm"
+      }), "Answer"), this.renderAnswerForm(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, questionAnswers.length), questionAnswers.map(function (answer) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"], {
           answer: answer,
           author: _this2.props.authors[answer.author_id],
@@ -1362,7 +1416,7 @@ function (_React$Component) {
         onClick: this.handleDelete
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
-      }, "To Index"));
+      }, "To Index")));
     }
   }]);
 
@@ -1401,7 +1455,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     question: question,
     authors: authors,
-    fullAnswers: state.entities.answers
+    fullAnswers: state.entities.answers,
+    currentUser: state.entities.users[state.session.id]
   };
 };
 

@@ -1,0 +1,173 @@
+
+ .login-form-container {
+    height: 100vh;
+    width: auto;
+    background-image: image-url("bg3.png");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ }
+
+ .greeting-box {
+     display: flex;
+     flex-direction: column;
+     min-height: auto;
+     width: 625px;
+     justify-content: center;
+     background-color: white;
+     border: 1px solid lightgray;
+     border-radius: 4px;
+     padding: 35px 0px 0px 0px;
+     box-shadow: 0px 0px 4px 1px gray;
+     margin-bottom: 45px;
+ }
+
+ .intro-row {
+     height: 26;
+     font-size: 19px;
+     font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     color: rgba($color: #949494, $alpha: 1.0);
+     display: flex;
+     justify-content: center;
+ }
+
+ .login-form {
+    background-color: white;
+     display: flex;
+     flex-direction: column;
+     height: 200px;
+     padding: 0px 0px 0px 26px;
+ }
+
+ .signup-form {
+    background-color: white;
+     display: flex;
+     flex-direction: column;
+     height: 200px;
+     border-right: 1px solid lightgrey;
+     padding-right: 32px;
+ }
+
+ .session-row {
+     width: auto;
+     height: auto;
+     display: flex;
+     justify-content: center;
+     padding-bottom: 30px;
+ }
+
+ .login-div {
+     font-family: -apple-system,system-ui,'Segoe UI', Segoe, Tahoma, Geneva, Verdana, sans-serif;
+     font-size: 13px;
+     font-weight: bold;
+     height: 19px;
+     color: rgba($color: #333333, $alpha: 1.0);
+     margin-bottom: 5px;
+ }
+
+ .session-input {
+     background-color: rgba($color: #E8F0FE, $alpha: 1.0);
+     width: 230px;
+     height: 24px;
+     border: 1px solid lightgray;
+     margin-top: 5px;
+     margin-bottom: 10px;
+     border-radius: 5px;
+     font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+
+ .session-input:focus {
+     outline-style: none;
+     border: 1px solid rgb(153, 152, 152);
+ }
+
+ .submit-button {
+     display: flex;
+     justify-content: center;
+     background-color: rgba($color: #3E78AD, $alpha: 1.0);
+     color: white;
+     width: 56px;
+     font-size: 14px;
+     height: 29px;
+     border: 1px solid rgba(45, 89, 129, 0.7);
+     border-radius: 3px;
+     margin: 3px;
+ }
+
+ .submit-button:hover {
+     cursor: pointer;
+     border: 1px solid rgba(26, 51, 75, 0.7);
+ }
+
+ .submit-button:active:hover {
+     background-color: rgba($color: rgb(138, 143, 146), $alpha: 1.0);
+ }
+
+ .submit-button:focus {
+     outline-style: none;
+     padding: 1px;
+ }
+
+ .button-row {
+     display: flex;
+     justify-content: flex-end;
+ }
+
+ .greeting-logo {
+    height: 82px;
+    display: flex;
+    justify-content: center;
+ }
+
+ .greeting {
+     width: 240px;
+     height: 61px;
+ }
+ 
+ .language-row {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 25px;
+     padding-top: 8px;
+     padding-bottom: 8px;
+     font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     font-size: 12px;
+     color: rgba($color: #3E78AD, $alpha: 1.0);
+     border-top: 1px solid lightgray;
+ }
+
+ .links-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 40px;
+    border-top: 1px solid lightgray;
+    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
+    font-size: 13px;
+    font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba($color: #949494, $alpha: 1.0)
+ }
+
+ .login-error-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+}
+
+.login-error-display {
+    padding: 2px;
+    font-size: 12px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    width: 175px;
+    border: 2px solid red;
+    color: red;
+    justify-content: center;
+    border-radius: 3px;
+}

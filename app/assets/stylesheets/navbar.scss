@@ -1,0 +1,81 @@
+
+ .navbar-row{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0; 
+    right: 0;
+    height: 51px;
+    border-bottom: 1px solid gray;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #FAFAFA, $alpha: 1.0)
+}
+
+.navbar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 83px;
+    font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+    color: rgba($color: #666666, $alpha: 1.0);
+    text-decoration: none;
+    padding: 0px 11px;
+}
+
+.search-container {
+   display: inline-flex;
+   align-items: center;
+   position: relative;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   overflow: hidden;
+   font-size: 14px;
+   color: rgba($color: #666666, $alpha: 1.0);
+   margin: 0px 14px;
+}
+
+.nav-search {
+    width: 290px;
+    height: 27px;
+    border: 0;
+    font-size: 14px;
+}
+
+.nav-search:focus {
+    outline-style: none;
+}
+
+.fa-search {
+    padding: 2px;
+    padding-left: 5px;
+}
+
+.profile-icon {
+    height: 26px;
+    width: 26px;
+    padding: 0px 14px;
+}
+
+.profile-icon:hover {
+    cursor: pointer;
+}
+
+.question-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 28px;
+    width: 105px;
+    background-color: rgba($color: #B92B27, $alpha: 1.0);
+    font-family: -apple-system,system-ui,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    border-radius: 4px;
+}
+
+.question-button:hover {
+    cursor: pointer;
+}

@@ -27,7 +27,7 @@ class OtherQuestionsColumn extends React.Component {
                     <div>More Questions</div>
                     <ul>
                     {listArr.map(question => (
-                        <li><Link to= {`/questions/${question.id}`}>{question.title}</Link></li>
+                        <li key={question.id}><Link to= {`/questions/${question.id}`}>{question.title}</Link></li>
                     ))}
                     </ul>
                 </div>

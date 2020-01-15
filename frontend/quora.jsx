@@ -11,6 +11,8 @@ import {login, logout, signup, logoutCurrentUser} from "./actions/session_action
 import { fetchQuestions, fetchQuestion, createQuestion, destroyQuestion } from "./actions/question_actions"
 import { fetchUsers, fetchUser } from "./actions/users_actions"
 import { createAnswer } from "./actions/answer_actions"
+import * as TopicsApiUtil from "./util/topics_api_util"
+import { fetchTopics } from "./actions/topic_actions"
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.logout = logout;
     window.signup = signup;
     window.dispatch = store.dispatch;
+    window.fetchTopics = fetchTopics
 
     const rootEl = document.getElementById("root");
     ReactDOM.render(<Root store = {store}/>, rootEl);

@@ -15,7 +15,7 @@ class Main extends React.Component {
             <div className= "quora-page">
                 <ModalContainer />
                 <NavbarContainer />
-                    <div className="main-row">
+                    <div>
                         <Switch>
                             <Route exact path = "/questions/:questionId" component={QuestionShowContainer} />
                             <Route exact path = "/" component={IndexContainer} />

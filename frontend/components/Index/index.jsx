@@ -1,6 +1,7 @@
 import React from "react"
 import IndexItem from "./index_item"
 // import IndexItemContainer from "./index_item"
+import TopicsColumnContainer from "../TopicsColumn/topics_column_container"
 
 class Index extends React.Component {
     constructor(props) {
@@ -13,12 +14,17 @@ class Index extends React.Component {
 
     render () {
         return (
-            <div className="index-box">
-                <ul>
-                    {this.props.questions.map(question => (
-                        <IndexItem question={question} key={question.id} author={this.props.users[question.author_id]} />
-                    ))}
-                </ul>
+            <div className="main-row">
+                <div>
+                    <TopicsColumnContainer />
+                </div>
+                <div className="index-box">
+                    <ul>
+                        {this.props.questions.map(question => (
+                            <IndexItem question={question} key={question.id} author={this.props.users[question.author_id]} />
+                        ))}
+                    </ul>
+                </div>
             </div>
         )
     }

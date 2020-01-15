@@ -8,24 +8,13 @@
 
 User.delete_all
 Question.delete_all
+Answer.delete_all
+Topic.delete_all
+TopicQuestionAssociation.delete_all
 
-u1 = User.create!(
-    username: 'guest',
-    email: 'guest@gmail.com',
-    password: 'password'
-)
-
-u2 = User.create!(
-    username: 'Fido',
-    email: 'fido@gmail.com',
-    password: '123456'
-)
-
-u3 = User.create!(
-    username: 'Rex',
-    email: 'rex@hotmail.com',
-    password: 'password123'
-)
+u1 = User.create!(username: 'guest', email: 'guest@gmail.com', password: 'password')
+u2 = User.create!(username: 'Fido', email: 'fido@gmail.com', password: '123456')
+u3 = User.create!(username: 'Rex', email: 'rex@hotmail.com', password: 'password123')
 
 q1 = Question.create!(
     title: 'How can you prove that birds are real?', body: 'I can\'t find it', author_id: u3.id
@@ -92,3 +81,25 @@ a9 = Answer.create!(
     author_id: u2.id,
     question_id: q1.id
 )
+
+t1 = Topic.create!(title: "Science")
+t2 = Topic.create!(title: "Math")
+t3 = Topic.create!(title: "Entertainment")
+t4 = Topic.create!(title: "News")
+t5 = Topic.create!(title: "Sports")
+t6 = Topic.create!(title: "Good")
+t7 = Topic.create!(title: "Evil")
+t8 = Topic.create!(title: "Doges")
+t9 = Topic.create!(title: "Star Wars")
+
+j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t1.id)
+j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t2.id)
+j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t3.id)
+j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t4.id)
+j1 = TopicQuestionAssociation.create!(question_id: q2.id, topic_id: t1.id)
+j1 = TopicQuestionAssociation.create!(question_id: q2.id, topic_id: t2.id)
+j1 = TopicQuestionAssociation.create!(question_id: q2.id, topic_id: t4.id)
+j1 = TopicQuestionAssociation.create!(question_id: q3.id, topic_id: t6.id)
+j1 = TopicQuestionAssociation.create!(question_id: q3.id, topic_id: t7.id)
+j1 = TopicQuestionAssociation.create!(question_id: q3.id, topic_id: t1.id)
+j1 = TopicQuestionAssociation.create!(question_id: q3.id, topic_id: t2.id)

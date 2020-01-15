@@ -28,15 +28,15 @@ u3 = User.create!(
 )
 
 q1 = Question.create!(
-    title: 'Where is my bone?', body: 'I can\'t find it', author_id: u3.id
+    title: 'How can you prove that birds are real?', body: 'I can\'t find it', author_id: u3.id
 )
 
 q2 = Question.create!(
-    title: 'Woof woof?', body: 'Woof.', author_id: u1.id
+    title: 'My 18 year old son wants to drop out of college to be a YouTuber. He only has 62 thousand subscribers and thinks he’ll make it big. How do I tell him that college is best for him?', body: 'Woof.', author_id: u1.id
 )
 
 q3 = Question.create!(
-    title: 'Bark!', body: 'Is it not that case that, when considered in light of recent developments in both material philosophy and technological advancement that one can conclude, with the obvious cavets, that in fact...', author_id: u2.id
+    title: 'Woof woof?', body: 'Is it not that case that, when considered in light of recent developments in both material philosophy and technological advancement that one can conclude, with the obvious cavets, that in fact...', author_id: u2.id
 )
 
 a1 = Answer.create!(

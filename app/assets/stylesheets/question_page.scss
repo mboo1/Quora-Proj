@@ -1,4 +1,6 @@
 .question-show-page {
+    display: flex;
+    justify-content: center;
     background-color: rgba($color: #FFFFFF, $alpha: 1.0)
 }
 
@@ -118,4 +120,10 @@
     font-size: 16px;
     line-height: 1.4;
     white-space: pre-wrap;
+}
+
+.other-questions-col {
+    display: flex;
+    flex-direction: column;
+    width: 300px
 }

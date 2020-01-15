@@ -22,6 +22,12 @@ class QuestionShow extends React.Component {
         this.props.fetchQuestion(this.props.match.params.questionId)
     }
 
+    componentDidUpdate() {
+        if (!this.props.question.authorIds) {
+            this.props.fetchQuestion(this.props.match.params.questionId)
+        }
+    }
+
     handleAnswer(e) {
         e.preventDefault();
         this.props.createAnswer({body: this.state.body, author_id: this.props.currentUser.id, question_id: this.props.question.id}).then(

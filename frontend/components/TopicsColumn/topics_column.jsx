@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom";
 
 
 class TopicsColumn extends React.Component {
@@ -17,7 +18,9 @@ class TopicsColumn extends React.Component {
         return (
             <div>
                 {this.props.topics.map(topic => (
-                    <div key={topic.id}>{topic.title}</div>
+                    // <Link to= {`/questions/${this.props.question.id}`}>{this.props.question.title}</Link>
+                    <Link key={topic.id} to= {`/topics/${topic.title}`}>{topic.title}</Link>
+                    // <div key={topic.id}>{topic.title}</div>
                 ))}
             </div>
         )

@@ -22,7 +22,8 @@ class Api::QuestionsController < ApplicationController
         else
             topic = params[:topic]
             @questions = Question.select("questions.title, questions.id, questions.body, questions.author_id")
-            .joins(:topics).where("topics.title = #{topic}")
+            .joins(:topics)
+            .where("topics.title = '#{topic}'")
             render "api/questions/index"
         end
     end
@@ -33,7 +34,7 @@ class Api::QuestionsController < ApplicationController
         render json: ["Question Destroyed"]
     end
 
-
+    # topic_ids: []
     def question_params
         params.require(:question).permit(:title, :body, :author_id, :filter)
     end

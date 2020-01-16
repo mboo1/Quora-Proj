@@ -5,6 +5,7 @@ const questionsReducer = (state = {}, action) => {
     let newState = Object.assign({}, state)
     switch (action.type) {
         case RECEIVE_QUESTION:
+            // console.log(action.question)
             newState[action.question.id] = action.question;
             return newState;
         case RECEIVE_QUESTIONS:

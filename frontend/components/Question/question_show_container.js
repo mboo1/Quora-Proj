@@ -3,6 +3,7 @@ import QuestionShow from "./question_show";
 import { destroyQuestion, fetchQuestion } from "../../actions/question_actions";
 import { selectAnswers, selectAuthors } from "../../reducers/selectors";
 import { createAnswer } from "../../actions/answer_actions";
+import { fetchTopics } from "../../actions/topic_actions" 
 
 const mapStateToProps = (state, ownProps) => {
     const question = state.entities.questions[ownProps.match.params.questionId];
@@ -13,14 +14,16 @@ const mapStateToProps = (state, ownProps) => {
         question: question,
         authors: authors,
         fullAnswers: state.entities.answers,
-        currentUser: state.entities.users[state.session.id]
+        currentUser: state.entities.users[state.session.id],
+        topics: state.entities.topics
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     destroyQuestion: (questionId) => dispatch(destroyQuestion(questionId)),
     fetchQuestion: (questionId) => dispatch(fetchQuestion(questionId)),
-    createAnswer: (answer) => dispatch(createAnswer(answer))
+    createAnswer: (answer) => dispatch(createAnswer(answer)),
+    fetchTopics: () => dispatch(fetchTopics())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionShow)

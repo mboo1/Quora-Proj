@@ -2,6 +2,7 @@ class Question < ApplicationRecord
 
     validates :title, :body, :author_id, presence: true
     validates :title, uniqueness: true
+    # topic_ids: array
 
     belongs_to :author,
         foreign_key: :author_id,

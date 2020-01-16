@@ -2,6 +2,7 @@ json.question do
     json.extract! @question, :id, :title, :body, :author_id, :created_at
     json.answerIds @question.answers.pluck(:id)
     json.authorIds @question.answers.pluck(:author_id)
+    json.topicIds @question.topics.pluck(:id)
 end
 
 @question.answers.includes(:author).each do |answer|

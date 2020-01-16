@@ -19,11 +19,11 @@ class QuestionShow extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchQuestion(this.props.match.params.questionId)
+        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics())
     }
 
     componentDidUpdate() {
-        if (!this.props.question.authorIds) {
+        if (!this.props.question || !this.props.question.authorIds) {
             this.props.fetchQuestion(this.props.match.params.questionId)
         }
     }

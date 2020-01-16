@@ -9,20 +9,26 @@ class TopicIndex extends React.Component {
         this.state = {
             topicQuestionIds: [],
             topicQuestions: [],
-            loaded: false
+            prevName: ''
         }
     }
 
     componentDidMount() {
         this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+        this.state.prevName = this.props.match.params.topicName
     }
 
     componentDidUpdate() {
-        this.state.topicQuestions = []
+        this.state.topicQuestions = [];
     }
 
 
+
     render () {
+        if (this.state.prevName !== '' && this.state.prevName !== this.props.match.params.topicName) {
+            this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+            this.state.prevName = this.props.match.params.topicName
+        }
         if (Object.entries(this.props.topics).length > 0) {
             let tempObj = Object.values(this.props.topics)
             for (let i = 0; i < tempObj.length; i++) {
@@ -35,8 +41,9 @@ class TopicIndex extends React.Component {
                     this.state.topicQuestions.push(this.props.questions[i])
                 }
             }
-            console.log(this.state.topicQuestions)
         }
+        console.log(this.state.topicQuestions)
+
         return (
             <div className = "main-row">
                 <div>
@@ -46,7 +53,7 @@ class TopicIndex extends React.Component {
                 <div className="index-box">
                     <ul>
                         {this.state.topicQuestions.map(question => (
-                        <IndexItem question={question} key={question.id} author={this.props.users[question.author_id]} />
+                        <IndexItem question={question} key={Math.random()} author={this.props.users[question.author_id]} />
                         ))}
                     </ul>
                 </div>

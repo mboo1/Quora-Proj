@@ -10,7 +10,7 @@ class Modal extends React.Component {
     component() {
         if (this.props.modalState === null) {
             return null
-        } else {
+        } else if (this.props.modalState === 'questionForm') {
             return (
             <div className="modal-background" onClick={this.props.closeModal}>
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
@@ -18,6 +18,16 @@ class Modal extends React.Component {
                 </div>
             </div>
             )
+        } else if (this.props.modalState === 'topicForm') {
+            return (
+            <div className="modal-background" onClick={this.props.closeModal}>
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div>Hi</div>
+                </div>
+            </div>
+            )
+        } else {
+            return null
         }
     }
 

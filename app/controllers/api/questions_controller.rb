@@ -21,7 +21,7 @@ class Api::QuestionsController < ApplicationController
             render "api/questions/index"
         else
             topic = params[:topic]
-            @questions = Question.select("questions.title, questions.id, questions.body, questions.author_id")
+            @questions = Question.select("questions.title, questions.id, questions.body, questions.author_id, questions.created_at")
             .joins(:topics)
             .where("topics.title = '#{topic}'")
             render "api/questions/index"

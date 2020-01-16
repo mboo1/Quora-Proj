@@ -10,12 +10,21 @@ class QuestionShow extends React.Component {
         super(props)
         this.state = {
             body: '',
-            answerClicked: false
+            answerClicked: false,
+            tempTopics: []
         }
+        this.keyCount = 0;
+
+        this.getKey = this.getKey.bind(this);
         this.handleAnswer = this.handleAnswer.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.openAnswerForm = this.openAnswerForm.bind(this);
         this.renderAnswerForm = this.renderAnswerForm.bind(this);
+        this.renderTopics = this.renderTopics.bind(this);
+    }
+
+    getKey(){
+        return this.keyCount++;
     }
 
     componentDidMount() {
@@ -65,14 +74,29 @@ class QuestionShow extends React.Component {
         }
     }
 
+    renderTopics() {
+        if (typeof this.state.tempTopics === 'undefined') {
+            return <div></div>
+        } else {
+            return (
+                this.state.tempTopics.map((topicName, idx) => 
+                    <div key={Math.random()} ><Link to= {`/topics/${topicName}`}>{topicName}</Link></div>
+                )
+            )
+        }
+    }
+
     render() {
         let questionAnswers = Object.values(this.props.fullAnswers);
         questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
         let tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title
+        if (typeof this.props.question !== 'undefined') this.state.tempTopics = this.props.question.topicNames
         return(
             <div className="question-show-page">
                 <div className="question-column">
+                    <div>Topics Row</div>
+                    {this.renderTopics()}
                     <div className="question-title">{tempTitle}</div>
                     <div className="question-answer-button" onClick={this.openAnswerForm}>
                         <i className="far fa-edit fa-sm"></i>
@@ -81,7 +105,7 @@ class QuestionShow extends React.Component {
                     {this.renderAnswerForm()}
                     <div className="answer-count">{questionAnswers.length} Answers</div>
                     {questionAnswers.map(answer => (
-                        <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={answer.id}/>
+                        <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
                     ))}
                 </div>
                 <OtherQuestionsColumnContainer />

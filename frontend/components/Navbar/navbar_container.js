@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
     createQuestion: (question) => dispatch(createQuestion(question)),
-    openModal: () => dispatch(openModal('open')),
+    openModal: () => dispatch(openModal('questionForm')),
     logout: () => dispatch(logout())
 })
 

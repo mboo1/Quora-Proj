@@ -1015,7 +1015,7 @@ function (_React$Component) {
     value: function component() {
       if (this.props.modalState === null) {
         return null;
-      } else {
+      } else if (this.props.modalState === 'questionForm') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "modal-background",
           onClick: this.props.closeModal
@@ -1025,6 +1025,18 @@ function (_React$Component) {
             return e.stopPropagation();
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_QuestionForm_question_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
+      } else if (this.props.modalState === 'topicForm') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-background",
+          onClick: this.props.closeModal
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-child",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi")));
+      } else {
+        return null;
       }
     }
   }, {
@@ -1237,7 +1249,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       return dispatch(Object(_actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["createQuestion"])(question));
     },
     openModal: function openModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])('open'));
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])('questionForm'));
     },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["logout"])());
@@ -1491,16 +1503,25 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(QuestionShow).call(this, props));
     _this.state = {
       body: '',
-      answerClicked: false
+      answerClicked: false,
+      tempTopics: []
     };
+    _this.keyCount = 0;
+    _this.getKey = _this.getKey.bind(_assertThisInitialized(_this));
     _this.handleAnswer = _this.handleAnswer.bind(_assertThisInitialized(_this));
     _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
     _this.openAnswerForm = _this.openAnswerForm.bind(_assertThisInitialized(_this));
     _this.renderAnswerForm = _this.renderAnswerForm.bind(_assertThisInitialized(_this));
+    _this.renderTopics = _this.renderTopics.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(QuestionShow, [{
+    key: "getKey",
+    value: function getKey() {
+      return this.keyCount++;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics());
@@ -1570,6 +1591,21 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "renderTopics",
+    value: function renderTopics() {
+      if (typeof this.state.tempTopics === 'undefined') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      } else {
+        return this.state.tempTopics.map(function (topicName, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: Math.random()
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/topics/".concat(topicName)
+          }, topicName));
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1580,11 +1616,12 @@ function (_React$Component) {
       });
       var tempTitle = '';
       if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title;
+      if (typeof this.props.question !== 'undefined') this.state.tempTopics = this.props.question.topicNames;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-show-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-column"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Topics Row"), this.renderTopics(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-title"
       }, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-answer-button",
@@ -1597,7 +1634,7 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"], {
           answer: answer,
           author: _this2.props.authors[answer.author_id],
-          key: answer.id
+          key: Math.random()
         });
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_other_questions_column_container__WEBPACK_IMPORTED_MODULE_4__["default"], null));
     }
@@ -1879,7 +1916,7 @@ function (_React$Component) {
     _this.state = {
       topicQuestionIds: [],
       topicQuestions: [],
-      loaded: false
+      prevName: ''
     };
     return _this;
   }
@@ -1888,6 +1925,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName));
+      this.state.prevName = this.props.match.params.topicName;
     }
   }, {
     key: "componentDidUpdate",
@@ -1898,6 +1936,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+
+      if (this.state.prevName !== '' && this.state.prevName !== this.props.match.params.topicName) {
+        this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName));
+        this.state.prevName = this.props.match.params.topicName;
+      }
 
       if (Object.entries(this.props.topics).length > 0) {
         var tempObj = Object.values(this.props.topics);
@@ -1913,10 +1956,9 @@ function (_React$Component) {
             this.state.topicQuestions.push(this.props.questions[_i]);
           }
         }
-
-        console.log(this.state.topicQuestions);
       }
 
+      console.log(this.state.topicQuestions);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1926,7 +1968,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Index_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           question: question,
-          key: question.id,
+          key: Math.random(),
           author: _this2.props.users[question.author_id]
         });
       }))));

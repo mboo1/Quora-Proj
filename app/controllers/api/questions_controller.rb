@@ -15,8 +15,16 @@ class Api::QuestionsController < ApplicationController
     end
 
     def index
-        @questions = Question.all
-        render "api/questions/index"
+        # debugger
+        if (params[:topic] == '')
+            @questions = Question.all
+            render "api/questions/index"
+        else
+            topic = params[:topic]
+            @questions = Question.select("questions.title, questions.id, questions.body, questions.author_id")
+            .joins(:topics).where("topics.title = #{topic}")
+            render "api/questions/index"
+        end
     end
 
     def destroy
@@ -27,6 +35,6 @@ class Api::QuestionsController < ApplicationController
 
 
     def question_params
-        params.require(:question).permit(:title, :body, :author_id)
+        params.require(:question).permit(:title, :body, :author_id, :filter)
     end
 end

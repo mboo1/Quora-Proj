@@ -22,8 +22,8 @@ const removeQuestion = (questionId) => ({
     questionId: questionId
 })
 
-export const fetchQuestions = () => dispatch => (
-    ApiQuestionUtil.fetchQuestions().then(questions => dispatch(receiveQuestions(questions)))
+export const fetchQuestions = (topic) => dispatch => (
+    ApiQuestionUtil.fetchQuestions(topic).then(questions => dispatch(receiveQuestions(questions)))
 )
 
 export const fetchQuestion = (questionId) => dispatch => (

@@ -1,8 +1,7 @@
-export const fetchQuestions = () =>(
+export const fetchQuestions = (topic) =>(
     $.ajax({
         method: "GET",
-        url: "/api/questions",
-        
+        url: `/api/questions?topic=${topic}`,
     })
 )
 

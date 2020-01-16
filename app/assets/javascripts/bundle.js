@@ -198,9 +198,9 @@ var removeQuestion = function removeQuestion(questionId) {
   };
 };
 
-var fetchQuestions = function fetchQuestions() {
+var fetchQuestions = function fetchQuestions(topic) {
   return function (dispatch) {
-    return _util_questions_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchQuestions"]().then(function (questions) {
+    return _util_questions_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchQuestions"](topic).then(function (questions) {
       return dispatch(receiveQuestions(questions));
     });
   };
@@ -488,7 +488,7 @@ function (_React$Component) {
   _createClass(Index, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUsers().then(this.props.fetchQuestions());
+      this.props.fetchUsers().then(this.props.fetchQuestions(''));
     }
   }, {
     key: "render",
@@ -544,8 +544,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchQuestions: function fetchQuestions() {
-      return dispatch(Object(_actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["fetchQuestions"])());
+    fetchQuestions: function fetchQuestions(topic) {
+      return dispatch(Object(_actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["fetchQuestions"])(topic));
     },
     fetchUsers: function fetchUsers() {
       return dispatch(Object(_actions_users_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUsers"])());
@@ -1854,15 +1854,32 @@ function (_React$Component) {
   _inherits(TopicsColumn, _React$Component);
 
   function TopicsColumn(props) {
+    var _this;
+
     _classCallCheck(this, TopicsColumn);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(TopicsColumn).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TopicsColumn).call(this, props));
+    _this.state = {
+      loaded: false
+    };
+    return _this;
   }
 
   _createClass(TopicsColumn, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchTopics().then(this.setState({
+        loaded: true
+      }));
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "TopicsColumn");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.topics.map(function (topic) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: topic.id
+        }, topic.title);
+      }));
     }
   }]);
 
@@ -1884,15 +1901,23 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _topics_column__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./topics_column */ "./frontend/components/TopicsColumn/topics_column.jsx");
+/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/topic_actions */ "./frontend/actions/topic_actions.js");
+
 
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    topics: Object.values(state.entities.topics)
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchTopics: function fetchTopics() {
+      return dispatch(Object(_actions_topic_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTopics"])());
+    }
+  };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_topics_column__WEBPACK_IMPORTED_MODULE_1__["default"]));
@@ -2624,10 +2649,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchQuestion", function() { return fetchQuestion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createQuestion", function() { return createQuestion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyQuestion", function() { return destroyQuestion; });
-var fetchQuestions = function fetchQuestions() {
+var fetchQuestions = function fetchQuestions(topic) {
   return $.ajax({
     method: "GET",
-    url: "/api/questions"
+    url: "/api/questions?topic=".concat(topic)
   });
 };
 var fetchQuestion = function fetchQuestion(questionId) {

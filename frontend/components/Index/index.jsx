@@ -9,7 +9,7 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUsers().then(this.props.fetchQuestions())
+        this.props.fetchUsers().then(this.props.fetchQuestions(''))
     }
 
     render () {

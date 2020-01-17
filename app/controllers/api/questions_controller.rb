@@ -35,13 +35,14 @@ class Api::QuestionsController < ApplicationController
     end
 
     def update
+        
         @question = Question.find(params[:id])
 
         render "api/questions/show"
     end
 
-    # topic_ids: []
+    
     def question_params
-        params.require(:question).permit(:title, :body, :author_id, :filter)
+        params.require(:question).permit(:title, :body, :author_id, :filter, topic_ids: [])
     end
 end

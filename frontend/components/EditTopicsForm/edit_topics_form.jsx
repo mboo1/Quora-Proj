@@ -22,6 +22,7 @@ class EditTopicsForm extends React.Component {
             this.state.checkedTopics.push(id)
         }
         console.log(this.state.checkedTopics)
+        this.props.updateQuestion(this.props.question)
     }
 
     render() {
@@ -42,6 +43,7 @@ class EditTopicsForm extends React.Component {
                         <input onChange={this.handleClick}type="checkbox" id={topic.id} defaultChecked={this.state.checkedTopics.includes(topic.id)}/>
                     </label>
                 ))}
+
             </div>
         )
     }

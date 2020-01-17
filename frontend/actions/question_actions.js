@@ -38,6 +38,6 @@ export const destroyQuestion = (questionId) => dispatch => (
     ApiQuestionUtil.destroyQuestion(questionId).then(() => dispatch(removeQuestion(questionId)) )
 )
 
-export const updateQuestion = (questionId) => dispatch => (
-    ApiQuestionUtil.updateQuestion(questionId).then(question => dispatch(receiveQuestion(question)))
+export const updateQuestion = (question) => dispatch => (
+    ApiQuestionUtil.updateQuestion(question).then(question => dispatch(receiveQuestion(question)))
 )

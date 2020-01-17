@@ -15,9 +15,7 @@ class Index extends React.Component {
     render () {
         return (
             <div className="main-row">
-                <div>
                     <TopicsColumnContainer />
-                </div>
                 <div className="index-box">
                     <ul>
                         {this.props.questions.map(question => (

@@ -18,7 +18,7 @@ class IndexItem extends React.Component {
             <li className="index-item">
                 <p >Answer · Recommended</p>
                 <p>{this.state.authorName}</p>
-                <Link to= {`/questions/${this.props.question.id}`}>{this.props.question.title}</Link>
+                <Link className="index-item-title"style={{ textDecoration: 'none' }} to= {`/questions/${this.props.question.id}`}>{this.props.question.title}</Link>
             </li>
         )
     }

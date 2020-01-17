@@ -227,9 +227,9 @@ var destroyQuestion = function destroyQuestion(questionId) {
     });
   };
 };
-var updateQuestion = function updateQuestion(questionId) {
+var updateQuestion = function updateQuestion(question) {
   return function (dispatch) {
-    return _util_questions_api_util__WEBPACK_IMPORTED_MODULE_0__["updateQuestion"](questionId).then(function (question) {
+    return _util_questions_api_util__WEBPACK_IMPORTED_MODULE_0__["updateQuestion"](question).then(function (question) {
       return dispatch(receiveQuestion(question));
     });
   };
@@ -512,6 +512,7 @@ function (_React$Component) {
       }
 
       console.log(this.state.checkedTopics);
+      this.props.updateQuestion(this.props.question);
     }
   }, {
     key: "render",
@@ -610,7 +611,7 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "index-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.questions.map(function (question) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -731,6 +732,10 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "index-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Answer \xB7 Recommended"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.authorName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "index-item-title",
+        style: {
+          textDecoration: 'none'
+        },
         to: "/questions/".concat(this.props.question.id)
       }, this.props.question.title));
     }
@@ -2099,14 +2104,11 @@ function (_React$Component) {
         }
       }
 
-      console.log(this.state.topicQuestions);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "test-topic-head"
-      }, "TopicIndex"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "index-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.params.topicName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Index_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           question: question,
           key: Math.random(),
@@ -2225,9 +2227,15 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.topics.map(function (topic) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Topics"), this.props.topics.map(function (topic) {
         return (// <Link to= {`/questions/${this.props.question.id}`}>{this.props.question.title}</Link>
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            style: {
+              textDecoration: 'none'
+            },
+            className: "topic-column-link",
             key: topic.id,
             to: "/topics/".concat(topic.title)
           }, topic.title) // <div key={topic.id}>{topic.title}</div>
@@ -3019,10 +3027,13 @@ var fetchQuestion = function fetchQuestion(questionId) {
     url: "/api/questions/".concat(questionId)
   });
 };
-var updateQuestion = function updateQuestion(questionId) {
+var updateQuestion = function updateQuestion(question) {
   return $.ajax({
     method: "PATCH",
-    url: "/api/questions/".concat(questionId)
+    url: "/api/questions/".concat(question.id),
+    data: {
+      question: question
+    }
   });
 };
 var createQuestion = function createQuestion(question) {

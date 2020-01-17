@@ -42,15 +42,13 @@ class TopicIndex extends React.Component {
                 }
             }
         }
-        console.log(this.state.topicQuestions)
 
         return (
             <div className = "main-row">
-                <div>
-                    <TopicsColumnContainer />
-                </div>
-                <div className="test-topic-head">TopicIndex</div>
+                <TopicsColumnContainer />
+                {/* <div className="test-topic-head">TopicIndex</div> */}
                 <div className="index-box">
+                    <div>{this.props.match.params.topicName}</div>
                     <ul>
                         {this.state.topicQuestions.map(question => (
                         <IndexItem question={question} key={Math.random()} author={this.props.users[question.author_id]} />

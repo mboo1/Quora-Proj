@@ -12,10 +12,11 @@ export const fetchQuestion = (questionId) =>(
     })
 )
 
-export const updateQuestion = (questionId) =>(
+export const updateQuestion = (question) =>(
     $.ajax({
         method: "PATCH",
-        url: `/api/questions/${questionId}`
+        url: `/api/questions/${question.id}`,
+        data: {question: question}
     })
 )
 

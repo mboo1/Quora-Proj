@@ -16,10 +16,11 @@ class TopicsColumn extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="topics-column">
+                <div>Topics</div>
                 {this.props.topics.map(topic => (
                     // <Link to= {`/questions/${this.props.question.id}`}>{this.props.question.title}</Link>
-                    <Link key={topic.id} to= {`/topics/${topic.title}`}>{topic.title}</Link>
+                    <Link style={{ textDecoration: 'none' }} className="topic-column-link" key={topic.id} to= {`/topics/${topic.title}`}>{topic.title}</Link>
                     // <div key={topic.id}>{topic.title}</div>
                 ))}
             </div>

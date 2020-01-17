@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // window.logout = SessionApiUtil.logout;
     // window.fetchQuestions = QuestionsApiUtil.fetchQuestions;
     window.fetchQuestion = QuestionsApiUtil.fetchQuestion;
+    window.updateQuestion = QuestionsApiUtil.updateQuestion;
     // window.createQuestion = QuestionsApiUtil.createQuestion;
     // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
     // window.fetchUsers = UsersApiUtil.fetchUsers;

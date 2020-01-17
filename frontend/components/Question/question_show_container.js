@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import QuestionShow from "./question_show";
-import { destroyQuestion, fetchQuestion } from "../../actions/question_actions";
+import { destroyQuestion, fetchQuestion, updateQuestion } from "../../actions/question_actions";
 import { selectAnswers, selectAuthors } from "../../reducers/selectors";
 import { createAnswer } from "../../actions/answer_actions";
-import { fetchTopics } from "../../actions/topic_actions" 
+import { fetchTopics } from "../../actions/topic_actions";
+import { openModal } from "../../actions/modal_actions" 
 
 const mapStateToProps = (state, ownProps) => {
     const question = state.entities.questions[ownProps.match.params.questionId];
@@ -23,7 +24,9 @@ const mapDispatchToProps = dispatch => ({
     destroyQuestion: (questionId) => dispatch(destroyQuestion(questionId)),
     fetchQuestion: (questionId) => dispatch(fetchQuestion(questionId)),
     createAnswer: (answer) => dispatch(createAnswer(answer)),
-    fetchTopics: () => dispatch(fetchTopics())
+    fetchTopics: () => dispatch(fetchTopics()),
+    openModal: (modal) => dispatch(openModal(modal)),
+    updateQuestion: (questionId) => dispatch(updateQuestion(questionId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionShow)

@@ -21,6 +21,7 @@ class QuestionShow extends React.Component {
         this.openAnswerForm = this.openAnswerForm.bind(this);
         this.renderAnswerForm = this.renderAnswerForm.bind(this);
         this.renderTopics = this.renderTopics.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     getKey(){
@@ -53,6 +54,11 @@ class QuestionShow extends React.Component {
 
     openAnswerForm(e) {
         this.setState({answerClicked: true})
+    }
+
+    handleEdit(e) {
+        e.preventDefault()
+        this.props.openModal({name: 'topicForm', question: this.props.question, topics: this.props.topics, updateQuestion: this.props.updateQuestion})
     }
 
     renderAnswerForm(e) {
@@ -96,6 +102,7 @@ class QuestionShow extends React.Component {
             <div className="question-show-page">
                 <div className="question-column">
                     <div>Topics Row</div>
+                    <button onClick={this.handleEdit}>Edit</button>
                     {this.renderTopics()}
                     <div className="question-title">{tempTitle}</div>
                     <div className="question-answer-button" onClick={this.openAnswerForm}>

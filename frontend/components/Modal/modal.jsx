@@ -1,5 +1,6 @@
 import React from "react"
 import QuestionFormContainer from "../QuestionForm/question_form_container"
+import EditTopicsForm from "../EditTopicsForm/edit_topics_form"
 
 class Modal extends React.Component {
     constructor(props) {
@@ -18,11 +19,11 @@ class Modal extends React.Component {
                 </div>
             </div>
             )
-        } else if (this.props.modalState === 'topicForm') {
+        } else if (this.props.modalState.name === 'topicForm') {
             return (
             <div className="modal-background" onClick={this.props.closeModal}>
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
-                    <div>Hi</div>
+                    <EditTopicsForm question={this.props.modalState.question} topics={this.props.modalState.topics} updateQuestion={this.props.modalState.updateQuestion} />
                 </div>
             </div>
             )

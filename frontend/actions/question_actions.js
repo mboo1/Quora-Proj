@@ -37,3 +37,7 @@ export const createQuestion = (question) => dispatch => (
 export const destroyQuestion = (questionId) => dispatch => (
     ApiQuestionUtil.destroyQuestion(questionId).then(() => dispatch(removeQuestion(questionId)) )
 )
+
+export const updateQuestion = (questionId) => dispatch => (
+    ApiQuestionUtil.updateQuestion(questionId).then(question => dispatch(receiveQuestion(question)))
+)

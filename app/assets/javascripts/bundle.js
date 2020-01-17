@@ -1495,9 +1495,15 @@ function (_React$Component) {
   _inherits(OtherQuestionsColumn, _React$Component);
 
   function OtherQuestionsColumn(props) {
+    var _this;
+
     _classCallCheck(this, OtherQuestionsColumn);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(OtherQuestionsColumn).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(OtherQuestionsColumn).call(this, props));
+    _this.state = {
+      listArr: []
+    };
+    return _this;
   }
 
   _createClass(OtherQuestionsColumn, [{
@@ -1509,19 +1515,19 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.props.questions) {
-        var questionArr = Object.values(this.props.questions);
-        var listArr = [];
+        var questionArr = Object.values(this.props.questions); // let listArr = [];
+
         var count = 0;
 
         while (count < 5 && questionArr.length > 1) {
           var sample = questionArr[Math.floor(Math.random() * questionArr.length)];
-          if (!listArr.includes(sample)) listArr.push(sample);
+          if (!this.state.listArr.includes(sample) && this.state.listArr.length < 3) this.state.listArr.push(sample);
           count++;
         }
 
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "other-questions-col"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "More Questions"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, listArr.map(function (question) {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "More Questions"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.listArr.map(function (question) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: question.id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

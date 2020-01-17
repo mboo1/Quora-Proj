@@ -35,10 +35,12 @@ class Api::QuestionsController < ApplicationController
     end
 
     def update
-        
         @question = Question.find(params[:id])
-
-        render "api/questions/show"
+        if @question.update(question_params) 
+            render "api/questions/show"
+        else 
+            render json: @question.errors.full_messages, status: 422
+        end
     end
 
     

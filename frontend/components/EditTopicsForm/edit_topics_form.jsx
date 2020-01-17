@@ -7,7 +7,8 @@ class EditTopicsForm extends React.Component {
             checkedTopics: [],
             initialState: true
         }
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this)
     }
 
     handleClick(e) {
@@ -22,7 +23,14 @@ class EditTopicsForm extends React.Component {
             this.state.checkedTopics.push(id)
         }
         console.log(this.state.checkedTopics)
-        this.props.updateQuestion(this.props.question)
+    }
+
+    handleUpdate(e) {
+        e.preventDefault()
+        console.log(this.props.question)
+        const question = {id: this.props.question.id, topic_ids: this.state.checkedTopics}
+        this.props.updateQuestion(question);
+
     }
 
     render() {
@@ -43,6 +51,7 @@ class EditTopicsForm extends React.Component {
                         <input onChange={this.handleClick}type="checkbox" id={topic.id} defaultChecked={this.state.checkedTopics.includes(topic.id)}/>
                     </label>
                 ))}
+                <button onClick={this.handleUpdate}>UPDATE</button>
 
             </div>
         )

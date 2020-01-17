@@ -13,7 +13,7 @@ Topic.delete_all
 TopicQuestionAssociation.delete_all
 
 u1 = User.create!(username: 'guest', email: 'guest@gmail.com', password: 'password')
-u2 = User.create!(username: 'Fido', email: 'fido@gmail.com', password: '123456')
+u2 = User.create!(username: 'Fido', email: 'fido@gmail.com', password: 'missionviejoNY')
 u3 = User.create!(username: 'Rex', email: 'rex@hotmail.com', password: 'password123')
 
 q1 = Question.create!(
@@ -93,8 +93,7 @@ t8 = Topic.create!(title: "Doges")
 t9 = Topic.create!(title: "Star Wars")
 
 j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t1.id)
-j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t2.id)
-j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t3.id)
+qj1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t3.id)
 j1 = TopicQuestionAssociation.create!(question_id: q1.id, topic_id: t4.id)
 j1 = TopicQuestionAssociation.create!(question_id: q2.id, topic_id: t1.id)
 j1 = TopicQuestionAssociation.create!(question_id: q2.id, topic_id: t2.id)

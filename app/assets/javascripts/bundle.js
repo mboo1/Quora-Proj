@@ -493,6 +493,7 @@ function (_React$Component) {
       initialState: true
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -512,7 +513,17 @@ function (_React$Component) {
       }
 
       console.log(this.state.checkedTopics);
-      this.props.updateQuestion(this.props.question);
+    }
+  }, {
+    key: "handleUpdate",
+    value: function handleUpdate(e) {
+      e.preventDefault();
+      console.log(this.props.question);
+      var question = {
+        id: this.props.question.id,
+        topic_ids: this.state.checkedTopics
+      };
+      this.props.updateQuestion(question);
     }
   }, {
     key: "render",
@@ -541,7 +552,9 @@ function (_React$Component) {
           id: topic.id,
           defaultChecked: _this2.state.checkedTopics.includes(topic.id)
         }));
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleUpdate
+      }, "UPDATE"));
     }
   }]);
 

@@ -5,5 +5,6 @@ class CreateUpvotes < ActiveRecord::Migration[5.2]
       t.integer :author_id, null: false
       t.timestamps
     end
+    add_index :upvotes, :answer_id
   end
 end

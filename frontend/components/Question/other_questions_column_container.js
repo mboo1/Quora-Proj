@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchQuestions: () => dispatch(fetchQuestions())
+    fetchQuestions: (topic) => dispatch(fetchQuestions(topic))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OtherQuestionsColumn)

@@ -34,3 +34,10 @@ export const destroyQuestion = (questionId) => (
         url: `/api/questions/${questionId}`
     })
 )
+
+export const searchQuestions = (searchString) => (
+    $.ajax({
+        method: "GET",
+        url: `/api/questions/search/${searchString}`
+    })
+)

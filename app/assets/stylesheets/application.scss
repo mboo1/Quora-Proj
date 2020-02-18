@@ -69,11 +69,13 @@ table {
   }
 
  .quora-page {
+    //  position: relative;
      display: flex;
      height: auto;
      width: auto;
      flex-direction: column;
-     background-color: rgba($color: rgb(231, 229, 229), $alpha: 1.0)
+     background-color: rgba($color: rgb(231, 229, 229), $alpha: 1.0);
+    //  z-index: 30;
  }
 
 

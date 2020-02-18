@@ -1,16 +1,79 @@
 import React from "react"
 import { withRouter, Link } from "react-router-dom"
+import SearchList from "./search_list"
+
+let timer;
 
 class Navbar extends React.Component {
     constructor(props) {
         super(props)
-        this.handleLogout = this.handleLogout.bind(this)
+        this.state = {
+            searchQuery: '',
+            searchClicked: false
+        }
+        this.handleLogout = this.handleLogout.bind(this);
+        this.handleInput = this.handleInput.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.renderSearchList = this.renderSearchList.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.setWrapperRef = this.setWrapperRef.bind(this);           
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     handleLogout() {
         this.props.logout();
         if (this.props.history.location.pathname !== "/") {
             this.props.history.push("/");
+        }
+    }
+
+    handleInput(e) {
+        clearTimeout(timer);
+        this.setState({
+            searchQuery: e.currentTarget.value
+        })
+        timer = setTimeout(() => {
+            this.handleSearch();
+        }, 1500)
+    }
+
+    handleSearch(e) {
+        this.props.searchQuestions(this.state.searchQuery);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+      }
+    
+      componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+      }
+
+    renderSearchList() {
+        if (this.state.searchClicked) {
+            return (
+                <SearchList questions={this.props.questions} searchQuery={this.state.searchQuery}/>
+            )
+        } else {
+            return null
+        }
+    }
+
+    handleClick() {
+        this.setState({
+            searchClicked: true
+        })
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            this.setState({
+                searchClicked: false
+            })
         }
     }
 
@@ -22,12 +85,20 @@ class Navbar extends React.Component {
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-edit fa-2x"></i>Answer</div></Link>
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link>
-                <div className="search-container">
+                <div ref={this.setWrapperRef} className="search-container">
                     <i className="fa fa-search"></i>
-                    <input className="nav-search" placeholder="Search Quora" type="text"/>
+                    {/* <form onSubmit={this.handleSearch}> */}
+                    <div className="search-bar">
+                        <input className="nav-search" placeholder="Search Quora" type="text" value={this.state.searchQuery} onChange={this.handleInput} onClick = {this.handleClick}/>
+
+                    </div>
+                    {/* </form> */}
+                    {this.renderSearchList()}
+
                 </div>
                 <img className="profile-icon" src={userImg} onClick={this.handleLogout} />
                 <p className="question-button" onClick={this.props.openModal}>Add Question</p>
+
             </nav>
         )
     }

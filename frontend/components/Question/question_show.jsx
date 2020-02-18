@@ -115,7 +115,7 @@ class QuestionShow extends React.Component {
                         <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
                     ))}
                 </div>
-                <OtherQuestionsColumnContainer />
+                {/* <OtherQuestionsColumnContainer currId={this.props.match.params.questionId}/> */}
             </div>
         )
     }

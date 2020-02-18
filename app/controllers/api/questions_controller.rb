@@ -19,6 +19,11 @@ class Api::QuestionsController < ApplicationController
         if (params[:topic] == '')
             @questions = Question.all
             render "api/questions/index"
+        elsif params[:topic].to_i > 0
+            @questions = Question.order(Arel.sql('RANDOM()')).limit(6)
+            midare = @questions
+            # debugger
+            render "api/questions/index"
         else
             topic = params[:topic]
             @questions = Question.select("questions.title, questions.id, questions.body, questions.author_id, questions.created_at")
@@ -26,6 +31,14 @@ class Api::QuestionsController < ApplicationController
             .where("topics.title = '#{topic}'")
             render "api/questions/index"
         end
+    end
+
+    def search
+        search = params[:query]
+        search = search.downcase
+        @questions = Question.where("lower(questions.title) LIKE '%#{search}%'")
+        # midare = @questions
+        render "api/questions/index"
     end
 
     def destroy

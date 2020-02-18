@@ -1,8 +1,10 @@
 .question-show-page {
+    // position: relative;
     margin-top: 51px;
     display: flex;
     justify-content: center;
-    background-color: rgba($color: #FFFFFF, $alpha: 1.0)
+    background-color: rgba($color: #FFFFFF, $alpha: 1.0);
+    // z-index: 70
 }
 
 .question-column {

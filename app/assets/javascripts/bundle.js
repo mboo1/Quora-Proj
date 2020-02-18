@@ -1180,6 +1180,11 @@ function (_React$Component) {
           topics: this.props.modalState.topics,
           updateQuestion: this.props.modalState.updateQuestion
         })));
+      } else if (this.props.modalState === 'searchBar') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-background",
+          onClick: this.props.closeModal
+        });
       } else {
         return null;
       }
@@ -1281,7 +1286,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Navbar).call(this, props));
     _this.state = {
       searchQuery: '',
-      searchClicked: false
+      searchClicked: false,
+      readyToRender: true
     };
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
@@ -1290,6 +1296,7 @@ function (_React$Component) {
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.setWrapperRef = _this.setWrapperRef.bind(_assertThisInitialized(_this));
     _this.handleClickOutside = _this.handleClickOutside.bind(_assertThisInitialized(_this));
+    _this.closeSearch = _this.closeSearch.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1313,7 +1320,7 @@ function (_React$Component) {
       });
       timer = setTimeout(function () {
         _this2.handleSearch();
-      }, 1500);
+      }, 100);
     }
   }, {
     key: "handleSearch",
@@ -1333,10 +1340,13 @@ function (_React$Component) {
   }, {
     key: "renderSearchList",
     value: function renderSearchList() {
-      if (this.state.searchClicked) {
+      if (this.state.searchClicked && this.state.searchQuery.length > 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
           questions: this.props.questions,
-          searchQuery: this.state.searchQuery
+          searchQuery: this.state.searchQuery,
+          openQuestion: this.props.openModal,
+          closeModal: this.props.closeModal,
+          closeSearch: this.closeSearch
         });
       } else {
         return null;
@@ -1347,6 +1357,15 @@ function (_React$Component) {
     value: function handleClick() {
       this.setState({
         searchClicked: true
+      });
+      this.props.openSearchModal();
+    }
+  }, {
+    key: "closeSearch",
+    value: function closeSearch() {
+      // console.log(this.state.searchClicked)
+      this.setState({
+        searchClicked: false
       });
     }
   }, {
@@ -1462,7 +1481,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  // console.log(ownProps)
   return {
     currentUser: state.entities.users[state.session.id],
     questions: state.entities.questions
@@ -1477,11 +1497,17 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     openModal: function openModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])('questionForm'));
     },
+    openSearchModal: function openSearchModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])('searchBar'));
+    },
     searchQuestions: function searchQuestions(searchQuery) {
       return dispatch(Object(_actions_question_actions__WEBPACK_IMPORTED_MODULE_2__["searchQuestions"])(searchQuery));
     },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["logout"])());
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
   };
 };
@@ -1534,9 +1560,14 @@ function (_React$Component) {
     _classCallCheck(this, SearchList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchList).call(this, props));
-    _this.state = {// results: []
+    _this.state = {
+      renderAddQuestion: false
     };
     _this.populateList = _this.populateList.bind(_assertThisInitialized(_this));
+    _this.questionButton = _this.questionButton.bind(_assertThisInitialized(_this));
+    _this.questionAction = _this.questionAction.bind(_assertThisInitialized(_this));
+    _this.searchHeader = _this.searchHeader.bind(_assertThisInitialized(_this));
+    _this.clickSearchLink = _this.clickSearchLink.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1549,19 +1580,80 @@ function (_React$Component) {
       questions.forEach(function (question) {
         var title = question.title.toLowerCase();
 
-        if (results.length < 6 && title.includes(searchString) && searchString !== ' ') {
-          results.push(questions);
+        if (results.length < 6 && title.includes(searchString) && searchString !== ' ' && searchString !== '') {
+          results.push(question);
         }
       });
+
+      if (results.length > 0 || this.props.searchQuery.length > 1) {
+        this.state.renderAddQuestion = true;
+      } else {
+        this.state.renderAddQuestion = false;
+      }
+
       return results;
+    }
+  }, {
+    key: "questionAction",
+    value: function questionAction() {
+      this.props.closeSearch();
+      this.props.openQuestion();
+    }
+  }, {
+    key: "clickSearchLink",
+    value: function clickSearchLink() {
+      this.props.closeModal();
+      this.props.closeSearch();
+    }
+  }, {
+    key: "questionButton",
+    value: function questionButton() {
+      if (this.state.renderAddQuestion) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-item-question",
+        onClick: this.questionAction
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "search-text"
+      }, "+ Add New Question"));
+      return null;
+    }
+  }, {
+    key: "searchHeader",
+    value: function searchHeader() {
+      if (this.state.renderAddQuestion) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "search-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fa fa-search"
+      }), "Search:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, this.props.searchQuery)));
+      return null;
     }
   }, {
     key: "render",
     value: function render() {
-      console.log(this.populateList());
+      var _this2 = this;
+
+      console.log(this.props);
+      var rez = this.populateList();
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-list"
-      });
+      }, this.searchHeader(), rez.map(function (question) {
+        var briefTitle = question.title;
+        if (briefTitle.length > 30) briefTitle = briefTitle.slice(0, 20);
+        return (// <div className="search-item" key={question.id}>
+          //     <Link className="search-text" to= {`/questions/${question.id}`} >{briefTitle}</Link>
+          //     <p>></p>
+          // </div>
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            className: "search-item",
+            key: question.id,
+            to: "/questions/".concat(question.id),
+            onClick: _this2.clickSearchLink
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "search-text"
+          }, briefTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ">"))
+        );
+      }), this.questionButton());
     }
   }]);
 

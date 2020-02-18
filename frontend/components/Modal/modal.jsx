@@ -27,7 +27,16 @@ class Modal extends React.Component {
                 </div>
             </div>
             )
-        } else {
+        } else if (this.props.modalState === 'searchBar') {
+            return (
+            <div className="modal-background" onClick={this.props.closeModal}>
+                {/* <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <EditTopicsForm question={this.props.modalState.question} topics={this.props.modalState.topics} updateQuestion={this.props.modalState.updateQuestion} />
+                </div> */}
+            </div>
+            )
+        } 
+        else {
             return null
         }
     }

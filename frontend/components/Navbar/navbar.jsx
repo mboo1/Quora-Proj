@@ -9,7 +9,8 @@ class Navbar extends React.Component {
         super(props)
         this.state = {
             searchQuery: '',
-            searchClicked: false
+            searchClicked: false,
+            readyToRender: true
         }
         this.handleLogout = this.handleLogout.bind(this);
         this.handleInput = this.handleInput.bind(this);
@@ -18,6 +19,7 @@ class Navbar extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.setWrapperRef = this.setWrapperRef.bind(this);           
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.closeSearch = this.closeSearch.bind(this);
     }
 
     handleLogout() {
@@ -34,7 +36,7 @@ class Navbar extends React.Component {
         })
         timer = setTimeout(() => {
             this.handleSearch();
-        }, 1500)
+        }, 100)
     }
 
     handleSearch(e) {
@@ -50,9 +52,9 @@ class Navbar extends React.Component {
       }
 
     renderSearchList() {
-        if (this.state.searchClicked) {
+        if (this.state.searchClicked && this.state.searchQuery.length > 0) {
             return (
-                <SearchList questions={this.props.questions} searchQuery={this.state.searchQuery}/>
+                <SearchList questions={this.props.questions} searchQuery={this.state.searchQuery} openQuestion={this.props.openModal} closeModal={this.props.closeModal} closeSearch={this.closeSearch}/>
             )
         } else {
             return null
@@ -62,6 +64,14 @@ class Navbar extends React.Component {
     handleClick() {
         this.setState({
             searchClicked: true
+        })
+        this.props.openSearchModal();
+    }
+
+    closeSearch() {
+        // console.log(this.state.searchClicked)
+        this.setState({
+            searchClicked: false
         })
     }
 

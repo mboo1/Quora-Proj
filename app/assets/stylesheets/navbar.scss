@@ -43,16 +43,91 @@
     z-index: 100;
 }
 
+@keyframes dropdown-slideup {
+    0% {
+        opacity: 0;
+        top: 75px;
+    }
+    100% {
+        opacity: 1;
+        top: 45px;
+    }
+}
+
 .search-list {
     position: absolute;
-    top: 30px;
+    display: flex;
+    flex-direction: column;
+    top: 45px;
     left: 3px;
-    width: 100px;
-    height: 100px;
-    background-color: greenyellow;
-    color: green;
+    width: 300px;
+    height: min-content;
+    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
+    color: rgba($color: #333333, $alpha: 1.0);
+    // border: 1px solid lightgrey;
+    border-radius: 2px;
     z-index: 1000;
-    font-size: 44px;
+    font-size: 16px;
+    animation-name: dropdown-slideup;
+    animation-duration: 0.5s;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    border-top: 1px solid #a09d9d;
+    border-right: 1px solid #a09d9d;
+    border-left: 1px solid #a09d9d;
+    text-decoration: none;
+    color: rgba($color: #333333, $alpha: 1.0);
+    padding-left: 15px;
+    padding-right: 15px;
+    // border-radius: 2px;
+}
+
+.search-item-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    border-top: 1px solid #a09d9d;
+    border-right: 1px solid #a09d9d;
+    border-left: 1px solid #a09d9d;
+    text-decoration: none;
+    color: rgba($color: #3E78AD, $alpha: 1.0);
+    background-color: rgba($color: #dad6d6, $alpha: 1.0);
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.search-text {
+    text-decoration: none;
+    // color: rgba($color: #333333, $alpha: 1.0);
+}
+
+.search-text:visited {
+    color: inherit;
+}
+
+.search-text:hover {
+    color: rgba($color: #3E78AD, $alpha: 1.0);
+}
+
+.search-item-question:hover {
+    background-color: rgba($color: #a09d9d, $alpha: 1.0);
+    cursor: pointer;
+    border-right: none;
+    border-left: none;
+}
+
+.search-item:hover {
+    background-color: rgba($color: #a09d9d, $alpha: 1.0);
+    color: rgba($color: #3E78AD, $alpha: 1.0);
+    cursor: pointer;
+    border-right: none;
+    border-left: none;
 }
 
 .nav-search {

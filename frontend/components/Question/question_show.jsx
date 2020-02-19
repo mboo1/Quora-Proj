@@ -1,8 +1,9 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import AnswerDetail from "./answer_detail"
+import React from "react";
+import { Link } from "react-router-dom";
+import AnswerDetail from "./answer_detail";
+import AnswerDetailContainer from "./answer_detail_container";
 import { selectAnswers, selectAuthors } from "../../reducers/selectors";
-import OtherQuestionsColumnContainer from "./other_questions_column_container"
+import OtherQuestionsColumnContainer from "./other_questions_column_container";
 
 
 class QuestionShow extends React.Component {
@@ -112,7 +113,7 @@ class QuestionShow extends React.Component {
                     {this.renderAnswerForm()}
                     <div className="answer-count">{questionAnswers.length} Answers</div>
                     {questionAnswers.map(answer => (
-                        <AnswerDetail answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
+                        <AnswerDetailContainer upvotes={this.props.upvotes} answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
                     ))}
                 </div>
                 {/* <OtherQuestionsColumnContainer currId={this.props.match.params.questionId}/> */}

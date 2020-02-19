@@ -4,11 +4,12 @@ export const RECEIVE_QUESTION = "RECEIVE_QUESTION";
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
 
-const receiveQuestion = ({question, answers, users}) => ({
+const receiveQuestion = ({question, answers, users, upvotes}) => ({
     type: RECEIVE_QUESTION,
     question: question,
     answers: answers,
-    users: users
+    users: users,
+    upvotes: upvotes
 })
 
 const receiveQuestions = ({questions, answers}) => ({

@@ -7,6 +7,8 @@ import * as SessionApiUtil from "./util/session_api_util"
 import * as QuestionsApiUtil from "./util/questions_api_util"
 import * as UsersApiUtil from "./util/users_api_util"
 import * as AnswersApiUtil from "./util/answers_api_util"
+import * as UpvotesApiUtil from "./util/upvotes_api_util"
+import { createUpvote, destroyUpvote } from "./actions/upvote_actions"
 import {login, logout, signup, logoutCurrentUser} from "./actions/session_actions"
 import { fetchQuestions, fetchQuestion, createQuestion, destroyQuestion } from "./actions/question_actions"
 import { fetchUsers, fetchUser } from "./actions/users_actions"
@@ -38,6 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     window.fetchQuestions = QuestionsApiUtil.fetchQuestions;
     window.fetchQuestion = QuestionsApiUtil.fetchQuestion;
     window.updateQuestion = QuestionsApiUtil.updateQuestion;
+    // window.destroyUpvote = UpvotesApiUtil.destroyUpvote;
+    // window.createUpvote = UpvotesApiUtil.createUpvote;
+    window.createUpvote = createUpvote;
+    window.destroyUpvote = destroyUpvote;
+
     // window.createQuestion = QuestionsApiUtil.createQuestion;
     // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
     window.searchQuestions = QuestionsApiUtil.searchQuestions;

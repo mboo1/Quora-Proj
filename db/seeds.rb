@@ -11,54 +11,23 @@ Question.delete_all
 Answer.delete_all
 Topic.delete_all
 TopicQuestionAssociation.delete_all
+Upvote.delete_all
 
 u1 = User.create!(username: 'guest', email: 'guest@gmail.com', password: 'password')
 u2 = User.create!(username: 'Fido', email: 'fido@gmail.com', password: 'missionviejoNY')
 u3 = User.create!(username: 'Rex', email: 'rex@hotmail.com', password: 'password123')
 
-q1 = Question.create!(
-    title: 'How can you prove that birds are real?', body: 'I can\'t find it', author_id: u3.id
-)
-
-q2 = Question.create!(
-    title: 'My 18 year old son wants to drop out of college to be a YouTuber. He only has 62 thousand subscribers and thinks he’ll make it big. How do I tell him that college is best for him?', body: 'Woof.', author_id: u1.id
-)
-
-q3 = Question.create!(
-    title: 'Woof woof?', body: 'Is it not that case that, when considered in light of recent developments in both material philosophy and technological advancement that one can conclude, with the obvious cavets, that in fact...', author_id: u2.id
-)
-
-q4 = Question.create!(
-    title: 'Bark?', body: '.', author_id: u2.id
-)
-
-q5 = Question.create!(
-    title: 'XYZ', body: '.', author_id: u2.id
-)
-
-q6 = Question.create!(
-    title: 'Who is the real', body: '.', author_id: u2.id
-)
-
-q7 = Question.create!(
-    title: 'Why am I not!', body: '.', author_id: u2.id
-)
-
-q8 = Question.create!(
-    title: 'zyzzyx', body: '.', author_id: u2.id
-)
-
-q9 = Question.create!(
-    title: 'Shadow on the', body: '.', author_id: u2.id
-)
-
-q10 = Question.create!(
-    title: 'Can I please?', body: '.', author_id: u2.id
-)
-
-q11 = Question.create!(
-    title: 'Would you kindly?', body: '.', author_id: u2.id
-)
+q1 = Question.create!(title: 'How can you prove that birds are real?', body: 'I can\'t find it', author_id: u3.id)
+q2 = Question.create!(title: 'My 18 year old son wants to drop out of college to be a YouTuber. He only has 62 thousand subscribers and thinks he’ll make it big. How do I tell him that college is best for him?', body: 'Woof.', author_id: u1.id)
+q3 = Question.create!(title: 'Woof woof?', body: 'Is it not that case that, when considered in light of recent developments in both material philosophy and technological advancement that one can conclude, with the obvious cavets, that in fact...', author_id: u2.id)
+q4 = Question.create!(title: 'Bark?', body: '.', author_id: u2.id)
+q5 = Question.create!(title: 'XYZ', body: '.', author_id: u2.id)
+q6 = Question.create!(title: 'Who is the real', body: '.', author_id: u2.id)
+q7 = Question.create!(title: 'Why am I not!', body: '.', author_id: u2.id)
+q8 = Question.create!(title: 'zyzzyx', body: '.', author_id: u2.id)
+q9 = Question.create!(title: 'Shadow on the', body: '.', author_id: u2.id)
+q10 = Question.create!(title: 'Can I please?', body: '.', author_id: u2.id)
+q11 = Question.create!(title: 'Would you kindly?', body: '.', author_id: u2.id)
 
 
 a1 = Answer.create!(
@@ -114,6 +83,17 @@ a9 = Answer.create!(
     author_id: u2.id,
     question_id: q1.id
 )
+
+v1 = Upvote.create!(author_id: u1.id, answer_id: a1.id)
+v2 = Upvote.create!(author_id: u1.id, answer_id: a2.id)
+v3 = Upvote.create!(author_id: u1.id, answer_id: a3.id)
+v4 = Upvote.create!(author_id: u1.id, answer_id: a4.id)
+v5 = Upvote.create!(author_id: u1.id, answer_id: a5.id)
+v6 = Upvote.create!(author_id: u1.id, answer_id: a6.id)
+v7 = Upvote.create!(author_id: u2.id, answer_id: a1.id)
+v8 = Upvote.create!(author_id: u3.id, answer_id: a1.id)
+v9 = Upvote.create!(author_id: u2.id, answer_id: a2.id)
+
 
 t1 = Topic.create!(title: "Science")
 t2 = Topic.create!(title: "Math")

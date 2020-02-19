@@ -16,7 +16,8 @@ const mapStateToProps = (state, ownProps) => {
         authors: authors,
         fullAnswers: state.entities.answers,
         currentUser: state.entities.users[state.session.id],
-        topics: state.entities.topics
+        topics: state.entities.topics,
+        upvotes: state.entities.upvotes
     }
 }
 

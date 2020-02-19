@@ -174,12 +174,14 @@ var REMOVE_QUESTION = "REMOVE_QUESTION";
 var receiveQuestion = function receiveQuestion(_ref) {
   var question = _ref.question,
       answers = _ref.answers,
-      users = _ref.users;
+      users = _ref.users,
+      upvotes = _ref.upvotes;
   return {
     type: RECEIVE_QUESTION,
     question: question,
     answers: answers,
-    users: users
+    users: users,
+    upvotes: upvotes
   };
 };
 
@@ -344,6 +346,57 @@ var fetchTopics = function fetchTopics() {
     });
   };
 };
+
+/***/ }),
+
+/***/ "./frontend/actions/upvote_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/upvote_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_UPVOTE, REMOVE_UPVOTE, createUpvote, destroyUpvote */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_UPVOTE", function() { return RECEIVE_UPVOTE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_UPVOTE", function() { return REMOVE_UPVOTE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUpvote", function() { return createUpvote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyUpvote", function() { return destroyUpvote; });
+/* harmony import */ var _util_upvotes_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/upvotes_api_util */ "./frontend/util/upvotes_api_util.js");
+
+var RECEIVE_UPVOTE = "RECEIVE_UPVOTE";
+var REMOVE_UPVOTE = "REMOVE_UPVOTE";
+
+var receiveUpvote = function receiveUpvote(upvote) {
+  return {
+    type: RECEIVE_UPVOTE,
+    upvote: upvote
+  };
+};
+
+var removeUpvote = function removeUpvote(upvoteId) {
+  return {
+    type: REMOVE_UPVOTE,
+    upvoteId: upvoteId
+  };
+};
+
+var createUpvote = function createUpvote(upvote) {
+  return function (dispatch) {
+    return _util_upvotes_api_util__WEBPACK_IMPORTED_MODULE_0__["createUpvote"](upvote).then(function (upvote) {
+      return dispatch(receiveUpvote(upvote));
+    });
+  };
+};
+var destroyUpvote = function destroyUpvote(upvoteId) {
+  return function (dispatch) {
+    return _util_upvotes_api_util__WEBPACK_IMPORTED_MODULE_0__["destroyUpvote"](upvoteId).then(function () {
+      return dispatch(removeUpvote(upvoteId));
+    });
+  };
+}; // export const destroyQuestion = (questionId) => dispatch => (
+//     ApiQuestionUtil.destroyQuestion(questionId).then(() => dispatch(removeQuestion(questionId)) )
+// )
 
 /***/ }),
 
@@ -1685,9 +1738,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1701,14 +1754,90 @@ function (_React$Component) {
   _inherits(AnswerDetail, _React$Component);
 
   function AnswerDetail(props) {
+    var _this;
+
     _classCallCheck(this, AnswerDetail);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AnswerDetail).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AnswerDetail).call(this, props));
+    _this.state = {
+      upvotes: [],
+      alreadyVoted: false,
+      voteId: ''
+    };
+    _this.renderVoteButton = _this.renderVoteButton.bind(_assertThisInitialized(_this));
+    _this.handleDestroyUpvote = _this.handleDestroyUpvote.bind(_assertThisInitialized(_this));
+    _this.handleCreateUpvote = _this.handleCreateUpvote.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(AnswerDetail, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var upvoteArr = [];
+      Object.values(this.props.upvotes).forEach(function (upvote) {
+        if (upvote.answer_id === _this2.props.answer.id) {
+          upvoteArr.push(upvote);
+
+          if (upvote.author_id === _this2.props.currentUser.id) {
+            _this2.setState({
+              alreadyVoted: true,
+              voteId: upvote.id
+            });
+          }
+        }
+      });
+      this.setState({
+        upvotes: upvoteArr
+      });
+    }
+  }, {
+    key: "handleDestroyUpvote",
+    value: function handleDestroyUpvote() {
+      this.props.destroyUpvote(this.state.voteId);
+    }
+  }, {
+    key: "handleCreateUpvote",
+    value: function handleCreateUpvote() {
+      this.props.createUpvote({
+        author_id: this.props.currentUser.id,
+        answer_id: this.props.answer.id
+      });
+    }
+  }, {
+    key: "renderVoteButton",
+    value: function renderVoteButton() {
+      if (this.state.alreadyVoted) {
+        this.state.upvotes;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "You already voted!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "upvoted-button",
+          onClick: this.handleDestroyUpvote
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "arrow-img",
+          src: "https://i.imgur.com/DkJAg3S.png",
+          height: "18px",
+          width: "20px",
+          alt: "upvoted"
+        }), "Upvote \u2022 ", this.state.upvotes.length));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "upvoted-button",
+          onClick: this.handleCreateUpvote
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "https://i.imgur.com/SqBaIR4.png",
+          height: "18px",
+          width: "20px",
+          alt: "upvote"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          color: "#000000"
+        }, "Upvote \u2022 ", this.state.upvotes.length));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      console.log(this.props);
       var tempName;
       typeof this.props.author === 'undefined' ? tempName = '' : tempName = this.props.author.username;
       var createdAt = new Date(this.props.answer.created_at).toString();
@@ -1724,7 +1853,7 @@ function (_React$Component) {
         className: "answer-date"
       }, "Answered ", createdAt), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-body"
-      }, this.props.answer.body));
+      }, this.props.answer.body), this.renderVoteButton());
     }
   }]);
 
@@ -1732,6 +1861,43 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (AnswerDetail);
+
+/***/ }),
+
+/***/ "./frontend/components/Question/answer_detail_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/Question/answer_detail_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/upvote_actions */ "./frontend/actions/upvote_actions.js");
+/* harmony import */ var _answer_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./answer_detail */ "./frontend/components/Question/answer_detail.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUser: state.entities.users[state.session.id]
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    createUpvote: function createUpvote(upvote) {
+      return dispatch(Object(_actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__["createUpvote"])(upvote));
+    },
+    destroyUpvote: function destroyUpvote(upvoteId) {
+      return dispatch(Object(_actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__["destroyUpvote"])(upvoteId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -1919,8 +2085,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _answer_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./answer_detail */ "./frontend/components/Question/answer_detail.jsx");
-/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
-/* harmony import */ var _other_questions_column_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./other_questions_column_container */ "./frontend/components/Question/other_questions_column_container.js");
+/* harmony import */ var _answer_detail_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./answer_detail_container */ "./frontend/components/Question/answer_detail_container.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _other_questions_column_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./other_questions_column_container */ "./frontend/components/Question/other_questions_column_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1938,6 +2105,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2100,7 +2268,8 @@ function (_React$Component) {
       }), "Answer"), this.renderAnswerForm(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-count"
       }, questionAnswers.length, " Answers"), questionAnswers.map(function (answer) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          upvotes: _this2.props.upvotes,
           answer: answer,
           author: _this2.props.authors[answer.author_id],
           key: Math.random()
@@ -2150,7 +2319,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     authors: authors,
     fullAnswers: state.entities.answers,
     currentUser: state.entities.users[state.session.id],
-    topics: state.entities.topics
+    topics: state.entities.topics,
+    upvotes: state.entities.upvotes
   };
 };
 
@@ -2782,13 +2952,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util/questions_api_util */ "./frontend/util/questions_api_util.js");
 /* harmony import */ var _util_users_api_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/users_api_util */ "./frontend/util/users_api_util.js");
 /* harmony import */ var _util_answers_api_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/answers_api_util */ "./frontend/util/answers_api_util.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
-/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
-/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./actions/answer_actions */ "./frontend/actions/answer_actions.js");
-/* harmony import */ var _util_topics_api_util__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./util/topics_api_util */ "./frontend/util/topics_api_util.js");
-/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./actions/topic_actions */ "./frontend/actions/topic_actions.js");
+/* harmony import */ var _util_upvotes_api_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./util/upvotes_api_util */ "./frontend/util/upvotes_api_util.js");
+/* harmony import */ var _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/upvote_actions */ "./frontend/actions/upvote_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./actions/answer_actions */ "./frontend/actions/answer_actions.js");
+/* harmony import */ var _util_topics_api_util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./util/topics_api_util */ "./frontend/util/topics_api_util.js");
+/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./actions/topic_actions */ "./frontend/actions/topic_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -2828,24 +3002,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.fetchQuestions = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["fetchQuestions"];
   window.fetchQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["fetchQuestion"];
-  window.updateQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["updateQuestion"]; // window.createQuestion = QuestionsApiUtil.createQuestion;
+  window.updateQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["updateQuestion"]; // window.destroyUpvote = UpvotesApiUtil.destroyUpvote;
+  // window.createUpvote = UpvotesApiUtil.createUpvote;
+
+  window.createUpvote = _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__["createUpvote"];
+  window.destroyUpvote = _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__["destroyUpvote"]; // window.createQuestion = QuestionsApiUtil.createQuestion;
   // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
 
   window.searchQuestions = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["searchQuestions"]; // window.fetchUsers = UsersApiUtil.fetchUsers;
   // window.fetchQuestions = fetchQuestions;
 
-  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["fetchUsers"];
-  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["fetchUser"];
-  window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_11__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
+  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__["fetchUsers"];
+  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__["fetchUser"];
+  window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_13__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
   // window.fetchQuestion = fetchQuestion;
 
-  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__["createQuestion"];
-  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_9__["destroyQuestion"];
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["login"];
-  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["logout"];
-  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_8__["signup"];
+  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__["createQuestion"];
+  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__["destroyQuestion"];
+  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["login"];
+  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["logout"];
+  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["signup"];
   window.dispatch = store.dispatch;
-  window.fetchTopics = _actions_topic_actions__WEBPACK_IMPORTED_MODULE_13__["fetchTopics"];
+  window.fetchTopics = _actions_topic_actions__WEBPACK_IMPORTED_MODULE_15__["fetchTopics"];
   var rootEl = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -2912,6 +3090,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _questions_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./questions_reducer */ "./frontend/reducers/questions_reducer.js");
 /* harmony import */ var _answers_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./answers_reducer */ "./frontend/reducers/answers_reducer.js");
 /* harmony import */ var _topics_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./topics_reducer */ "./frontend/reducers/topics_reducer.js");
+/* harmony import */ var _upvotes_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./upvotes_reducer */ "./frontend/reducers/upvotes_reducer.js");
+
 
 
 
@@ -2921,7 +3101,8 @@ var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   questions: _questions_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   answers: _answers_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  topics: _topics_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  topics: _topics_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  upvotes: _upvotes_reducer__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -3215,6 +3396,54 @@ var uiReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
 
 /***/ }),
 
+/***/ "./frontend/reducers/upvotes_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/upvotes_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/upvote_actions */ "./frontend/actions/upvote_actions.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var upvotesReducer = function upvotesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
+      newState = _objectSpread({}, newState, {}, action.upvotes);
+      return newState;
+
+    case _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_UPVOTE"]:
+      newState[action.upvote.id] = action.upvote;
+      return newState;
+
+    case _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_UPVOTE"]:
+      delete newState[action.upvoteId];
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (upvotesReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/users_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/users_reducer.js ***!
@@ -3447,6 +3676,35 @@ var fetchTopics = function fetchTopics() {
   return $.ajax({
     method: "GET",
     url: "/api/topics"
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/upvotes_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/upvotes_api_util.js ***!
+  \*******************************************/
+/*! exports provided: createUpvote, destroyUpvote */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUpvote", function() { return createUpvote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyUpvote", function() { return destroyUpvote; });
+var createUpvote = function createUpvote(upvote) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/upvotes",
+    data: {
+      upvote: upvote
+    }
+  });
+};
+var destroyUpvote = function destroyUpvote(upvoteId) {
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/upvotes/".concat(upvoteId)
   });
 };
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :answers, only: [:create]
     resources :topics, only: [:index]
+    resources :upvotes, only: [:create, :destroy]
     get 'questions/search/:query', :to => 'questions#search'
   end
 

@@ -85,6 +85,13 @@ a9 = Answer.create!(
     question_id: q1.id
 )
 
+a10 = Answer.create!(
+    body: 'Sure bud.',
+    author_id: u1.id,
+    question_id: q4.id
+)
+
+
 v1 = Upvote.create!(author_id: u1.id, answer_id: a1.id)
 v2 = Upvote.create!(author_id: u1.id, answer_id: a2.id)
 v3 = Upvote.create!(author_id: u1.id, answer_id: a3.id)
@@ -107,6 +114,9 @@ c9 = Comment.create!(author_id: u2.id, answer_id: a4.id, body: "This is a great 
 c10 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
 c11 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
 c12 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
+c13 = Comment.create!(author_id: u3.id, answer_id: a10.id, body: "Arf!")
+c14 = Comment.create!(author_id: u2.id, answer_id: a10.id, body: "Yip!")
+
 
 
 t1 = Topic.create!(title: "Science")

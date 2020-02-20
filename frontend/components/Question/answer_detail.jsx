@@ -1,4 +1,5 @@
 import React from "react";
+import CommentIndexContainer from "../Comment/comment_index_container";
 
 class AnswerDetail extends React.Component {
     constructor(props) {
@@ -75,6 +76,7 @@ class AnswerDetail extends React.Component {
                 {/* <div className="answer-body">{renderHTML(this.props.answer.body)}</div> */}
                 <div className="answer-body" dangerouslySetInnerHTML={{__html: this.props.answer.body}}></div>
                 {this.renderVoteButton()}
+                <CommentIndexContainer answer={this.props.answer}/>
             </div>
         )
     }

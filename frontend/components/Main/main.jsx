@@ -5,6 +5,8 @@ import NavbarContainer from "../Navbar/navbar_container"
 import ModalContainer from "../Modal/modal_container"
 import QuestionShowContainer from "../Question/question_show_container"
 import TopicIndexContainer from "../TopicIndex/topic_index_container"
+// import QuillEditor from "../Experiment/experiment"
+import ExperimentContainer from "../Experiment/experiment_container"
 
 class Main extends React.Component {
     constructor(props) {
@@ -21,6 +23,7 @@ class Main extends React.Component {
                             <Route exact path = "/questions/:questionId" component={QuestionShowContainer} />
                             <Route exact path = "/topics/:topicName" component={TopicIndexContainer} />
                             <Route exact path = "/" component={IndexContainer} />
+                            <Route exact path = "/quill" component = {ExperimentContainer} />
                             <Redirect from="*" to="/"/>
                         </Switch>
                     </div>

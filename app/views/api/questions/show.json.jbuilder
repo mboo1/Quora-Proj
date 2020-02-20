@@ -18,10 +18,24 @@ end
         end
     end
 
-    answer.comments.each do |comment|
+    # answer.comments.each do |comment|
+    #     json.comments do
+    #         json.set! comment.id do
+    #             json.extract! comment, :id, :author_id, :answer_id, :body
+    #         end
+    #     end
+    # end
+
+    answer.comments.includes(:author).each do |comment|
         json.comments do
             json.set! comment.id do
-                json.extract! comment, :id, :author_id, :answer_id, :body
+                json.extract! comment, :id, :author_id, :answer_id, :body, :created_at
+            end
+        end
+
+        json.users do
+            json.set! comment.author.id do
+                json.extract! comment.author, :id, :username
             end
         end
     end

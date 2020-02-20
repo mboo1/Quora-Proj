@@ -5,6 +5,7 @@ import AnswerDetail from "./answer_detail";
 
 const mapStateToProps = state => ({
     currentUser: state.entities.users[state.session.id],
+    comments: state.entities.comments
 })
 
 const mapDispatchToProps = dispatch => ({

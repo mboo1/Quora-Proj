@@ -2404,9 +2404,11 @@ function (_React$Component) {
     _this.state = {
       body: '',
       answerClicked: false,
-      tempTopics: []
+      tempTopics: [],
+      editorCreated: false
     };
     _this.keyCount = 0;
+    _this.editor = '';
     _this.getKey = _this.getKey.bind(_assertThisInitialized(_this));
     _this.handleAnswer = _this.handleAnswer.bind(_assertThisInitialized(_this));
     _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
@@ -2414,20 +2416,6 @@ function (_React$Component) {
     _this.renderAnswerForm = _this.renderAnswerForm.bind(_assertThisInitialized(_this));
     _this.renderTopics = _this.renderTopics.bind(_assertThisInitialized(_this));
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
-    _this.modules = {
-      toolbar: [[{
-        font: []
-      }], ['bold', 'italic', 'underline', 'strike'], [{
-        'list': 'ordered'
-      }, {
-        'list': 'bullet'
-      }, {
-        'indent': '-1'
-      }, {
-        'indent': '+1'
-      }], ['clean'], [], [], ['link', 'image', 'video']]
-    };
-    _this.formats = ['font', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'indent', 'link', 'image', 'video'];
     return _this;
   }
 
@@ -2452,8 +2440,9 @@ function (_React$Component) {
     key: "handleAnswer",
     value: function handleAnswer(e) {
       e.preventDefault();
+      var editor_content = this.editor.root.innerHTML;
       this.props.createAnswer({
-        body: this.state.body,
+        body: editor_content,
         author_id: this.props.currentUser.id,
         question_id: this.props.question.id
       }).then(window.setTimeout(function () {
@@ -2462,7 +2451,8 @@ function (_React$Component) {
           behavior: 'smooth'
         });
       }.bind(this), 125)).then(this.setState({
-        body: ''
+        body: '',
+        answerClicked: false
       }));
     }
   }, {
@@ -2476,9 +2466,23 @@ function (_React$Component) {
   }, {
     key: "openAnswerForm",
     value: function openAnswerForm(e) {
-      this.setState({
-        answerClicked: true
-      });
+      var _this2 = this;
+
+      if (!this.state.answerClicked) {
+        this.setState({
+          answerClicked: true
+        }, function () {
+          var container = document.getElementById('editor');
+          _this2.editor = new Quill(container, {
+            modules: {
+              toolbar: [[{
+                header: [1, 2, false]
+              }], ['bold', 'italic', 'underline'], ['image', 'code-block', 'link', 'video']]
+            },
+            theme: 'snow'
+          });
+        });
+      }
     }
   }, {
     key: "handleEdit",
@@ -2495,22 +2499,23 @@ function (_React$Component) {
     key: "renderAnswerForm",
     value: function renderAnswerForm(e) {
       if (this.state.answerClicked) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "answer-form"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "answer-input-container"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_quill__WEBPACK_IMPORTED_MODULE_6___default.a, {
-          height: "500",
-          theme: 'snow',
-          value: this.state.body,
-          bounds: '.app',
-          modules: this.modules,
-          formats: this.formats,
-          placeholder: "Write your answer",
-          onChange: this.handleInput
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "answer-username"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "profile-icon",
+          src: userImg
+        }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "quill-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "editor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "answer-submit-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "submit-answer-button",
           onClick: this.handleAnswer
-        }, "ceeeee")));
+        }, "Submit")));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }
@@ -2522,9 +2527,9 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       } else {
         return this.state.tempTopics.map(function (topicName, idx) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: Math.random()
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            key: Math.random(),
+            className: "topic-button",
             to: "/topics/".concat(topicName)
           }, topicName));
         });
@@ -2533,11 +2538,11 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var questionAnswers = Object.values(this.props.fullAnswers);
       questionAnswers = questionAnswers.filter(function (obj) {
-        return obj.question_id === _this2.props.question.id;
+        return obj.question_id === _this3.props.question.id;
       });
       var tempTitle = '';
       if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title;
@@ -2546,11 +2551,13 @@ function (_React$Component) {
         className: "question-show-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-column"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Topics Row"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-row"
+      }, this.renderTopics(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleEdit
-      }, "Edit"), this.renderTopics(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-title"
-      }, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Hiii"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-answer-button",
         onClick: this.openAnswerForm
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2559,9 +2566,9 @@ function (_React$Component) {
         className: "answer-count"
       }, questionAnswers.length, " Answers"), questionAnswers.map(function (answer) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          upvotes: _this2.props.upvotes,
+          upvotes: _this3.props.upvotes,
           answer: answer,
-          author: _this2.props.authors[answer.author_id],
+          author: _this3.props.authors[answer.author_id],
           key: Math.random()
         });
       })));
@@ -2571,7 +2578,49 @@ function (_React$Component) {
   return QuestionShow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (QuestionShow);
+/* harmony default export */ __webpack_exports__["default"] = (QuestionShow); // Alternate Answer Form
+// this.modules = {
+//     toolbar: [
+//         [{ font: [] }],
+//         ['bold', 'italic', 'underline', 'strike'],
+//         [{ 'list': 'ordered' }, { 'list': 'bullet' },
+//         { 'indent': '-1' }, { 'indent': '+1' }],
+//         ['clean'], [], [],
+//         ['link', 'image', 'video']
+//     ]
+// };
+// this.formats = [
+//     'font',
+//     'bold', 'italic', 'underline', 'strike',
+//     'list', 'bullet', 'indent',
+//     'link', 'image', 'video'
+// ];
+
+{
+  /* <div className="answer-input-container">
+      <ReactQuill
+          height='500'
+          theme={'snow'}
+          value={this.state.body}
+          bounds={'.app'}
+          modules={this.modules}
+          formats={this.formats}
+          placeholder="Write your answer"
+          onChange={this.handleInput}>
+      </ReactQuill>
+      <button onClick={this.handleAnswer}>ceeeee</button>
+  </div> */
+}
+{
+  /* <div className="answer-username">
+     <img className="profile-icon" src={userImg}/>
+     {this.props.currentUser.username}
+  </div>
+  <textarea className="answer-textarea" placeholder={'Write your answer'} value={this.state.body} onChange={this.handleInput}/>
+  <div className="answer-submit-row">
+     <button className="answer-submit-button" onClick={this.handleAnswer}>Submit</button>
+  </div> */
+}
 
 /***/ }),
 
@@ -2853,7 +2902,8 @@ function (_React$Component) {
     _this.state = {
       topicQuestionIds: [],
       topicQuestions: [],
-      prevName: ''
+      prevName: '',
+      readyToRender: false
     };
     return _this;
   }
@@ -2861,7 +2911,9 @@ function (_React$Component) {
   _createClass(TopicIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName));
+      this.props.fetchTopics().then(this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName)).then(this.setState({
+        readyToRender: true
+      })));
       this.state.prevName = this.props.match.params.topicName;
     }
   }, {
@@ -2883,10 +2935,18 @@ function (_React$Component) {
         var tempObj = Object.values(this.props.topics);
 
         for (var i = 0; i < tempObj.length; i++) {
+          console.log(tempObj[i].title);
+          console.log(this.props.match.params.topicName);
+
           if (tempObj[i].title === this.props.match.params.topicName) {
+            console.log('hi');
+            console.log(tempObj[i]);
             this.state.topicQuestionIds = tempObj[i].questionIds;
+            console.log(this.state.topicQuestionIds);
           }
         }
+
+        console.log(this.state.topicQuestionIds); // console.log(this.state.topicQuestions)
 
         for (var _i = 0; _i < this.props.questions.length; _i++) {
           if (this.state.topicQuestionIds.includes(this.props.questions[_i].id)) {
@@ -2895,17 +2955,21 @@ function (_React$Component) {
         }
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "main-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "index-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.params.topicName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Index_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          question: question,
-          key: Math.random(),
-          author: _this2.props.users[question.author_id]
-        });
-      }))));
+      if (this.state.readyToRender) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "main-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "index-box"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.params.topicName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Index_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            question: question,
+            key: Math.random(),
+            author: _this2.props.users[question.author_id]
+          });
+        }))));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 
@@ -2929,6 +2993,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _topic_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./topic_index */ "./frontend/components/TopicIndex/topic_index.jsx");
 /* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/question_actions */ "./frontend/actions/question_actions.js");
 /* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/topic_actions */ "./frontend/actions/topic_actions.js");
+
 
 
 
@@ -2950,6 +3016,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchUsers: function fetchUsers() {
       return dispatch(Object(_actions_users_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUsers"])());
+    },
+    fetchTopics: function fetchTopics() {
+      return dispatch(Object(_actions_topic_actions__WEBPACK_IMPORTED_MODULE_4__["fetchTopics"])());
     }
   };
 };
@@ -3679,12 +3748,6 @@ var sessionReducer = function sessionReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/topic_actions */ "./frontend/actions/topic_actions.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var topicsReducer = function topicsReducer() {
@@ -3695,7 +3758,8 @@ var topicsReducer = function topicsReducer() {
 
   switch (action.type) {
     case _actions_topic_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TOPICS"]:
-      newState = _objectSpread({}, action.topics, {}, newState);
+      // newState = {...action.topics, ...newState}
+      newState = action.topics;
       return newState;
 
     default:

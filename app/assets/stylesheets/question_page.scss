@@ -36,9 +36,32 @@
     cursor: pointer;
 }
 
-.answer-form {
-    border: 1px solid lightgray;
+.answer-input-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    width: 550px;
+    border: 1px solid rgb(15, 15, 15);
     border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#editor {
+    height:250px;
+    width: inherit;
+}
+
+.submit-answer-button {
+    display: flex;
+    justify-content: center;
+    background-color: rgba($color: #3E78AD, $alpha: 1.0);
+    color: white;
+    width: 56px;
+    font-size: 14px;
+    height: 29px;
+    border: 1px solid rgba(45, 89, 129, 0.7);
+    border-radius: 3px;
+    margin: 3px;
 }
 
 .answer-username {
@@ -47,7 +70,9 @@
     justify-content: start;
     height: 40px;
     border-bottom: 1px solid lightgray;
-    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
+    background-color: rgba($color: #dfdfdf, $alpha: 1.0);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .answer-textarea {
@@ -69,23 +94,9 @@
     align-items: center;
     height: 30px;
     padding: 10px;
-    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
-}
-
-.answer-submit-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba($color: #FFFFFF, $alpha: 1.0);
-    background-color: rgba($color: #3E78AD, $alpha: 1.0);
-    border-radius: 3px;
-}
-
-.answer-submit-button:focus {
-    outline-style: none;
+    background-color: rgba($color: #dfdfdf, $alpha: 1.0);
+    border-bottom-left-radius:2px;
+    border-bottom-right-radius: 2px;
 }
 
 .answer-count {
@@ -156,3 +167,41 @@
     flex-direction: column;
     width: 300px
 }
+
+.topics-row {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 30px;
+    margin-bottom: 6px;
+}
+
+.topic-button {
+    font-size: 13px;
+    color: rgba($color: #666666, $alpha: 1.0);
+    background-color: rgba($color: #dfdfdf, $alpha: 1.0);
+    text-decoration: none;
+    padding: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.topic-button:hover {
+    color: rgba($color: #3E78AD, $alpha: 1.0)
+}
+
+// .answer-submit-button {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     height: 30px;
+    //     font-size: 13px;
+    //     font-weight: 500;
+    //     color: rgba($color: #FFFFFF, $alpha: 1.0);
+    //     background-color: rgba($color: #3E78AD, $alpha: 1.0);
+    //     border-radius: 3px;
+    // }
+    
+    // .answer-submit-button:focus {
+    //     outline-style: none;
+    // }

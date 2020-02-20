@@ -9,12 +9,15 @@ class TopicIndex extends React.Component {
         this.state = {
             topicQuestionIds: [],
             topicQuestions: [],
-            prevName: ''
+            prevName: '',
+            readyToRender: false
         }
     }
 
     componentDidMount() {
-        this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+        this.props.fetchTopics().then(this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName)).then(
+            this.setState({readyToRender:true})
+        ))
         this.state.prevName = this.props.match.params.topicName
     }
 
@@ -32,17 +35,24 @@ class TopicIndex extends React.Component {
         if (Object.entries(this.props.topics).length > 0) {
             let tempObj = Object.values(this.props.topics)
             for (let i = 0; i < tempObj.length; i++) {
+                console.log(tempObj[i].title);
+                console.log(this.props.match.params.topicName);
                 if (tempObj[i].title === this.props.match.params.topicName) {
+                    console.log('hi')
+                    console.log(tempObj[i])
                     this.state.topicQuestionIds = tempObj[i].questionIds
+                    console.log(this.state.topicQuestionIds)
                 }
             }
+            console.log(this.state.topicQuestionIds)
+            // console.log(this.state.topicQuestions)
             for (let i = 0; i < this.props.questions.length; i++) {
                 if (this.state.topicQuestionIds.includes(this.props.questions[i].id)) {
                     this.state.topicQuestions.push(this.props.questions[i])
                 }
             }
         }
-
+        if (this.state.readyToRender) {
         return (
             <div className = "main-row">
                 <TopicsColumnContainer />
@@ -57,6 +67,12 @@ class TopicIndex extends React.Component {
                 </div>
             </div>
         )
+                        }
+        else {
+            return (
+                <div></div>
+            )
+        }
     }
 }
 

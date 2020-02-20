@@ -6,7 +6,8 @@ const topicsReducer = (state = {}, action) => {
 
     switch (action.type) {
         case RECEIVE_TOPICS:
-            newState = {...action.topics, ...newState}
+            // newState = {...action.topics, ...newState}
+            newState = action.topics
             return newState    
         default:
             return state

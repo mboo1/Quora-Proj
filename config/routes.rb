@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :answers, only: [:create]
     resources :topics, only: [:index]
     resources :upvotes, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy, :update]
     get 'questions/search/:query', :to => 'questions#search'
   end
 

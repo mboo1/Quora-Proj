@@ -12,6 +12,7 @@ Answer.delete_all
 Topic.delete_all
 TopicQuestionAssociation.delete_all
 Upvote.delete_all
+Comment.delete_all
 
 u1 = User.create!(username: 'guest', email: 'guest@gmail.com', password: 'password')
 u2 = User.create!(username: 'Fido', email: 'fido@gmail.com', password: 'missionviejoNY')
@@ -93,6 +94,19 @@ v6 = Upvote.create!(author_id: u1.id, answer_id: a6.id)
 v7 = Upvote.create!(author_id: u2.id, answer_id: a1.id)
 v8 = Upvote.create!(author_id: u3.id, answer_id: a1.id)
 v9 = Upvote.create!(author_id: u2.id, answer_id: a2.id)
+
+c1 = Comment.create!(author_id: u1.id, answer_id: a1.id, body: "This is a great point!")
+c2 = Comment.create!(author_id: u1.id, answer_id: a1.id, body: "No it's not!")
+c3 = Comment.create!(author_id: u1.id, answer_id: a2.id, body: "Disagree!")
+c4 = Comment.create!(author_id: u1.id, answer_id: a3.id, body: "Ok!")
+c5 = Comment.create!(author_id: u1.id, answer_id: a4.id, body: "Sure, but have you considered the possibility that!")
+c6 = Comment.create!(author_id: u2.id, answer_id: a1.id, body: "Hmm okay maybe!")
+c7 = Comment.create!(author_id: u2.id, answer_id: a2.id, body: "I'm gay!")
+c8 = Comment.create!(author_id: u2.id, answer_id: a3.id, body: "Yeah!")
+c9 = Comment.create!(author_id: u2.id, answer_id: a4.id, body: "This is a great point!")
+c10 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
+c11 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
+c12 = Comment.create!(author_id: u3.id, answer_id: a1.id, body: "I don't know computers!")
 
 
 t1 = Topic.create!(title: "Science")

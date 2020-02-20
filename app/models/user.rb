@@ -20,6 +20,10 @@ class User < ApplicationRecord
         foreign_key: :author_id,
         class_name: :Upvote
 
+    has_many :comments,
+        foreign_key: :author_id,
+        class_name: :Comment
+
     def password=(password)
         @password = password
         self.password_digest = BCrypt::Password.create(password)

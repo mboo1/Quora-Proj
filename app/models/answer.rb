@@ -12,4 +12,8 @@ class Answer < ApplicationRecord
     has_many :upvotes,
         foreign_key: :answer_id,
         class_name: :Upvote
+
+    has_many :comments,
+        foreign_key: :answer_id,
+        class_name: :Comment
 end

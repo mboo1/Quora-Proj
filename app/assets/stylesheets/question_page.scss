@@ -143,6 +143,10 @@
     cursor: pointer;
 }
 
+.upvoted-button p {
+    color: #000000
+}
+
 .arrow-img {
     filter: invert(59%) sepia(65%) saturate(5443%) hue-rotate(196deg) brightness(111%) contrast(102%);
 }

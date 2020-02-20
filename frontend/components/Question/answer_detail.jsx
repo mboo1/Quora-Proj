@@ -54,7 +54,7 @@ class AnswerDetail extends React.Component {
         } else {
             return (<div className="upvoted-button" onClick={this.handleCreateUpvote}>
                         <img src="https://i.imgur.com/SqBaIR4.png" height="18px" width="20px" alt="upvote"/>
-                        <p color="#000000">Upvote • {this.state.upvotes.length}</p>
+                        <p>Upvote • {this.state.upvotes.length}</p>
                     </div>
             )
         }
@@ -63,7 +63,6 @@ class AnswerDetail extends React.Component {
 
 
     render() {
-        console.log(this.props)
         let tempName;
         (typeof this.props.author === 'undefined') ? tempName = '' : tempName = this.props.author.username;
         let createdAt = new Date(this.props.answer.created_at).toString();
@@ -72,8 +71,9 @@ class AnswerDetail extends React.Component {
             <div className="answer-detail">
                 <div className="answer-profile-row"><img className="profile-icon" src={userImg}/>{tempName}</div>
                 <div className="answer-date">Answered {createdAt}</div>
-                <div className="answer-body">{this.props.answer.body}</div>
-                {/* <div>{this.state.upvotes.length}</div> */}
+                {/* <div className="answer-body">{this.props.answer.body}</div> */}
+                {/* <div className="answer-body">{renderHTML(this.props.answer.body)}</div> */}
+                <div className="answer-body" dangerouslySetInnerHTML={{__html: this.props.answer.body}}></div>
                 {this.renderVoteButton()}
             </div>
         )

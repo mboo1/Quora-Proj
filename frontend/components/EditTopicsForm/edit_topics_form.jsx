@@ -5,7 +5,8 @@ class EditTopicsForm extends React.Component {
         super(props)
         this.state = {
             checkedTopics: [],
-            initialState: true
+            initialState: true,
+            originalTopics: []
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
@@ -27,10 +28,8 @@ class EditTopicsForm extends React.Component {
 
     handleUpdate(e) {
         e.preventDefault()
-        console.log(this.props.question)
         const question = {id: this.props.question.id, topic_ids: this.state.checkedTopics}
-        this.props.updateQuestion(question);
-
+        this.props.updateQuestion(question).then(this.props.closeModal());
     }
 
     render() {
@@ -39,20 +38,49 @@ class EditTopicsForm extends React.Component {
             topicsArr.forEach(topic => {
                 if (this.props.question.topicNames.includes(topic.title)) {
                     this.state.checkedTopics.push(topic.id)
+                    this.state.originalTopics.push(topic.id)
                 }
             })
         this.state.initialState = false;
         }
         return (
             <div className="edit-topics-form">
-                <h6>Edit Topics</h6>
-                {topicsArr.map(topic => (
-                    <label key={topic.id}>{topic.title}
-                        <input onChange={this.handleClick}type="checkbox" id={topic.id} defaultChecked={this.state.checkedTopics.includes(topic.id)}/>
-                    </label>
-                ))}
-                <button onClick={this.handleUpdate}>UPDATE</button>
-
+                <div className="edit-question-title">{this.props.question.title}</div>
+                <div className="topics-intro">Add topics that best describe your question</div>
+                <div className="topics-list-message">
+                    <p className="topic-number">1</p>Verify that these topics describe your question
+                </div>
+                <div className="topics-list">
+                {topicsArr.map(topic => {
+                    if (this.state.originalTopics.includes(topic.id)) { 
+                    return (<label key={topic.id} className="topic-selector">
+                                <input onChange={this.handleClick}type="checkbox" id={topic.id} defaultChecked={this.state.checkedTopics.includes(topic.id)}/>
+                                {topic.title}
+                            </label>
+                        )
+                    }
+                }
+                )}
+                </div>
+                <div className="topics-list-message">
+                    <p className="topic-number">2</p>Select any topics that also describe your question
+                </div>
+                <div className="topics-list">
+                {topicsArr.map(topic => {
+                    if (!this.state.originalTopics.includes(topic.id)) { 
+                    return (<label key={topic.id} className="topic-selector">
+                                <input onChange={this.handleClick}type="checkbox" id={topic.id} defaultChecked={this.state.checkedTopics.includes(topic.id)}/>
+                                {topic.title}
+                            </label>
+                            )
+                        }
+                    }
+                )}
+                </div>
+                <div className="topics-update-row">
+                    <p className="topic-cancel" onClick={this.props.closeModal}>Cancel</p>
+                    <div className="update-topics-button" onClick={this.handleUpdate}>Confirm Topics</div>
+                </div>
             </div>
         )
     }

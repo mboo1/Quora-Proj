@@ -118,6 +118,63 @@ var createAnswer = function createAnswer(answer) {
 
 /***/ }),
 
+/***/ "./frontend/actions/comment_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/comment_actions.js ***!
+  \*********************************************/
+/*! exports provided: RECEIVE_COMMENT, REMOVE_COMMENT, createComment, updateComment, destroyComment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_COMMENT", function() { return RECEIVE_COMMENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_COMMENT", function() { return REMOVE_COMMENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createComment", function() { return createComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateComment", function() { return updateComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyComment", function() { return destroyComment; });
+/* harmony import */ var _util_comments_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/comments_api_util */ "./frontend/util/comments_api_util.js");
+
+var RECEIVE_COMMENT = "RECEIVE_COMMENT";
+var REMOVE_COMMENT = "REMOVE_COMMENT";
+
+var receiveComment = function receiveComment(comment) {
+  return {
+    type: RECEIVE_COMMENT,
+    comment: comment
+  };
+};
+
+var removeComment = function removeComment(commentId) {
+  return {
+    type: REMOVE_COMMENT,
+    commentId: commentId
+  };
+};
+
+var createComment = function createComment(comment) {
+  return function (dispatch) {
+    return _util_comments_api_util__WEBPACK_IMPORTED_MODULE_0__["createComment"](comment).then(function (comment) {
+      return dispatch(receiveComment(comment));
+    });
+  };
+};
+var updateComment = function updateComment(comment) {
+  return function (dispatch) {
+    return _util_comments_api_util__WEBPACK_IMPORTED_MODULE_0__["updateComment"](comment).then(function (comment) {
+      return dispatch(receiveComment(comment));
+    });
+  };
+};
+var destroyComment = function destroyComment(commentId) {
+  return function (dispatch) {
+    return _util_comments_api_util__WEBPACK_IMPORTED_MODULE_0__["destroyComment"](commentId).then(function () {
+      return dispatch(removeComment(commentId));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/modal_actions.js":
 /*!*******************************************!*\
   !*** ./frontend/actions/modal_actions.js ***!
@@ -509,10 +566,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/Comment/comment_index.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/Comment/comment_index.jsx ***!
-  \*******************************************************/
+/***/ "./frontend/components/Comment/comment_detail.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/Comment/comment_detail.jsx ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -520,6 +577,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_color_generator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/color_generator */ "./frontend/util/color_generator.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -540,6 +598,91 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+var CommentDetail =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CommentDetail, _React$Component);
+
+  function CommentDetail(props) {
+    _classCallCheck(this, CommentDetail);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(CommentDetail).call(this, props));
+  }
+
+  _createClass(CommentDetail, [{
+    key: "createdAt",
+    value: function createdAt() {
+      var createdAt = new Date(this.props.comment.created_at).toString();
+      createdAt = createdAt.split(' ').slice(1, 4).join(' ');
+      return createdAt;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var color = Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_1__["default"])(this.props.author.username);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-profile-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "profile-icon-circle",
+        style: {
+          background: color
+        }
+      }, this.props.author.username[0].toUpperCase()), this.props.author.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "answer-date"
+      }, "Answered ", this.createdAt()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-body"
+      }, this.props.comment.body));
+    }
+  }]);
+
+  return CommentDetail;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (CommentDetail);
+
+/***/ }),
+
+/***/ "./frontend/components/Comment/comment_index.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/Comment/comment_index.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _util_color_generator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/color_generator */ "./frontend/util/color_generator.js");
+/* harmony import */ var _comment_detail__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comment_detail */ "./frontend/components/Comment/comment_detail.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var heightLimit = 200;
+
 var CommentIndex =
 /*#__PURE__*/
 function (_React$Component) {
@@ -552,9 +695,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentIndex).call(this, props));
     _this.state = {
-      readyToRender: false
+      readyToRender: false,
+      commentBody: ''
     };
     _this.commentsArr = [];
+    _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
+    _this.handleCommentSubmit = _this.handleCommentSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -571,11 +717,59 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleInput",
+    value: function handleInput(e) {
+      e.preventDefault();
+      this.setState({
+        commentBody: e.currentTarget.value
+      });
+      var textarea = document.getElementById("add-comment-area-".concat(this.props.answer.id));
+      textarea.style.height = "";
+      textarea.style.height = Math.min(textarea.scrollHeight - 3, heightLimit) + "px";
+    }
+  }, {
+    key: "handleCommentSubmit",
+    value: function handleCommentSubmit() {
+      this.props.createComment({
+        body: this.state.commentBody,
+        author_id: this.props.currentUser.id,
+        answer_id: this.props.answer.id
+      }).then(this.setState({
+        commentBody: ''
+      }));
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      // console.log(this.props.authors[114])
       if (this.state.readyToRender) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Comment Index"), this.commentsArr.map(function (comment) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, comment.body);
+        var color = Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_2__["default"])(this.props.currentUser.username);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "comment-index"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "add-comment-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "profile-icon-circle",
+          style: {
+            background: color
+          }
+        }, this.props.currentUser.username[0].toUpperCase()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "comment-field",
+          value: this.state.commentBody,
+          id: "add-comment-area-".concat(this.props.answer.id),
+          onChange: this.handleInput,
+          placeholder: "Add a comment..."
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "add-comment-button",
+          onClick: this.handleCommentSubmit
+        }, "Add Comment")), this.commentsArr.map(function (comment) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_detail__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: comment.id,
+            comment: comment,
+            author: _this3.props.authors[comment.author_id]
+          });
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -601,18 +795,25 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _comment_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_index */ "./frontend/components/Comment/comment_index.jsx");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
 
 
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.entities.users[state.session.id],
-    comments: state.entities.comments
+    comments: state.entities.comments,
+    authors: state.entities.users
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    createComment: function createComment(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["createComment"])(comment));
+    }
+  };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
@@ -663,7 +864,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditTopicsForm).call(this, props));
     _this.state = {
       checkedTopics: [],
-      initialState: true
+      initialState: true,
+      originalTopics: []
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
@@ -691,12 +893,11 @@ function (_React$Component) {
     key: "handleUpdate",
     value: function handleUpdate(e) {
       e.preventDefault();
-      console.log(this.props.question);
       var question = {
         id: this.props.question.id,
         topic_ids: this.state.checkedTopics
       };
-      this.props.updateQuestion(question);
+      this.props.updateQuestion(question).then(this.props.closeModal());
     }
   }, {
     key: "render",
@@ -709,6 +910,8 @@ function (_React$Component) {
         topicsArr.forEach(function (topic) {
           if (_this2.props.question.topicNames.includes(topic.title)) {
             _this2.state.checkedTopics.push(topic.id);
+
+            _this2.state.originalTopics.push(topic.id);
           }
         });
         this.state.initialState = false;
@@ -716,18 +919,55 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-topics-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Edit Topics"), topicsArr.map(function (topic) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-          key: topic.id
-        }, topic.title, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          onChange: _this2.handleClick,
-          type: "checkbox",
-          id: topic.id,
-          defaultChecked: _this2.state.checkedTopics.includes(topic.id)
-        }));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "edit-question-title"
+      }, this.props.question.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-intro"
+      }, "Add topics that best describe your question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-list-message"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "topic-number"
+      }, "1"), "Verify that these topics describe your question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-list"
+      }, topicsArr.map(function (topic) {
+        if (_this2.state.originalTopics.includes(topic.id)) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            key: topic.id,
+            className: "topic-selector"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            onChange: _this2.handleClick,
+            type: "checkbox",
+            id: topic.id,
+            defaultChecked: _this2.state.checkedTopics.includes(topic.id)
+          }), topic.title);
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-list-message"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "topic-number"
+      }, "2"), "Select any topics that also describe your question"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-list"
+      }, topicsArr.map(function (topic) {
+        if (!_this2.state.originalTopics.includes(topic.id)) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            key: topic.id,
+            className: "topic-selector"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            onChange: _this2.handleClick,
+            type: "checkbox",
+            id: topic.id,
+            defaultChecked: _this2.state.checkedTopics.includes(topic.id)
+          }), topic.title);
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "topics-update-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "topic-cancel",
+        onClick: this.props.closeModal
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "update-topics-button",
         onClick: this.handleUpdate
-      }, "UPDATE"));
+      }, "Confirm Topics")));
     }
   }]);
 
@@ -1500,7 +1740,8 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditTopicsForm_edit_topics_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
           question: this.props.modalState.question,
           topics: this.props.modalState.topics,
-          updateQuestion: this.props.modalState.updateQuestion
+          updateQuestion: this.props.modalState.updateQuestion,
+          closeModal: this.props.closeModal
         })));
       } else if (this.props.modalState === 'searchBar') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1998,6 +2239,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Comment_comment_index_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Comment/comment_index_container */ "./frontend/components/Comment/comment_index_container.js");
+/* harmony import */ var _util_color_generator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/color_generator */ "./frontend/util/color_generator.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2015,6 +2257,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2081,7 +2324,7 @@ function (_React$Component) {
     value: function renderVoteButton() {
       if (this.state.alreadyVoted) {
         this.state.upvotes;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "You already voted!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "upvoted-button",
           onClick: this.handleDestroyUpvote
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -2110,14 +2353,17 @@ function (_React$Component) {
       typeof this.props.author === 'undefined' ? tempName = '' : tempName = this.props.author.username;
       var createdAt = new Date(this.props.answer.created_at).toString();
       createdAt = createdAt.split(' ').slice(1, 4).join(' ');
+      var color = Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_2__["default"])(tempName);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-detail"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-profile-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "profile-icon",
-        src: userImg
-      }), tempName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "profile-icon-circle",
+        style: {
+          background: color
+        }
+      }, tempName[0].toUpperCase()), tempName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-date"
       }, "Answered ", createdAt), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "answer-body",
@@ -2125,6 +2371,7 @@ function (_React$Component) {
           __html: this.props.answer.body
         }
       }), this.renderVoteButton(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Comment_comment_index_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        key: this.props.answer.id,
         answer: this.props.answer
       }));
     }
@@ -2416,6 +2663,8 @@ function (_React$Component) {
     _this.renderAnswerForm = _this.renderAnswerForm.bind(_assertThisInitialized(_this));
     _this.renderTopics = _this.renderTopics.bind(_assertThisInitialized(_this));
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
+    _this.closeAnswerForm = _this.closeAnswerForm.bind(_assertThisInitialized(_this)); // this.profileDraw = this.profileDraw.bind(this);
+
     return _this;
   }
 
@@ -2485,9 +2734,16 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "closeAnswerForm",
+    value: function closeAnswerForm() {
+      this.setState({
+        answerClicked: false
+      });
+    }
+  }, {
     key: "handleEdit",
     value: function handleEdit(e) {
-      e.preventDefault();
+      // e.preventDefault()
       this.props.openModal({
         name: 'topicForm',
         question: this.props.question,
@@ -2512,7 +2768,10 @@ function (_React$Component) {
           id: "editor"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "answer-submit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "topic-cancel",
+          onClick: this.closeAnswerForm
+        }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "submit-answer-button",
           onClick: this.handleAnswer
         }, "Submit")));
@@ -2553,9 +2812,13 @@ function (_React$Component) {
         className: "question-column"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "topics-row"
-      }, this.renderTopics(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, this.renderTopics(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.handleEdit
-      }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "edit-topics-button",
+        src: "https://i.imgur.com/yQBSUR6.png",
+        alt: "edit-pen-icon"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-title"
       }, tempTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "question-answer-button",
@@ -2935,18 +3198,11 @@ function (_React$Component) {
         var tempObj = Object.values(this.props.topics);
 
         for (var i = 0; i < tempObj.length; i++) {
-          console.log(tempObj[i].title);
-          console.log(this.props.match.params.topicName);
-
           if (tempObj[i].title === this.props.match.params.topicName) {
-            console.log('hi');
-            console.log(tempObj[i]);
             this.state.topicQuestionIds = tempObj[i].questionIds;
-            console.log(this.state.topicQuestionIds);
           }
-        }
+        } // console.log(this.state.topicQuestions)
 
-        console.log(this.state.topicQuestionIds); // console.log(this.state.topicQuestions)
 
         for (var _i = 0; _i < this.props.questions.length; _i++) {
           if (this.state.topicQuestionIds.includes(this.props.questions[_i].id)) {
@@ -3312,14 +3568,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_users_api_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/users_api_util */ "./frontend/util/users_api_util.js");
 /* harmony import */ var _util_answers_api_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/answers_api_util */ "./frontend/util/answers_api_util.js");
 /* harmony import */ var _util_upvotes_api_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./util/upvotes_api_util */ "./frontend/util/upvotes_api_util.js");
-/* harmony import */ var _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/upvote_actions */ "./frontend/actions/upvote_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
-/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
-/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./actions/answer_actions */ "./frontend/actions/answer_actions.js");
-/* harmony import */ var _util_topics_api_util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./util/topics_api_util */ "./frontend/util/topics_api_util.js");
-/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./actions/topic_actions */ "./frontend/actions/topic_actions.js");
+/* harmony import */ var _util_comments_api_util__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./util/comments_api_util */ "./frontend/util/comments_api_util.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./actions/upvote_actions */ "./frontend/actions/upvote_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_users_actions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./actions/users_actions */ "./frontend/actions/users_actions.js");
+/* harmony import */ var _actions_answer_actions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./actions/answer_actions */ "./frontend/actions/answer_actions.js");
+/* harmony import */ var _util_topics_api_util__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./util/topics_api_util */ "./frontend/util/topics_api_util.js");
+/* harmony import */ var _actions_topic_actions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./actions/topic_actions */ "./frontend/actions/topic_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -3363,26 +3623,32 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["fetchQuestion"];
   window.updateQuestion = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["updateQuestion"]; // window.destroyUpvote = UpvotesApiUtil.destroyUpvote;
   // window.createUpvote = UpvotesApiUtil.createUpvote;
-
-  window.createUpvote = _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__["createUpvote"];
-  window.destroyUpvote = _actions_upvote_actions__WEBPACK_IMPORTED_MODULE_9__["destroyUpvote"]; // window.createQuestion = QuestionsApiUtil.createQuestion;
+  // window.createUpvote = createUpvote;
+  // window.destroyUpvote = destroyUpvote;
+  // window.createComment = CommentsApiUtil.createComment
+  // window.destroyComment = CommentsApiUtil.destroyComment
+  // window.updateComment = CommentsApiUtil.updateComment
+  // window.createComment = createComment;
+  // window.updateComment = updateComment;
+  // window.destroyComment = destroyComment;
+  // window.createQuestion = QuestionsApiUtil.createQuestion;
   // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;
 
   window.searchQuestions = _util_questions_api_util__WEBPACK_IMPORTED_MODULE_5__["searchQuestions"]; // window.fetchUsers = UsersApiUtil.fetchUsers;
   // window.fetchQuestions = fetchQuestions;
 
-  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__["fetchUsers"];
-  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_12__["fetchUser"];
-  window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_13__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
+  window.fetchUsers = _actions_users_actions__WEBPACK_IMPORTED_MODULE_14__["fetchUsers"];
+  window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_14__["fetchUser"];
+  window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_15__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
   // window.fetchQuestion = fetchQuestion;
 
-  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__["createQuestion"];
-  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_11__["destroyQuestion"];
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["login"];
-  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["logout"];
-  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_10__["signup"];
+  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_13__["createQuestion"];
+  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_13__["destroyQuestion"];
+  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["login"];
+  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["logout"];
+  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["signup"];
   window.dispatch = store.dispatch;
-  window.fetchTopics = _actions_topic_actions__WEBPACK_IMPORTED_MODULE_15__["fetchTopics"];
+  window.fetchTopics = _actions_topic_actions__WEBPACK_IMPORTED_MODULE_17__["fetchTopics"];
   var rootEl = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -3445,11 +3711,13 @@ var answersReducer = function answersReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/question_actions */ "./frontend/actions/question_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/comment_actions */ "./frontend/actions/comment_actions.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3462,6 +3730,14 @@ var commentsReducer = function commentsReducer() {
   switch (action.type) {
     case _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
       newState = _objectSpread({}, newState, {}, action.comments);
+      return newState;
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_COMMENT"]:
+      newState[action.comment.id] = action.comment;
+      return newState;
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_COMMENT"]:
+      delete newState[action.commentId];
       return newState;
 
     default:
@@ -3951,6 +4227,69 @@ var createAnswer = function createAnswer(answer) {
     url: "/api/answers",
     data: {
       answer: answer
+    }
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/color_generator.js":
+/*!******************************************!*\
+  !*** ./frontend/util/color_generator.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var alphabet = "abcdefghijklmopqrstuvwxyz";
+var colors = ['DeepSkyBlue', 'DarkSlateBlue', 'DarkGreen', 'DarkSalmon', 'DarkOrchid', 'FireBrick'];
+
+var generateColor = function generateColor(username) {
+  var initial;
+  if (!username || username === '') username = 'a';
+  initial = username[0].toLowerCase();
+  var indi = alphabet.indexOf(initial) % colors.length;
+  return colors[indi];
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (generateColor);
+
+/***/ }),
+
+/***/ "./frontend/util/comments_api_util.js":
+/*!********************************************!*\
+  !*** ./frontend/util/comments_api_util.js ***!
+  \********************************************/
+/*! exports provided: createComment, destroyComment, updateComment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createComment", function() { return createComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyComment", function() { return destroyComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateComment", function() { return updateComment; });
+var createComment = function createComment(comment) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/comments",
+    data: {
+      comment: comment
+    }
+  });
+};
+var destroyComment = function destroyComment(commentId) {
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/comments/".concat(commentId)
+  });
+};
+var updateComment = function updateComment(comment) {
+  return $.ajax({
+    method: "PATCH",
+    url: "/api/comments/".concat(comment.id),
+    data: {
+      comment: comment
     }
   });
 };

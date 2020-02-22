@@ -3,7 +3,8 @@
     margin-top: 51px;
     display: flex;
     justify-content: center;
-    background-color: rgba($color: #FFFFFF, $alpha: 1.0);
+    background-color: rgba($color: #F7F7F8, $alpha: 1.0);
+    // background-color: rgba($color: #FFFFFF, $alpha: 1.0);
     // z-index: 70
 }
 
@@ -12,6 +13,9 @@
     flex-direction: column;
     width: 600px;
     padding: 32px;
+    border: 1px solid lightgrey;
+    margin-top: 45px;
+    background-color: rgba($color: #FAFAFA, $alpha: 1.0);
 }
 
 .question-title {
@@ -36,6 +40,20 @@
     cursor: pointer;
 }
 
+@keyframes answer-form-slide {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+// .answer-form-spacer {
+//     height: 400px;
+// }
+
+
 .answer-input-container {
     display: flex;
     flex-direction: column;
@@ -44,6 +62,9 @@
     border: 1px solid rgb(15, 15, 15);
     border-radius: 3px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: answer-form-slide;
+    animation-duration: 3s;
+
 }
 
 #editor {
@@ -54,7 +75,7 @@
 .submit-answer-button {
     display: flex;
     justify-content: center;
-    background-color: rgba($color: #3E78AD, $alpha: 1.0);
+    background-color: rgba($color: #329bff, $alpha: 1.0);
     color: white;
     width: 56px;
     font-size: 14px;
@@ -62,6 +83,11 @@
     border: 1px solid rgba(45, 89, 129, 0.7);
     border-radius: 3px;
     margin: 3px;
+    margin-left: 10px;
+}
+
+.submit-answer-button:hover {
+    cursor: pointer;
 }
 
 .answer-username {
@@ -91,6 +117,7 @@
 
 .answer-submit-row {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     height: 30px;
     padding: 10px;
@@ -188,6 +215,17 @@
 
 .topic-button:hover {
     color: rgba($color: #3E78AD, $alpha: 1.0)
+}
+
+.edit-topics-button {
+    padding-top: 3px;
+    height: 25px;
+    width: 25px;
+}
+
+.edit-topics-button:hover {
+    cursor: pointer;
+    filter: invert(59%) sepia(65%) saturate(5443%) hue-rotate(196deg) brightness(111%) contrast(102%);
 }
 
 // .answer-submit-button {

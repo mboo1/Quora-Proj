@@ -1,8 +1,126 @@
 .edit-topics-form {
     display: flex;
     flex-direction: column;
-    width: 350px;
-    height: 350px;
+    // justify-content: center;
+    align-items: center;
+    width: 650px;
+    // height: 475px;
+    font-size: 15px;
     background-color: white;
-    padding: 20px;
+    border-radius: 5px;
+    margin-top: 30px;
+    color: rgba($color: #333, $alpha: 1.0);
+}
+
+.edit-question-title {
+    font-size: 18px;
+    font-weight: bold;
+    width: 635px;
+    display: flex;
+    height: 45px;
+    align-items: center;
+    background-color: rgba($color: #dfdfdf, $alpha: 1.0);
+    border-bottom: 1px solid gray;
+    padding-left: 10px;
+    padding-right: 5px;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.topics-intro {
+    border-bottom: 1px solid lightgrey;
+    width: 600px;
+    font-size: 15px;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+.topics-list-message {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: start;
+    // padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 600px;
+    margin-top: 5px;
+}
+
+.topic-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba($color: #329bff, $alpha: 1.0);
+    color: rgba($color: #ffffff, $alpha: 1.0);
+    border-radius: 50%;
+    margin-right: 5px;
+    width: 21px;
+    height: 21px;
+}
+
+.topics-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    width: 600px;
+}
+
+.topic-selector {
+    display: flex;
+    align-items: center;
+    background-color: rgba($color: rgb(247, 245, 245), $alpha: 1.0);
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 13px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.topic-selector:hover {
+    color: rgba($color: #329bff, $alpha: 1.0);
+    cursor: pointer;
+}
+
+.topics-update-row {
+    width: 635px;
+    display: flex;
+    justify-content: flex-end;
+    height: 45px;
+    align-items: center;
+    background-color: rgba($color: #dfdfdf, $alpha: 1.0);
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-right: 5px;
+    border-top: 1px solid gray;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.update-topics-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #329bff, $alpha: 1.0);
+    color: white;
+    width: 120px;
+    font-size: 15px;
+    height: 29px;
+    border-radius: 3px;
+    margin: 3px;
+    margin-left: 10px;
+}
+
+.update-topics-button:hover {
+    cursor: pointer;
+    background-color: rgba($color: #287bc9, $alpha: 1.0);
+}
+
+.topic-cancel:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }

@@ -26,6 +26,8 @@ class QuestionShow extends React.Component {
         this.renderAnswerForm = this.renderAnswerForm.bind(this);
         this.renderTopics = this.renderTopics.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.closeAnswerForm = this.closeAnswerForm.bind(this);
+        // this.profileDraw = this.profileDraw.bind(this);
     }
 
     getKey(){
@@ -71,8 +73,14 @@ class QuestionShow extends React.Component {
         }
     }
 
+    closeAnswerForm() {
+        this.setState({
+            answerClicked: false
+        })
+    }
+
     handleEdit(e) {
-        e.preventDefault()
+        // e.preventDefault()
         this.props.openModal({name: 'topicForm', question: this.props.question, topics: this.props.topics, updateQuestion: this.props.updateQuestion})
     }
 
@@ -90,6 +98,7 @@ class QuestionShow extends React.Component {
                         </div>
                     </div>
                     <div className="answer-submit-row">
+                        <p className="topic-cancel" onClick={this.closeAnswerForm}>Cancel</p>
                         <button className="submit-answer-button" onClick={this.handleAnswer}>Submit</button>
                     </div>
                 </div>
@@ -105,7 +114,7 @@ class QuestionShow extends React.Component {
         } else {
             return (
                 this.state.tempTopics.map((topicName, idx) => 
-                    <div  ><Link key={Math.random()} className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
+                    <div><Link key={Math.random()} className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
                 )
             )
         }
@@ -122,7 +131,9 @@ class QuestionShow extends React.Component {
                 <div className="question-column">
                     <div className="topics-row">
                         {this.renderTopics()}
-                        <button onClick={this.handleEdit}>Edit</button>
+                        <div onClick={this.handleEdit}>
+                            <img className="edit-topics-button" src="https://i.imgur.com/yQBSUR6.png" alt="edit-pen-icon"/>
+                        </div>
                     </div>
                     <div className="question-title">{tempTitle}</div>
                     <div className="question-answer-button" onClick={this.openAnswerForm}>

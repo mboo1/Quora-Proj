@@ -1,5 +1,6 @@
 import React from "react";
 import CommentIndexContainer from "../Comment/comment_index_container";
+import generateColor from "../../util/color_generator";
 
 class AnswerDetail extends React.Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class AnswerDetail extends React.Component {
         if (this.state.alreadyVoted) {
             this.state.upvotes
             return (<div>
-                        <div>You already voted!</div>
+                        {/* <div>You already voted!</div> */}
                         <div className="upvoted-button" onClick={this.handleDestroyUpvote}>
                             {/* <img src="https://i.imgur.com/SYOBXMd.png" height="18px" width="20px" alt="upvoted"/> */}
                             <img className="arrow-img" src="https://i.imgur.com/DkJAg3S.png" height="18px" width="20px" alt="upvoted"/>
@@ -68,15 +69,19 @@ class AnswerDetail extends React.Component {
         (typeof this.props.author === 'undefined') ? tempName = '' : tempName = this.props.author.username;
         let createdAt = new Date(this.props.answer.created_at).toString();
         createdAt = createdAt.split(' ').slice(1,4).join(' ')
+        let color = generateColor(tempName);
         return (
             <div className="answer-detail">
-                <div className="answer-profile-row"><img className="profile-icon" src={userImg}/>{tempName}</div>
+                {/* <div className="answer-profile-row"><img className="profile-icon" src={userImg}/>{tempName}</div> */}
+                <div className="answer-profile-row">
+                    <div className="profile-icon-circle" style={{ background: color }} >{tempName[0].toUpperCase()}</div>{tempName}
+                </div>
                 <div className="answer-date">Answered {createdAt}</div>
                 {/* <div className="answer-body">{this.props.answer.body}</div> */}
                 {/* <div className="answer-body">{renderHTML(this.props.answer.body)}</div> */}
                 <div className="answer-body" dangerouslySetInnerHTML={{__html: this.props.answer.body}}></div>
                 {this.renderVoteButton()}
-                <CommentIndexContainer answer={this.props.answer}/>
+                <CommentIndexContainer key={this.props.answer.id} answer={this.props.answer}/>
             </div>
         )
     }

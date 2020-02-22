@@ -35,16 +35,10 @@ class TopicIndex extends React.Component {
         if (Object.entries(this.props.topics).length > 0) {
             let tempObj = Object.values(this.props.topics)
             for (let i = 0; i < tempObj.length; i++) {
-                console.log(tempObj[i].title);
-                console.log(this.props.match.params.topicName);
                 if (tempObj[i].title === this.props.match.params.topicName) {
-                    console.log('hi')
-                    console.log(tempObj[i])
                     this.state.topicQuestionIds = tempObj[i].questionIds
-                    console.log(this.state.topicQuestionIds)
                 }
             }
-            console.log(this.state.topicQuestionIds)
             // console.log(this.state.topicQuestions)
             for (let i = 0; i < this.props.questions.length; i++) {
                 if (this.state.topicQuestionIds.includes(this.props.questions[i].id)) {

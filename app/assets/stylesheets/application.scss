@@ -106,6 +106,15 @@ table {
      color: rgba($color: #3E78AD, $alpha: 1.0);
  }
 
+ @keyframes modal-bg-fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
  .modal-background {
     position: fixed;
     top: 0;
@@ -114,6 +123,8 @@ table {
     left: 0;
     background: rgba(0, 0, 0, 0.7);
     z-index: 10;
+    animation-name: modal-bg-fade-in;
+    animation-duration: 0.5s;
   }
   
   .modal-child {
@@ -165,3 +176,4 @@ table {
   //dfdfdf for nice gray
   //666666 for gray text color
   //#3E78AD for blue
+  //329bff pretty blue

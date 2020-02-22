@@ -8,6 +8,8 @@ import * as QuestionsApiUtil from "./util/questions_api_util"
 import * as UsersApiUtil from "./util/users_api_util"
 import * as AnswersApiUtil from "./util/answers_api_util"
 import * as UpvotesApiUtil from "./util/upvotes_api_util"
+import * as CommentsApiUtil from "./util/comments_api_util"
+import { createComment, updateComment, destroyComment } from "./actions/comment_actions"
 import { createUpvote, destroyUpvote } from "./actions/upvote_actions"
 import {login, logout, signup, logoutCurrentUser} from "./actions/session_actions"
 import { fetchQuestions, fetchQuestion, createQuestion, destroyQuestion } from "./actions/question_actions"
@@ -42,8 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.updateQuestion = QuestionsApiUtil.updateQuestion;
     // window.destroyUpvote = UpvotesApiUtil.destroyUpvote;
     // window.createUpvote = UpvotesApiUtil.createUpvote;
-    window.createUpvote = createUpvote;
-    window.destroyUpvote = destroyUpvote;
+    // window.createUpvote = createUpvote;
+    // window.destroyUpvote = destroyUpvote;
+    // window.createComment = CommentsApiUtil.createComment
+    // window.destroyComment = CommentsApiUtil.destroyComment
+    // window.updateComment = CommentsApiUtil.updateComment
+    // window.createComment = createComment;
+    // window.updateComment = updateComment;
+    // window.destroyComment = destroyComment;
 
     // window.createQuestion = QuestionsApiUtil.createQuestion;
     // window.destroyQuestion = QuestionsApiUtil.destroyQuestion;

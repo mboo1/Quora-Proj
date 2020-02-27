@@ -1,4 +1,4 @@
-# README
+# Fora
 
 See the live site at [https://foraproject.herokuapp.com/?#/](https://foraproject.herokuapp.com/?#/)
 

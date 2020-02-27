@@ -1,7 +1,8 @@
 import React from "react"
 import IndexItem from "./index_item"
-// import IndexItemContainer from "./index_item"
+import IndexItemContainer from "./index_item_container"
 import TopicsColumnContainer from "../TopicsColumn/topics_column_container"
+import generateColor from "../../util/color_generator"
 
 class Index extends React.Component {
     constructor(props) {
@@ -15,11 +16,20 @@ class Index extends React.Component {
     render () {
         return (
             <div className="main-row">
-                    <TopicsColumnContainer />
+                <TopicsColumnContainer />
                 <div className="index-box">
+                    <div className="question-prompt" onClick={this.props.openModal}>
+                        <div className="prompt-profile-row">
+                            <p className="profile-icon-circle" style={{ background: generateColor(this.props.currentUser.username) }} >{this.props.currentUser.username[0].toUpperCase()}</p>
+                            {this.props.currentUser.username}
+                        </div>
+                        <div className="prompt-text">
+                            What is your question?
+                        </div>
+                    </div>
                     <ul>
                         {this.props.questions.map(question => (
-                            <IndexItem question={question} key={question.id} author={this.props.users[question.author_id]} />
+                            <IndexItemContainer question={question} key={question.id} author={this.props.users[question.author_id]} />
                         ))}
                     </ul>
                 </div>

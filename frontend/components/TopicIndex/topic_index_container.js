@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
     currentUser: state.entities.users[state.session.id],
     users: state.entities.users,
     questions: Object.values(state.entities.questions),
-    topics: state.entities.topics
+    topics: state.entities.topics,
+    answers: state.entities.answers
 
 })
 

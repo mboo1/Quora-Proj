@@ -23,7 +23,8 @@ class Login extends React.Component {
         )
     }
 
-    handleSignUp() {
+    handleSignUp(e) {
+        e.preventDefault();
         let user = {username: this.state.newUsername, email: this.state.newEmail, password: this.state.newPassword}
         this.props.signup(user)
     }
@@ -38,10 +39,27 @@ class Login extends React.Component {
         e.preventDefault();
         let user;
         // this.props.login({username: 'guestt', password: 'password'})
-        this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
-            user = {username: this.state.oldUsername, password: this.state.oldPassword}
-            this.props.login(user)
-        })
+
+        // this.setState({oldUsername: 'guest', oldPassword: 'password'}, () => {
+        //     user = {username: this.state.oldUsername, password: this.state.oldPassword}
+        //     this.props.login(user)
+        // })
+
+        let i = 0;
+        let n = 0;
+        let nameEnt = setInterval(() => {
+            if (i <= 'guest'.length) {
+                this.setState({ oldUsername: 'guest'.slice(0,i) })
+                i += 1
+            } else if (n <= 'password'.length) {
+                this.setState({ oldPassword: 'password'.slice(0,n) })
+                n += 1
+            } else {
+                clearInterval(nameEnt)
+                user = {username: this.state.oldUsername, password: this.state.oldPassword}
+                this.props.login(user)
+            }
+        }, 100)
     }
 
     checkErrors() {
@@ -51,7 +69,7 @@ class Login extends React.Component {
             return (
                 <h6 className="login-error-bar">
                     <div className="login-error-display">
-                        {this.props.errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                        {this.props.errors.map((error, idx) => <div key={idx}>{error}</div>)}
                     </div>
                 </h6>
             )
@@ -86,8 +104,10 @@ class Login extends React.Component {
                                 <input placeholder={" Name"}className="session-input" type="text" value={this.state.oldUsername} onChange={this.handleChange('oldUsername')}/>
                                 <input placeholder={" Password"}className= "session-input" type="password" value={this.state.oldPassword} onChange={this.handleChange('oldPassword')}/>
                                 <div className="button-row">
-                                    <button onClick={this.handleGuest} className="submit-button">Demo</button>
                                     <button onClick={this.handleSignIn} className="submit-button">Login</button>
+                                </div>
+                                <div className="submit-button-row">
+                                    <button onClick={this.handleGuest} className="submit-button">Demo</button>
                                 </div>
                             </form>
                         </div>

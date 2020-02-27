@@ -8,7 +8,7 @@ end
 @question.answers.includes(:author, :upvotes, :comments).each do |answer|
     json.answers do
         json.set! answer.id do
-            json.extract! answer, :id, :body, :author_id, :question_id, :created_at
+            json.extract! answer, :id, :body, :author_id, :question_id, :created_at, :upvotes
         end
     end
 

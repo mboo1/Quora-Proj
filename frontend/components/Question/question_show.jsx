@@ -5,6 +5,7 @@ import AnswerDetailContainer from "./answer_detail_container";
 import { selectAnswers, selectAuthors } from "../../reducers/selectors";
 import OtherQuestionsColumnContainer from "./other_questions_column_container";
 import ReactQuill from 'react-quill';
+import generateColor from "../../util/color_generator";
 
 
 
@@ -15,7 +16,9 @@ class QuestionShow extends React.Component {
             body: '',
             answerClicked: false,
             tempTopics: [],
-            editorCreated: false
+            editorCreated: false,
+            qAnswers: [],
+            readyToRender: false
         }
         this.keyCount = 0;
         this.editor = '';
@@ -27,6 +30,7 @@ class QuestionShow extends React.Component {
         this.renderTopics = this.renderTopics.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.closeAnswerForm = this.closeAnswerForm.bind(this);
+        this.sortQuestions = this.sortQuestions.bind(this);
         // this.profileDraw = this.profileDraw.bind(this);
     }
 
@@ -35,7 +39,14 @@ class QuestionShow extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics())
+        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
+            this.state.qAnswers = Object.values(this.props.fullAnswers);
+            this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+            this.sortQuestions(this.state.qAnswers)
+            this.setState({
+                readyToRender: true
+            })
+        })
     }
 
     componentDidUpdate() {
@@ -67,6 +78,7 @@ class QuestionShow extends React.Component {
                 this.editor = new Quill(container, {modules: {toolbar: [
                     [{ header: [1, 2, false] }],
                     ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['image', 'code-block', 'link', 'video']
                 ]}, theme: 'snow'});
             })
@@ -89,7 +101,8 @@ class QuestionShow extends React.Component {
         return (
                 <div className="answer-input-container">
                     <div className="answer-username">
-                        <img className="profile-icon" src={userImg}/>
+                        <p className="profile-icon-circle" style={{ background: generateColor(this.props.currentUser.username) }} >{this.props.currentUser.username[0].toUpperCase()}</p>
+                        {/* <img className="profile-icon" src={userImg}/> */}
                         {this.props.currentUser.username}
                     </div>
                     <div className="quill-container">
@@ -114,15 +127,26 @@ class QuestionShow extends React.Component {
         } else {
             return (
                 this.state.tempTopics.map((topicName, idx) => 
-                    <div><Link key={Math.random()} className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
+                    <div key={Math.random()}><Link className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
                 )
             )
         }
     }
 
+    sortQuestions(questionAnswers) {
+        if (typeof questionAnswers !== 'undefined' && questionAnswers.length > 1) {
+            questionAnswers.sort((a, b) => (a.upvotes.length < b.upvotes.length) ? 1 : -1)
+        }
+    }
+
     render() {
-        let questionAnswers = Object.values(this.props.fullAnswers);
-        questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
+        // let questionAnswers = Object.values(this.props.fullAnswers);
+        // questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
+        // this.sortQuestions(questionAnswers)
+        if (this.state.readyToRender) {
+        this.state.qAnswers = Object.values(this.props.fullAnswers);
+        this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+        this.sortQuestions(this.state.qAnswers);
         let tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title
         if (typeof this.props.question !== 'undefined') this.state.tempTopics = this.props.question.topicNames
@@ -141,14 +165,19 @@ class QuestionShow extends React.Component {
                         Answer
                     </div>
                     {this.renderAnswerForm()}
-                    <div className="answer-count">{questionAnswers.length} Answers</div>
-                    {questionAnswers.map(answer => (
+                    <div className="answer-count">{this.state.qAnswers.length} Answers</div>
+                    {this.state.qAnswers.map(answer => (
                         <AnswerDetailContainer upvotes={this.props.upvotes} answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
                     ))}
                 </div>
-                {/* <OtherQuestionsColumnContainer currId={this.props.match.params.questionId}/> */}
+                <OtherQuestionsColumnContainer currId={this.props.match.params.questionId}/>
             </div>
+
         )
+                    }
+        else {
+            return <div></div>
+        }
     }
 }
 

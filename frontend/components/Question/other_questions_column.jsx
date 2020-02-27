@@ -68,12 +68,13 @@ class OtherQuestionsColumn extends React.Component {
             
             return (
                 <div className="other-questions-col">
-                    <div>More Questions</div>
-                    <ul>
+                    <div className="other-questions-title">More Questions</div>
+                    <ul className="other-questions-list">
                     {this.state.listArr.map(question => (
-                        <li key={question.id}><Link to= {`/questions/${question.id}`}>{question.title}</Link></li>
+                        <li className="other-questions-link" key={question.id}><Link className="other-questions-text" to= {`/questions/${question.id}`}>{question.title}</Link></li>
                     ))}
                     </ul>
+                    <div className="other-questions-add" onClick={this.props.openModal}>Ask Question</div>
                 </div>
             )
         } else {

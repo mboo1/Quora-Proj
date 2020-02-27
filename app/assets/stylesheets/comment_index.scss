@@ -43,6 +43,19 @@
     background-color: rgba($color: #1b8ffc, $alpha: 1.0);
 }
 
+.comment-item {
+    margin-top: 13px;
+    font-size: 13px;
+}
+
 .comment-body {
     white-space: pre-line;
+    margin-left: 25px
+}
+
+.comment-answer-date {
+    font-size: 13px;
+    color: rgba($color: #949494, $alpha: 1.0);
+    padding-bottom: 8px;
+    margin-left: 25px;
 }

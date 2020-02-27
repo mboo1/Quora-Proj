@@ -1,6 +1,7 @@
-import React from "react"
-import { withRouter, Link } from "react-router-dom"
-import SearchList from "./search_list"
+import React from "react";
+import { withRouter, Link } from "react-router-dom";
+import SearchList from "./search_list";
+import generateColor from "../../util/color_generator";
 
 let timer;
 
@@ -106,7 +107,10 @@ class Navbar extends React.Component {
                     {this.renderSearchList()}
 
                 </div>
-                <img className="profile-icon" src={userImg} onClick={this.handleLogout} />
+                <div className="profile-display">
+                    <p className="navbar-icon-circle" style={{ background: generateColor(this.props.currentUser.username) }} onClick={this.handleLogout}>{this.props.currentUser.username[0].toUpperCase()}</p>
+                </div>
+                {/* <img className="profile-icon" src={userImg} onClick={this.handleLogout} /> */}
                 <p className="question-button" onClick={this.props.openModal}>Add Question</p>
 
             </nav>

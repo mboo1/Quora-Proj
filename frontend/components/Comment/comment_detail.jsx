@@ -17,10 +17,10 @@ class CommentDetail extends React.Component {
 
         return (
             <div className="comment-item">
-                <div className="answer-profile-row">
-                    <div className="profile-icon-circle" style={{ background: color }} >{this.props.author.username[0].toUpperCase()}</div>{this.props.author.username}
+                <div className="answer-profile-row" style={{fontSize: 13}}>
+                    <div className="profile-icon-circle" style={{ background: color, height: 22, width: 22, fontSize: 13}} >{this.props.author.username[0].toUpperCase()}</div>{this.props.author.username}
                 </div>
-                <div className="answer-date">Answered {this.createdAt()}</div>
+                <div className="comment-answer-date">Answered {this.createdAt()}</div>
                 <div className="comment-body">{this.props.comment.body}</div>
             </div>
         )

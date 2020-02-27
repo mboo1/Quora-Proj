@@ -1,6 +1,6 @@
 import React from "react"
-import IndexItem from "../Index/index_item"
-// import IndexItemContainer from "./index_item"
+// import IndexItem from "../Index/index_item"
+import IndexItemContainer from "../Index/index_item_container"
 import TopicsColumnContainer from "../TopicsColumn/topics_column_container"
 
 class TopicIndex extends React.Component {
@@ -15,7 +15,8 @@ class TopicIndex extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchTopics().then(this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName)).then(
+        this.props.fetchTopics().then(() => this.props.fetchUsers().then(() => this.props.fetchQuestions(this.props.match.params.topicName)).then(
+            () =>
             this.setState({readyToRender:true})
         ))
         this.state.prevName = this.props.match.params.topicName
@@ -52,10 +53,10 @@ class TopicIndex extends React.Component {
                 <TopicsColumnContainer />
                 {/* <div className="test-topic-head">TopicIndex</div> */}
                 <div className="index-box">
-                    <div>{this.props.match.params.topicName}</div>
+                    <div className="index-topic-title">Questions by Topic: {this.props.match.params.topicName}</div>
                     <ul>
                         {this.state.topicQuestions.map(question => (
-                        <IndexItem question={question} key={Math.random()} author={this.props.users[question.author_id]} />
+                        <IndexItemContainer question={question} key={Math.random()} author={this.props.users[question.author_id]} />
                         ))}
                     </ul>
                 </div>

@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     background-color: rgba($color: #F7F7F8, $alpha: 1.0);
+    min-height: 100vh;
     // background-color: rgba($color: #FFFFFF, $alpha: 1.0);
     // z-index: 70
 }
@@ -13,6 +14,7 @@
     flex-direction: column;
     width: 600px;
     padding: 32px;
+    min-height: 20px;
     border: 1px solid lightgrey;
     margin-top: 45px;
     background-color: rgba($color: #FAFAFA, $alpha: 1.0);
@@ -99,6 +101,7 @@
     background-color: rgba($color: #dfdfdf, $alpha: 1.0);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
+    padding-left: 10px;
 }
 
 .answer-textarea {
@@ -137,12 +140,14 @@
     flex-direction: column;
     border-top: 1px solid lightgray;
     padding: 12px 0 12px 0;
+    
 }
 
 .answer-profile-row {
     display: flex;
     align-items: center;
     font-size: 17px;
+    font-weight: bold;
     color: rgba($color: #333333, $alpha: 1.0);
     padding-bottom: 5px;
 }
@@ -161,6 +166,11 @@
     font-size: 16px;
     line-height: 1.4;
     white-space: pre-wrap;
+
+    img {
+        max-width: 600px;
+        // max-height: 300px;
+    }
 }
 
 .upvoted-button {
@@ -191,8 +201,51 @@
 
 .other-questions-col {
     display: flex;
+    margin-left: 86px;
+    margin-top: 42px;
     flex-direction: column;
-    width: 300px
+    width: 300px;
+}
+
+.other-questions-title {
+    color: rgba($color: #333333, $alpha: 1.0);
+    font-size: 15px;
+    margin-bottom: 8px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid lightgrey;
+}
+
+
+.other-questions-list {
+    list-style: none;
+}
+
+.other-questions-link {
+    text-decoration: none;
+    color: #3E78AD;
+    margin-top: 20px;
+}
+
+.other-questions-link:hover {
+    text-decoration: underline;
+}
+
+.other-questions-text {
+    line-height: 1.4px;
+    text-decoration: none;
+    color: #3E78AD;
+    font-size: 14px;
+}
+
+.other-questions-add {
+    margin-top: 20px;    
+    color: #666666;
+    font-size: 14px;
+}
+
+.other-questions-add:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .topics-row {

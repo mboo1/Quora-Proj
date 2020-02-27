@@ -62,11 +62,9 @@ class AnswerDetail extends React.Component {
         }
     }
 
-
-
     render() {
         let tempName;
-        (typeof this.props.author === 'undefined') ? tempName = '' : tempName = this.props.author.username;
+        (typeof this.props.author === 'undefined') ? tempName = 'x' : tempName = this.props.author.username;
         let createdAt = new Date(this.props.answer.created_at).toString();
         createdAt = createdAt.split(' ').slice(1,4).join(' ')
         let color = generateColor(tempName);
@@ -77,9 +75,8 @@ class AnswerDetail extends React.Component {
                     <div className="profile-icon-circle" style={{ background: color }} >{tempName[0].toUpperCase()}</div>{tempName}
                 </div>
                 <div className="answer-date">Answered {createdAt}</div>
-                {/* <div className="answer-body">{this.props.answer.body}</div> */}
-                {/* <div className="answer-body">{renderHTML(this.props.answer.body)}</div> */}
                 <div className="answer-body" dangerouslySetInnerHTML={{__html: this.props.answer.body}}></div>
+                {/* <div className="answer-body" dangerouslySetInnerHTML={{__html: this.renderBody(this.props.answer.body)}}></div> */}
                 {this.renderVoteButton()}
                 <CommentIndexContainer key={this.props.answer.id} answer={this.props.answer}/>
             </div>

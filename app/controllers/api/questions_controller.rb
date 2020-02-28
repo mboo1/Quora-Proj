@@ -37,7 +37,6 @@ class Api::QuestionsController < ApplicationController
         search = params[:query]
         search = search.downcase
         @questions = Question.where("lower(questions.title) LIKE '%#{search}%'")
-        # midare = @questions
         render "api/questions/index"
     end
 

@@ -1179,44 +1179,60 @@ function (_React$Component) {
   _inherits(Index, _React$Component);
 
   function Index(props) {
+    var _this;
+
     _classCallCheck(this, Index);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Index).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Index).call(this, props));
+    _this.state = {
+      readyToRender: false
+    };
+    return _this;
   }
 
   _createClass(Index, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUsers().then(this.props.fetchQuestions(''));
+      var _this2 = this;
+
+      this.props.fetchUsers().then(this.props.fetchQuestions('')).then(function () {
+        _this2.setState({
+          readyToRender: true
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "main-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "index-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "question-prompt",
-        onClick: this.props.openModal
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "prompt-profile-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "profile-icon-circle",
-        style: {
-          background: Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_4__["default"])(this.props.currentUser.username)
-        }
-      }, this.props.currentUser.username[0].toUpperCase()), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "prompt-text"
-      }, "What is your question?")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.questions.map(function (question) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index_item_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          question: question,
-          key: question.id,
-          author: _this.props.users[question.author_id]
-        });
-      }))));
+      if (this.state.readyToRender) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "main-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TopicsColumn_topics_column_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "index-box"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "question-prompt",
+          onClick: this.props.openModal
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "prompt-profile-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "profile-icon-circle",
+          style: {
+            background: Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_4__["default"])(this.props.currentUser.username)
+          }
+        }, this.props.currentUser.username[0].toUpperCase()), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "prompt-text"
+        }, "What is your question?")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.questions.map(function (question) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index_item_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            question: question,
+            key: question.id,
+            author: _this3.props.users[question.author_id]
+          });
+        }))));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 
@@ -1354,6 +1370,8 @@ function (_React$Component) {
       this.sortQuestions(answers);
 
       if (typeof answers[0] !== 'undefined') {
+        // console.log(this.props.users)
+        // console.log(answers[0])
         var createdAt = new Date(answers[0].created_at).toString();
         createdAt = createdAt.split(' ').slice(1, 4).join(' ');
         this.setState({
@@ -1558,9 +1576,9 @@ function (_React$Component) {
       var i = 0;
       var n = 0;
       var nameEnt = setInterval(function () {
-        if (i <= 'guest'.length) {
+        if (i <= 'Guest'.length) {
           _this3.setState({
-            oldUsername: 'guest'.slice(0, i)
+            oldUsername: 'Guest'.slice(0, i)
           });
 
           i += 1;
@@ -2913,17 +2931,32 @@ function (_React$Component) {
           var container = document.getElementById('editor');
           _this3.editor = new Quill(container, {
             modules: {
-              toolbar: [[{
-                header: [1, 2, false]
-              }], ['bold', 'italic', 'underline'], [{
-                'list': 'ordered'
-              }, {
-                'list': 'bullet'
-              }], ['image', 'code-block', 'link', 'video']]
+              toolbar: {
+                container: [[{
+                  header: [1, 2, false]
+                }], ['bold', 'italic', 'underline'], [{
+                  'list': 'ordered'
+                }, {
+                  'list': 'bullet'
+                }], ['image', 'link', 'code-block', 'video']],
+                handlers: {
+                  link: _this3.imageHandler
+                }
+              }
             },
             theme: 'snow'
           });
         });
+      }
+    }
+  }, {
+    key: "imageHandler",
+    value: function imageHandler() {
+      var range = this.quill.getSelection();
+      var value = prompt('What is the image URL');
+
+      if (value) {
+        this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
       }
     }
   }, {

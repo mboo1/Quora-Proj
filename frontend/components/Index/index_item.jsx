@@ -29,6 +29,8 @@ class IndexItem extends React.Component {
         answers = answers.filter(obj => obj.question_id === this.props.question.id);
         this.sortQuestions(answers);
         if (typeof answers[0] !== 'undefined') {
+            // console.log(this.props.users)
+            // console.log(answers[0])
             let createdAt = new Date(answers[0].created_at).toString();
             createdAt = createdAt.split(' ').slice(1,4).join(' ')    
             this.setState({

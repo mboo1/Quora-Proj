@@ -48,8 +48,8 @@ class Login extends React.Component {
         let i = 0;
         let n = 0;
         let nameEnt = setInterval(() => {
-            if (i <= 'guest'.length) {
-                this.setState({ oldUsername: 'guest'.slice(0,i) })
+            if (i <= 'Guest'.length) {
+                this.setState({ oldUsername: 'Guest'.slice(0,i) })
                 i += 1
             } else if (n <= 'password'.length) {
                 this.setState({ oldPassword: 'password'.slice(0,n) })

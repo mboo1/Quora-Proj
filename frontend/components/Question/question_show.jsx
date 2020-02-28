@@ -75,13 +75,27 @@ class QuestionShow extends React.Component {
         if (!this.state.answerClicked) {
             this.setState({answerClicked: true}, () => {
                 let container = document.getElementById('editor');
-                this.editor = new Quill(container, {modules: {toolbar: [
-                    [{ header: [1, 2, false] }],
-                    ['bold', 'italic', 'underline'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['image', 'code-block', 'link', 'video']
-                ]}, theme: 'snow'});
+                this.editor = new Quill(container, {modules: {toolbar: { 
+                    container: 
+                    [[{ header: [1, 2, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['image', 'link', 'code-block', 'video'],],
+                    handlers: {
+                        link: this.imageHandler
+                    }
+                    
+                }
+                }, theme: 'snow'});
             })
+        }
+    }
+
+    imageHandler() {
+        let range = this.quill.getSelection();
+        let value = prompt('What is the image URL');
+        if(value){
+            this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
         }
     }
 

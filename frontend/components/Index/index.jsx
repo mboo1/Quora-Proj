@@ -7,13 +7,21 @@ import generateColor from "../../util/color_generator"
 class Index extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            readyToRender: false
+        }
     }
 
     componentDidMount() {
-        this.props.fetchUsers().then(this.props.fetchQuestions(''))
+        this.props.fetchUsers().then(this.props.fetchQuestions('')).then(()=>{
+            this.setState({
+                readyToRender: true
+            })
+        })
     }
 
     render () {
+        if (this.state.readyToRender) {
         return (
             <div className="main-row">
                 <TopicsColumnContainer />
@@ -35,6 +43,11 @@ class Index extends React.Component {
                 </div>
             </div>
         )
+        } else {
+            return (
+                <div></div>
+            )
+        }
     }
 }
 

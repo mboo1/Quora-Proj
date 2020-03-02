@@ -1627,11 +1627,9 @@ function (_React$Component) {
         className: "greeting-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting-logo"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "greeting",
-        src: logo,
-        alt: "logo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "greeting-logo-text"
+      }, "Fora")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "intro-row"
       }, "A place to share knowledge and better understand the world"), this.checkErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-row"

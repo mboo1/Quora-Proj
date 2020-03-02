@@ -83,7 +83,8 @@ class Login extends React.Component {
                 <div className="login-form-container">
                     <div className="greeting-box">
                         <div className="greeting-logo">
-                            <img className="greeting" src = {logo} alt = "logo"></img>
+                            <div className="greeting-logo-text">Fora</div>
+                            {/* <img className="greeting" src = {logo} alt = "logo"></img> */}
                         </div>
                         <div className="intro-row">A place to share knowledge and better understand the world</div>
                         {this.checkErrors()}

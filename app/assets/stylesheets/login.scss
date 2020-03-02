@@ -18,7 +18,7 @@
      background-color: white;
      border: 1px solid lightgray;
      border-radius: 4px;
-     padding: 35px 0px 0px 0px;
+     padding: 30px 0px 0px 0px;
      box-shadow: 0px 0px 4px 1px gray;
      margin-bottom: 45px;
  }
@@ -123,6 +123,20 @@
     height: 82px;
     display: flex;
     justify-content: center;
+    padding-bottom: 15px;
+
+ }
+
+ .greeting-logo-text {
+    //  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     font-family: 'Libre Baskerville', ;
+     color: rgba($color: #b62e2e, $alpha: 1.0);
+     font-weight: bold;
+     font-size: 72px;
+ }
+
+ .greeting-logo-text:hover {
+     cursor: default;
  }
 
  .greeting {

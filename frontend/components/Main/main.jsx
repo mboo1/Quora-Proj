@@ -23,7 +23,7 @@ class Main extends React.Component {
                             <Route exact path = "/questions/:questionId" component={QuestionShowContainer} />
                             <Route exact path = "/topics/:topicName" component={TopicIndexContainer} />
                             <Route exact path = "/" component={IndexContainer} />
-                            <Route exact path = "/quill" component = {ExperimentContainer} />
+                            {/* <Route exact path = "/quill" component = {ExperimentContainer} /> */}
                             <Redirect from="*" to="/"/>
                         </Switch>
                     </div>

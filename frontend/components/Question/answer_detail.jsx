@@ -64,7 +64,7 @@ class AnswerDetail extends React.Component {
 
     render() {
         let tempName;
-        (typeof this.props.author === 'undefined') ? tempName = 'x' : tempName = this.props.author.username;
+        (typeof this.props.author === 'undefined') ? tempName = this.props.currentUser.username : tempName = this.props.author.username;
         let createdAt = new Date(this.props.answer.created_at).toString();
         createdAt = createdAt.split(' ').slice(1,4).join(' ')
         let color = generateColor(tempName);

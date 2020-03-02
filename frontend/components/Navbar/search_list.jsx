@@ -66,7 +66,6 @@ class SearchList extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         let rez = this.populateList();
         return (
             <div className="search-list">

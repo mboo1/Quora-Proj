@@ -723,6 +723,9 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {}
+  }, {
     key: "handleInput",
     value: function handleInput(e) {
       e.preventDefault();
@@ -751,6 +754,10 @@ function (_React$Component) {
 
       // console.log(this.props.authors[114])
       if (this.state.readyToRender) {
+        this.commentsArr = [];
+        Object.values(this.props.comments).forEach(function (comment) {
+          if (comment.answer_id === _this3.props.answer.id) _this3.commentsArr.push(comment);
+        });
         var color = Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_2__["default"])(this.props.currentUser.username);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "comment-index"
@@ -891,9 +898,8 @@ function (_React$Component) {
         }
       } else {
         this.state.checkedTopics.push(id);
-      }
+      } // console.log(this.state.checkedTopics)
 
-      console.log(this.state.checkedTopics);
     }
   }, {
     key: "handleUpdate",
@@ -1812,10 +1818,6 @@ function (_React$Component) {
         exact: true,
         path: "/",
         component: _Index_index_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        exact: true,
-        path: "/quill",
-        component: _Experiment_experiment_container__WEBPACK_IMPORTED_MODULE_7__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
         from: "*",
         to: "/"
@@ -2120,12 +2122,9 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "navbar-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "navbar-logo",
         to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "navbar-item",
-        src: logo,
-        alt: "logo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, "Fora"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         style: {
           textDecoration: 'none'
         },
@@ -2134,34 +2133,19 @@ function (_React$Component) {
         className: "navbar-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-book fa-2x"
-      }), "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        style: {
-          textDecoration: 'none'
-        },
-        to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar-item"
+      }), "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "navbar-item",
+        href: "https://github.com/mboo1",
+        target: "_blank"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-edit fa-2x"
-      }), "Answer")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        style: {
-          textDecoration: 'none'
-        },
-        to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar-item"
+        className: "fab fa-github fa-2x"
+      }), "GitHub"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "navbar-item",
+        href: "https://www.linkedin.com/in/michael-booe-42448313/",
+        target: "_blank"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-users fa-2x"
-      }), "Spaces")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        style: {
-          textDecoration: 'none'
-        },
-        to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-bell fa-2x"
-      }), "Notifications")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fab fa-linkedin fa-2x"
+      }), "LinkedIn"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         ref: this.setWrapperRef,
         className: "search-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2170,7 +2154,7 @@ function (_React$Component) {
         className: "search-bar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "nav-search",
-        placeholder: "Search Quora",
+        placeholder: "Search Fora",
         type: "text",
         value: this.state.searchQuery,
         onChange: this.handleInput,
@@ -2194,6 +2178,14 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Navbar));
+{
+  /* <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-edit fa-2x"></i>Answer</div></Link>
+  <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
+  <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link> */
+}
+{
+  /* <a className="navbar-item" href="https://github.com/mboo1" target="_blank"><img src="https://i.imgur.com/E5f1im3.png" alt="GitHub" height="25px" width="25px"/>GitHub</a> */
+}
 
 /***/ }),
 
@@ -2369,7 +2361,6 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props);
       var rez = this.populateList();
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-list"
@@ -2523,7 +2514,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var tempName;
-      typeof this.props.author === 'undefined' ? tempName = 'x' : tempName = this.props.author.username;
+      typeof this.props.author === 'undefined' ? tempName = this.props.currentUser.username : tempName = this.props.author.username;
       var createdAt = new Date(this.props.answer.created_at).toString();
       createdAt = createdAt.split(' ').slice(1, 4).join(' ');
       var color = Object(_util_color_generator__WEBPACK_IMPORTED_MODULE_2__["default"])(tempName);
@@ -2843,7 +2834,8 @@ function (_React$Component) {
       tempTopics: [],
       editorCreated: false,
       qAnswers: [],
-      readyToRender: false
+      readyToRender: false,
+      prevId: ''
     };
     _this.keyCount = 0;
     _this.editor = '';
@@ -2879,15 +2871,36 @@ function (_React$Component) {
         _this2.sortQuestions(_this2.state.qAnswers);
 
         _this2.setState({
-          readyToRender: true
+          readyToRender: true,
+          prevId: _this2.props.question.id
         });
       });
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      if (!this.props.question || !this.props.question.authorIds) {
-        this.props.fetchQuestion(this.props.match.params.questionId);
+      var _this3 = this;
+
+      // if (!this.props.question || !this.props.question.authorIds) {
+      //     console.log('new fetch')
+      //     this.props.fetchQuestion(this.props.match.params.questionId)
+      // }
+      if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
+        this.state.prevId = this.props.question.id;
+        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(function () {
+          _this3.state.qAnswers = Object.values(_this3.props.fullAnswers);
+          _this3.state.qAnswers = _this3.state.qAnswers.filter(function (obj) {
+            return obj.question_id === _this3.props.question.id;
+          });
+
+          _this3.sortQuestions(_this3.state.qAnswers);
+
+          _this3.setState({
+            readyToRender: true,
+            prevId: _this3.props.question.id
+          });
+        }); // this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+        // this.state.prevName = this.props.match.params.topicName
       }
     }
   }, {
@@ -2920,14 +2933,14 @@ function (_React$Component) {
   }, {
     key: "openAnswerForm",
     value: function openAnswerForm(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.state.answerClicked) {
         this.setState({
           answerClicked: true
         }, function () {
           var container = document.getElementById('editor');
-          _this3.editor = new Quill(container, {
+          _this4.editor = new Quill(container, {
             modules: {
               toolbar: {
                 container: [[{
@@ -2938,7 +2951,7 @@ function (_React$Component) {
                   'list': 'bullet'
                 }], ['image', 'link', 'code-block', 'video']],
                 handlers: {
-                  link: _this3.imageHandler
+                  link: _this4.imageHandler
                 }
               }
             },
@@ -3013,7 +3026,7 @@ function (_React$Component) {
       } else {
         return this.state.tempTopics.map(function (topicName, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: Math.random()
+            key: idx
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             className: "topic-button",
             to: "/topics/".concat(topicName)
@@ -3025,23 +3038,26 @@ function (_React$Component) {
     key: "sortQuestions",
     value: function sortQuestions(questionAnswers) {
       if (typeof questionAnswers !== 'undefined' && questionAnswers.length > 1) {
+        // let strid = questionAnswers[0].created_at
+        // let stridD = new Date(strid)
+        // questionAnswers.sort((a, b) => (a.upvotes.length < b.upvotes.length) ? 1 : -1)
         questionAnswers.sort(function (a, b) {
-          return a.upvotes.length < b.upvotes.length ? 1 : -1;
+          return a.upvotes.length < b.upvotes.length ? 1 : a.upvotes.length === b.upvotes.length ? new Date(a.created_at) > new Date(b.created_at) ? 1 : -1 : -1;
         });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       // let questionAnswers = Object.values(this.props.fullAnswers);
       // questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
       // this.sortQuestions(questionAnswers)
       if (this.state.readyToRender) {
         this.state.qAnswers = Object.values(this.props.fullAnswers);
-        this.state.qAnswers = this.state.qAnswers.filter(function (obj) {
-          return obj.question_id === _this4.props.question.id;
+        if (this.props.question) this.state.qAnswers = this.state.qAnswers.filter(function (obj) {
+          return obj.question_id === _this5.props.question.id;
         });
         this.sortQuestions(this.state.qAnswers);
         var tempTitle = '';
@@ -3070,10 +3086,10 @@ function (_React$Component) {
           className: "answer-count"
         }, this.state.qAnswers.length, " Answers"), this.state.qAnswers.map(function (answer) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_answer_detail_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            upvotes: _this4.props.upvotes,
+            upvotes: _this5.props.upvotes,
             answer: answer,
-            author: _this4.props.authors[answer.author_id],
-            key: Math.random()
+            author: _this5.props.authors[answer.author_id],
+            key: answer.created_at
           });
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_other_questions_column_container__WEBPACK_IMPORTED_MODULE_5__["default"], {
           currId: this.props.match.params.questionId
@@ -3274,9 +3290,6 @@ function (_React$Component) {
       if (this.state.body === '') this.state.body = 'placeholder';
       this.props.createQuestion(this.state).then(function (response) {
         _this2.props.closeModal();
-
-        console.log(response);
-        console.log(response.question);
 
         _this2.props.history.push("/questions/".concat(response.question.id));
       }, function (error) {
@@ -3481,8 +3494,7 @@ function (_React$Component) {
           if (tempObj[i].title === this.props.match.params.topicName) {
             this.state.topicQuestionIds = tempObj[i].questionIds;
           }
-        } // console.log(this.state.topicQuestions)
-
+        }
 
         for (var _i = 0; _i < this.props.questions.length; _i++) {
           if (this.state.topicQuestionIds.includes(this.props.questions[_i].id)) {
@@ -3501,7 +3513,7 @@ function (_React$Component) {
         }, "Questions by Topic: ", this.props.match.params.topicName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.topicQuestions.map(function (question) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Index_index_item_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
             question: question,
-            key: Math.random(),
+            key: question.created_at,
             author: _this3.props.users[question.author_id]
           });
         }))));
@@ -3926,14 +3938,14 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchUser = _actions_users_actions__WEBPACK_IMPORTED_MODULE_14__["fetchUser"];
   window.createAnswer = _actions_answer_actions__WEBPACK_IMPORTED_MODULE_15__["createAnswer"]; // window.createAnswer = AnswersApiUtil.createAnswer;
   // window.fetchQuestion = fetchQuestion;
+  // window.createQuestion = createQuestion;
+  // window.destroyQuestion = destroyQuestion;
+  // window.login = login;
+  // window.logout = logout;
+  // window.signup = signup;
+  // window.dispatch = store.dispatch;
+  // window.fetchTopics = fetchTopics
 
-  window.createQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_13__["createQuestion"];
-  window.destroyQuestion = _actions_question_actions__WEBPACK_IMPORTED_MODULE_13__["destroyQuestion"];
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["login"];
-  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["logout"];
-  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_12__["signup"];
-  window.dispatch = store.dispatch;
-  window.fetchTopics = _actions_topic_actions__WEBPACK_IMPORTED_MODULE_17__["fetchTopics"];
   var rootEl = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -4109,7 +4121,6 @@ var modalReducer = function modalReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  // console.log(action)
   switch (action.type) {
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_MODAL"]:
       return action.modal;
@@ -4152,7 +4163,6 @@ var questionsReducer = function questionsReducer() {
 
   switch (action.type) {
     case _actions_question_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
-      // console.log(action.question)
       newState[action.question.id] = action.question;
       return newState;
 

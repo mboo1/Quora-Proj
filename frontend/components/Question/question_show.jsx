@@ -18,7 +18,8 @@ class QuestionShow extends React.Component {
             tempTopics: [],
             editorCreated: false,
             qAnswers: [],
-            readyToRender: false
+            readyToRender: false,
+            prevId: ''
         }
         this.keyCount = 0;
         this.editor = '';
@@ -44,14 +45,31 @@ class QuestionShow extends React.Component {
             this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
             this.sortQuestions(this.state.qAnswers)
             this.setState({
-                readyToRender: true
+                readyToRender: true,
+                prevId: this.props.question.id
             })
         })
     }
 
     componentDidUpdate() {
-        if (!this.props.question || !this.props.question.authorIds) {
-            this.props.fetchQuestion(this.props.match.params.questionId)
+        // if (!this.props.question || !this.props.question.authorIds) {
+        //     console.log('new fetch')
+        //     this.props.fetchQuestion(this.props.match.params.questionId)
+        // }
+        if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
+            this.state.prevId = this.props.question.id
+            this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
+                this.state.qAnswers = Object.values(this.props.fullAnswers);
+                this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+                this.sortQuestions(this.state.qAnswers)
+                this.setState({
+                    readyToRender: true,
+                    prevId: this.props.question.id
+                })
+            })
+
+            // this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+            // this.state.prevName = this.props.match.params.topicName
         }
     }
 
@@ -141,7 +159,7 @@ class QuestionShow extends React.Component {
         } else {
             return (
                 this.state.tempTopics.map((topicName, idx) => 
-                    <div key={Math.random()}><Link className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
+                    <div key={idx}><Link className="topic-button" to= {`/topics/${topicName}`}>{topicName}</Link></div>
                 )
             )
         }
@@ -149,7 +167,15 @@ class QuestionShow extends React.Component {
 
     sortQuestions(questionAnswers) {
         if (typeof questionAnswers !== 'undefined' && questionAnswers.length > 1) {
-            questionAnswers.sort((a, b) => (a.upvotes.length < b.upvotes.length) ? 1 : -1)
+            // let strid = questionAnswers[0].created_at
+            // let stridD = new Date(strid)
+
+            // questionAnswers.sort((a, b) => (a.upvotes.length < b.upvotes.length) ? 1 : -1)
+
+            questionAnswers.sort((a, b) => (a.upvotes.length < b.upvotes.length) ? 1 :
+            (a.upvotes.length === b.upvotes.length ) ? ((new Date(a.created_at) > new Date(b.created_at)) ? 1 : -1) :    
+            -1)
+
         }
     }
 
@@ -159,7 +185,7 @@ class QuestionShow extends React.Component {
         // this.sortQuestions(questionAnswers)
         if (this.state.readyToRender) {
         this.state.qAnswers = Object.values(this.props.fullAnswers);
-        this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+        if (this.props.question) this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
         this.sortQuestions(this.state.qAnswers);
         let tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title
@@ -181,7 +207,7 @@ class QuestionShow extends React.Component {
                     {this.renderAnswerForm()}
                     <div className="answer-count">{this.state.qAnswers.length} Answers</div>
                     {this.state.qAnswers.map(answer => (
-                        <AnswerDetailContainer upvotes={this.props.upvotes} answer={answer} author={this.props.authors[answer.author_id]} key={Math.random()}/>
+                        <AnswerDetailContainer upvotes={this.props.upvotes} answer={answer} author={this.props.authors[answer.author_id]} key={answer.created_at}/>
                     ))}
                 </div>
                 <OtherQuestionsColumnContainer currId={this.props.match.params.questionId}/>

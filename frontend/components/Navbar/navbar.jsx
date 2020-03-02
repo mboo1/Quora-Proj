@@ -91,16 +91,15 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar-row">
-                <Link to="/"><img className="navbar-item" src = {logo} alt = "logo"></img></Link>
+                <Link className="navbar-logo" to="/">Fora</Link>
                 <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-book fa-2x"></i>Home</div></Link>
-                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-edit fa-2x"></i>Answer</div></Link>
-                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
-                <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link>
+                <a className="navbar-item" href="https://github.com/mboo1" target="_blank"><i className="fab fa-github fa-2x"></i>GitHub</a>
+                <a className="navbar-item" href="https://www.linkedin.com/in/michael-booe-42448313/" target="_blank"><i className="fab fa-linkedin fa-2x"></i>LinkedIn</a>
                 <div ref={this.setWrapperRef} className="search-container">
                     <i className="fa fa-search"></i>
                     {/* <form onSubmit={this.handleSearch}> */}
                     <div className="search-bar">
-                        <input className="nav-search" placeholder="Search Quora" type="text" value={this.state.searchQuery} onChange={this.handleInput} onClick = {this.handleClick}/>
+                        <input className="nav-search" placeholder="Search Fora" type="text" value={this.state.searchQuery} onChange={this.handleInput} onClick = {this.handleClick}/>
 
                     </div>
                     {/* </form> */}
@@ -119,3 +118,9 @@ class Navbar extends React.Component {
 }
 
 export default withRouter(Navbar)
+
+{/* <Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-edit fa-2x"></i>Answer</div></Link>
+<Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="fas fa-users fa-2x"></i>Spaces</div></Link>
+<Link style={{ textDecoration: 'none' }} to="/"><div className="navbar-item"><i className="far fa-bell fa-2x"></i>Notifications</div></Link> */}
+
+{/* <a className="navbar-item" href="https://github.com/mboo1" target="_blank"><img src="https://i.imgur.com/E5f1im3.png" alt="GitHub" height="25px" width="25px"/>GitHub</a> */}

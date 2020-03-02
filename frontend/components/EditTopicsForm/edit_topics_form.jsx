@@ -23,7 +23,7 @@ class EditTopicsForm extends React.Component {
         } else {
             this.state.checkedTopics.push(id)
         }
-        console.log(this.state.checkedTopics)
+        // console.log(this.state.checkedTopics)
     }
 
     handleUpdate(e) {

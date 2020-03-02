@@ -40,7 +40,6 @@ class TopicIndex extends React.Component {
                     this.state.topicQuestionIds = tempObj[i].questionIds
                 }
             }
-            // console.log(this.state.topicQuestions)
             for (let i = 0; i < this.props.questions.length; i++) {
                 if (this.state.topicQuestionIds.includes(this.props.questions[i].id)) {
                     this.state.topicQuestions.push(this.props.questions[i])
@@ -56,7 +55,7 @@ class TopicIndex extends React.Component {
                     <div className="index-topic-title">Questions by Topic: {this.props.match.params.topicName}</div>
                     <ul>
                         {this.state.topicQuestions.map(question => (
-                        <IndexItemContainer question={question} key={Math.random()} author={this.props.users[question.author_id]} />
+                        <IndexItemContainer question={question} key={question.created_at} author={this.props.users[question.author_id]} />
                         ))}
                     </ul>
                 </div>

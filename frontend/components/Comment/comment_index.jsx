@@ -26,6 +26,9 @@ class CommentIndex extends React.Component {
         })
     }
 
+    componentDidUpdate() {
+    }
+
     handleInput(e) {
         e.preventDefault();
         this.setState({
@@ -49,6 +52,10 @@ class CommentIndex extends React.Component {
     render() {
         // console.log(this.props.authors[114])
         if (this.state.readyToRender) {
+            this.commentsArr = [];
+            Object.values(this.props.comments).forEach((comment) => {
+                if (comment.answer_id === this.props.answer.id) this.commentsArr.push(comment)
+            })
             let color = generateColor(this.props.currentUser.username);
             return (
                 <div className="comment-index">

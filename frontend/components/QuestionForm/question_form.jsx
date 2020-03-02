@@ -26,8 +26,6 @@ class QuestionForm extends React.Component {
         if (this.state.body === '') this.state.body = 'placeholder'
         this.props.createQuestion(this.state).then((response) => {
             this.props.closeModal()
-            console.log(response)
-            console.log(response.question)
             this.props.history.push(`/questions/${response.question.id}`)
             },
             (error) => {

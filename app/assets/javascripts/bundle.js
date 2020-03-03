@@ -2037,23 +2037,25 @@ function (_React$Component) {
   _createClass(Navbar, [{
     key: "handleLogout",
     value: function handleLogout() {
-      this.props.logout();
+      var _this2 = this;
 
-      if (this.props.history.location.pathname !== "/") {
-        this.props.history.push("/");
-      }
+      this.props.logout().then(function () {
+        if (_this2.props.history.location.pathname !== "/") {
+          _this2.props.history.push("/");
+        }
+      });
     }
   }, {
     key: "handleInput",
     value: function handleInput(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       clearTimeout(timer);
       this.setState({
         searchQuery: e.currentTarget.value
       });
       timer = setTimeout(function () {
-        _this2.handleSearch();
+        _this3.handleSearch();
       }, 100);
     }
   }, {
@@ -2440,7 +2442,8 @@ function (_React$Component) {
     _this.state = {
       upvotes: [],
       alreadyVoted: false,
-      voteId: ''
+      voteId: '',
+      readyToRender: false
     };
     _this.renderVoteButton = _this.renderVoteButton.bind(_assertThisInitialized(_this));
     _this.handleDestroyUpvote = _this.handleDestroyUpvote.bind(_assertThisInitialized(_this));
@@ -2459,6 +2462,9 @@ function (_React$Component) {
           upvoteArr.push(upvote);
 
           if (upvote.author_id === _this2.props.currentUser.id) {
+            _this2.state.alreadyVoted = true;
+            console.log('found upvote');
+
             _this2.setState({
               alreadyVoted: true,
               voteId: upvote.id
@@ -2474,14 +2480,40 @@ function (_React$Component) {
     key: "handleDestroyUpvote",
     value: function handleDestroyUpvote() {
       this.props.destroyUpvote(this.state.voteId);
+      this.setState({
+        alreadyVoted: false,
+        voteId: ''
+      });
     }
   }, {
     key: "handleCreateUpvote",
     value: function handleCreateUpvote() {
+      var _this3 = this;
+
       this.props.createUpvote({
         author_id: this.props.currentUser.id,
         answer_id: this.props.answer.id
+      }).then(function (upvote) {
+        _this3.setState({
+          alreadyVoted: true,
+          voteId: upvote.upvote.id
+        });
       });
+    }
+  }, {
+    key: "upVoteCounter",
+    value: function upVoteCounter() {
+      var _this4 = this;
+
+      if (this.props.upVoteCount.length > 0) {
+        var count = 0;
+        this.props.upVoteCount.forEach(function (vote) {
+          if (vote.answer_id === _this4.props.answer.id) count += 1;
+        });
+        return count;
+      } else {
+        return 0;
+      }
     }
   }, {
     key: "renderVoteButton",
@@ -2497,7 +2529,7 @@ function (_React$Component) {
           height: "18px",
           width: "20px",
           alt: "upvoted"
-        }), "Upvote \u2022 ", this.state.upvotes.length));
+        }), "Upvote \u2022 ", this.upVoteCounter()));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "upvoted-button",
@@ -2507,7 +2539,7 @@ function (_React$Component) {
           height: "18px",
           width: "20px",
           alt: "upvote"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Upvote \u2022 ", this.state.upvotes.length));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Upvote \u2022 ", this.upVoteCounter()));
       }
     }
   }, {
@@ -2567,7 +2599,8 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.entities.users[state.session.id],
-    comments: state.entities.comments
+    comments: state.entities.comments,
+    upVoteCount: Object.values(state.entities.upvotes)
   };
 };
 
@@ -2847,7 +2880,8 @@ function (_React$Component) {
     _this.renderTopics = _this.renderTopics.bind(_assertThisInitialized(_this));
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
     _this.closeAnswerForm = _this.closeAnswerForm.bind(_assertThisInitialized(_this));
-    _this.sortQuestions = _this.sortQuestions.bind(_assertThisInitialized(_this)); // this.profileDraw = this.profileDraw.bind(this);
+    _this.sortQuestions = _this.sortQuestions.bind(_assertThisInitialized(_this));
+    _this.handleQuestionChange = _this.handleQuestionChange.bind(_assertThisInitialized(_this)); // this.profileDraw = this.profileDraw.bind(this);
 
     return _this;
   }
@@ -2872,36 +2906,27 @@ function (_React$Component) {
 
         _this2.setState({
           readyToRender: true,
-          prevId: _this2.props.question.id
+          prevId: _this2.props.match.params.questionId
         });
       });
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      var _this3 = this;
-
-      // if (!this.props.question || !this.props.question.authorIds) {
+    value: function componentDidUpdate() {// if (!this.props.question || !this.props.question.authorIds) {
       //     console.log('new fetch')
       //     this.props.fetchQuestion(this.props.match.params.questionId)
       // }
-      if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
-        this.state.prevId = this.props.question.id;
-        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(function () {
-          _this3.state.qAnswers = Object.values(_this3.props.fullAnswers);
-          _this3.state.qAnswers = _this3.state.qAnswers.filter(function (obj) {
-            return obj.question_id === _this3.props.question.id;
-          });
-
-          _this3.sortQuestions(_this3.state.qAnswers);
-
-          _this3.setState({
-            readyToRender: true,
-            prevId: _this3.props.question.id
-          });
-        }); // this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
-        // this.state.prevName = this.props.match.params.topicName
-      }
+      // if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
+      //     this.state.prevId = this.props.question.id
+      //     this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
+      //         this.setState({
+      //             readyToRender: true,
+      //             prevId: this.props.question.id
+      //         })
+      //     })
+      // this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
+      // this.state.prevName = this.props.match.params.topicName
+      // }
     }
   }, {
     key: "handleAnswer",
@@ -2933,14 +2958,14 @@ function (_React$Component) {
   }, {
     key: "openAnswerForm",
     value: function openAnswerForm(e) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (!this.state.answerClicked) {
         this.setState({
           answerClicked: true
         }, function () {
           var container = document.getElementById('editor');
-          _this4.editor = new Quill(container, {
+          _this3.editor = new Quill(container, {
             modules: {
               toolbar: {
                 container: [[{
@@ -2951,7 +2976,7 @@ function (_React$Component) {
                   'list': 'bullet'
                 }], ['image', 'link', 'code-block', 'video']],
                 handlers: {
-                  link: _this4.imageHandler
+                  link: _this3.imageHandler
                 }
               }
             },
@@ -3047,19 +3072,43 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleQuestionChange",
+    value: function handleQuestionChange() {
+      var _this4 = this;
+
+      if (this.state.prevId !== '' && this.state.prevId !== this.props.match.params.questionId) {
+        this.state.prevId = this.props.match.params.questionId;
+        this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(function () {
+          _this4.state.qAnswers = Object.values(_this4.props.fullAnswers);
+          _this4.state.qAnswers = _this4.state.qAnswers.filter(function (obj) {
+            return obj.question_id === _this4.props.question.id;
+          });
+
+          _this4.sortQuestions(_this4.state.qAnswers);
+
+          _this4.setState({
+            readyToRender: true,
+            prevId: _this4.props.match.params.questionId
+          });
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this5 = this;
 
-      // let questionAnswers = Object.values(this.props.fullAnswers);
-      // questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
-      // this.sortQuestions(questionAnswers)
       if (this.state.readyToRender) {
-        this.state.qAnswers = Object.values(this.props.fullAnswers);
-        if (this.props.question) this.state.qAnswers = this.state.qAnswers.filter(function (obj) {
-          return obj.question_id === _this5.props.question.id;
-        });
-        this.sortQuestions(this.state.qAnswers);
+        this.handleQuestionChange();
+
+        if (this.props.question) {
+          this.state.qAnswers = Object.values(this.props.fullAnswers);
+          this.state.qAnswers = this.state.qAnswers.filter(function (obj) {
+            return obj.question_id === _this5.props.question.id;
+          });
+          this.sortQuestions(this.state.qAnswers);
+        }
+
         var tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title;
         if (typeof this.props.question !== 'undefined') this.state.tempTopics = this.props.question.topicNames;

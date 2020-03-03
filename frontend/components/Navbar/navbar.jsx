@@ -24,10 +24,11 @@ class Navbar extends React.Component {
     }
 
     handleLogout() {
-        this.props.logout();
-        if (this.props.history.location.pathname !== "/") {
-            this.props.history.push("/");
-        }
+        this.props.logout().then(() => {
+            if (this.props.history.location.pathname !== "/") {
+                this.props.history.push("/");
+            }
+        });
     }
 
     handleInput(e) {

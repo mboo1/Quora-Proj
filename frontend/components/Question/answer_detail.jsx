@@ -8,7 +8,8 @@ class AnswerDetail extends React.Component {
         this.state = {
             upvotes: [],
             alreadyVoted: false,
-            voteId: ''
+            voteId: '',
+            readyToRender: false
         }
         this.renderVoteButton = this.renderVoteButton.bind(this);
         this.handleDestroyUpvote = this.handleDestroyUpvote.bind(this);
@@ -21,6 +22,8 @@ class AnswerDetail extends React.Component {
             if (upvote.answer_id === this.props.answer.id) {
                 upvoteArr.push(upvote);
                 if (upvote.author_id === this.props.currentUser.id) {
+                    this.state.alreadyVoted = true;
+                    console.log('found upvote')
                     this.setState({
                         alreadyVoted: true,
                         voteId: upvote.id
@@ -29,19 +32,40 @@ class AnswerDetail extends React.Component {
             }
         })
         this.setState({
-            upvotes: upvoteArr
+            upvotes: upvoteArr,
         })
     }
 
     handleDestroyUpvote() {
-        this.props.destroyUpvote(this.state.voteId)
+        this.props.destroyUpvote(this.state.voteId);
+        this.setState({
+            alreadyVoted: false,
+            voteId: ''
+        })
     }
 
     handleCreateUpvote() {
-        this.props.createUpvote({author_id: this.props.currentUser.id, answer_id: this.props.answer.id})
+        this.props.createUpvote({author_id: this.props.currentUser.id, answer_id: this.props.answer.id}).then(
+            (upvote) => {
+                this.setState({
+                    alreadyVoted: true,
+                    voteId: upvote.upvote.id
+                })
+            }
+        );
+    }
+
+    upVoteCounter() {
+        if (this.props.upVoteCount.length > 0) {
+        let count = 0;
+        this.props.upVoteCount.forEach(vote => { if (vote.answer_id === this.props.answer.id) count += 1; })
+        return count;
+    }
+        else { return 0 }
     }
 
     renderVoteButton() {
+        
         if (this.state.alreadyVoted) {
             this.state.upvotes
             return (<div>
@@ -49,14 +73,14 @@ class AnswerDetail extends React.Component {
                         <div className="upvoted-button" onClick={this.handleDestroyUpvote}>
                             {/* <img src="https://i.imgur.com/SYOBXMd.png" height="18px" width="20px" alt="upvoted"/> */}
                             <img className="arrow-img" src="https://i.imgur.com/DkJAg3S.png" height="18px" width="20px" alt="upvoted"/>
-                            Upvote • {this.state.upvotes.length}
+                            Upvote • {this.upVoteCounter()}
                         </div>
                     </div>
             )
         } else {
             return (<div className="upvoted-button" onClick={this.handleCreateUpvote}>
                         <img src="https://i.imgur.com/SqBaIR4.png" height="18px" width="20px" alt="upvote"/>
-                        <p>Upvote • {this.state.upvotes.length}</p>
+                        <p>Upvote • {this.upVoteCounter()}</p>
                     </div>
             )
         }

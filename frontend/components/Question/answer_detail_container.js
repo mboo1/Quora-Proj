@@ -5,7 +5,8 @@ import AnswerDetail from "./answer_detail";
 
 const mapStateToProps = state => ({
     currentUser: state.entities.users[state.session.id],
-    comments: state.entities.comments
+    comments: state.entities.comments,
+    upVoteCount: Object.values(state.entities.upvotes)
 })
 
 const mapDispatchToProps = dispatch => ({

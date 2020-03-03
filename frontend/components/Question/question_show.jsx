@@ -32,6 +32,7 @@ class QuestionShow extends React.Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.closeAnswerForm = this.closeAnswerForm.bind(this);
         this.sortQuestions = this.sortQuestions.bind(this);
+        this.handleQuestionChange = this.handleQuestionChange.bind(this);
         // this.profileDraw = this.profileDraw.bind(this);
     }
 
@@ -46,7 +47,7 @@ class QuestionShow extends React.Component {
             this.sortQuestions(this.state.qAnswers)
             this.setState({
                 readyToRender: true,
-                prevId: this.props.question.id
+                prevId: this.props.match.params.questionId
             })
         })
     }
@@ -56,21 +57,19 @@ class QuestionShow extends React.Component {
         //     console.log('new fetch')
         //     this.props.fetchQuestion(this.props.match.params.questionId)
         // }
-        if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
-            this.state.prevId = this.props.question.id
-            this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
-                this.state.qAnswers = Object.values(this.props.fullAnswers);
-                this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
-                this.sortQuestions(this.state.qAnswers)
-                this.setState({
-                    readyToRender: true,
-                    prevId: this.props.question.id
-                })
-            })
+        
+        // if (this.state.prevId !== '' && this.props.question && this.state.prevId !== this.props.question.id) {
+        //     this.state.prevId = this.props.question.id
+        //     this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
+        //         this.setState({
+        //             readyToRender: true,
+        //             prevId: this.props.question.id
+        //         })
+        //     })
 
             // this.props.fetchUsers().then(this.props.fetchQuestions(this.props.match.params.topicName))
             // this.state.prevName = this.props.match.params.topicName
-        }
+        // }
     }
 
     handleAnswer(e) {
@@ -179,14 +178,30 @@ class QuestionShow extends React.Component {
         }
     }
 
+    handleQuestionChange() {
+        if (this.state.prevId !== '' && this.state.prevId !== this.props.match.params.questionId) {
+            this.state.prevId = this.props.match.params.questionId
+            this.props.fetchQuestion(this.props.match.params.questionId).then(this.props.fetchTopics()).then(() => {
+                this.state.qAnswers = Object.values(this.props.fullAnswers);
+                this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+                this.sortQuestions(this.state.qAnswers)
+                this.setState({
+                    readyToRender: true,
+                    prevId: this.props.match.params.questionId
+                })
+            })
+        }
+
+    }
+
     render() {
-        // let questionAnswers = Object.values(this.props.fullAnswers);
-        // questionAnswers = questionAnswers.filter(obj => obj.question_id === this.props.question.id);
-        // this.sortQuestions(questionAnswers)
         if (this.state.readyToRender) {
-        this.state.qAnswers = Object.values(this.props.fullAnswers);
-        if (this.props.question) this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
-        this.sortQuestions(this.state.qAnswers);
+        this.handleQuestionChange();
+        if (this.props.question) {
+            this.state.qAnswers = Object.values(this.props.fullAnswers);
+            this.state.qAnswers = this.state.qAnswers.filter(obj => obj.question_id === this.props.question.id);
+            this.sortQuestions(this.state.qAnswers)
+        }
         let tempTitle = '';
         if (typeof this.props.question !== 'undefined') tempTitle = this.props.question.title
         if (typeof this.props.question !== 'undefined') this.state.tempTopics = this.props.question.topicNames

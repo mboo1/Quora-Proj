@@ -2518,6 +2518,15 @@ function (_React$Component) {
   }, {
     key: "renderVoteButton",
     value: function renderVoteButton() {
+      var _this5 = this;
+
+      this.state.alreadyVoted = false;
+      Object.values(this.props.upvotes).forEach(function (upvote) {
+        if (upvote.author_id === _this5.props.currentUser.id && upvote.answer_id === _this5.props.answer.id) {
+          _this5.state.alreadyVoted = true;
+        }
+      });
+
       if (this.state.alreadyVoted) {
         this.state.upvotes;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

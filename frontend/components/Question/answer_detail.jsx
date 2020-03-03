@@ -65,7 +65,12 @@ class AnswerDetail extends React.Component {
     }
 
     renderVoteButton() {
-        
+        this.state.alreadyVoted = false;
+        Object.values(this.props.upvotes).forEach(upvote => {
+            if (upvote.author_id === this.props.currentUser.id && upvote.answer_id === this.props.answer.id) {
+                this.state.alreadyVoted = true;
+            }
+        })
         if (this.state.alreadyVoted) {
             this.state.upvotes
             return (<div>
